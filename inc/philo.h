@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/06 18:01:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/07 09:37:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <unistd.h>
+# include <pthread.h>
 
 # define ARGLIMIT 201
 
