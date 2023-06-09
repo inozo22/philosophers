@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/09 17:11:23 by nimai            ###   ########.fr       */
+/*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
+/*   Updated: 2023/06/09 17:27:41 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <philo.h>
+#include "philo.h"
 
-int	main(int ac, char **av)
+void	philo_error(int code)
 {
-	if (ac < 5 || ac > 6)
+	if (code == 1)
 	{
-		philo_error(1);
+		printf("Usage	:[1]number_of_philosophers\n");
+		printf("	:[2]time_to_die\n");
+		printf("	:[3]time_to_eat\n");
+		printf("	:[4]time_to_sleep\n");
+		printf("	:[5][number_of_times_each_philosopher_must_eat]\n");
+		printf("-------------------------------------------------------\n");
+		printf("example	:philo 5 800 200 200 [10]\n");
+		exit(1);
 	}
-	int i = -1;
-	while (av[++i])
-		printf("av[%d]: %s\n", i, av[i]);
-	return (0);
 }

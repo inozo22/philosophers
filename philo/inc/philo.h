@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/09 17:13:18 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/09 17:44:07 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define PHILO_H
 
 # include <stdio.h>
+#include <stdbool.h>
 # include <stdlib.h>
 # include <errno.h>
 # include <unistd.h>
