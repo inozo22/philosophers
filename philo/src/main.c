@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/09 18:10:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/11 17:59:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	myatoi(char *str)
  */
 bool	check_av(int num, int flag)
 {
-	int	i;
+//	int	i;
 
 	(void)flag;
-	i = 0;
+//	i = 0;
 	if (num > 200)
 		return (false);
 
