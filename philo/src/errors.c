@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/09 17:27:41 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/22 13:52:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,26 @@ void	philo_error(int code)
 		printf("-------------------------------------------------------\n");
 		printf("example	:philo 5 800 200 200 [10]\n");
 		exit(1);
+	}
+	if (code == 2)
+	{
+		printf("Please, number of Philo should be fewer than 201.\n");
+	}
+	if (code == 3)
+	{
+		printf("Please, each time should not be under 60ms.\n");
+	}
+}
+
+/**
+ * @brief print error message.
+ * @author nimai
+ * @return nothing.
+ */
+void	heap_error(int flag)
+{
+	if (flag == 1)
+	{
+		printf("memory allocate failure\n");
 	}
 }

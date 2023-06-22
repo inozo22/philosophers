@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/09 17:44:07 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/22 13:37:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <errno.h>
 # include <unistd.h>
 # include <pthread.h>
+# include <string.h>
 
 # define ARGLIMIT 201
 
@@ -36,6 +37,7 @@ typedef struct s_philo
 
 /**
  * @brief main structure 
+ * @note 230622nimai: maybe I can allocate just number of philos for t_philo philo
  */
 typedef struct s_bundle
 {
@@ -47,6 +49,17 @@ typedef struct s_bundle
 	int		meals;//If all philosophers have eaten at least number_of_times_each_philosopher_must_eat times, the simulation stops. If not specified, the simulation stops when a philosopher dies.
 }	t_bundle;
 
+//--------------------------------
+//errors
+//--------------------------------
+
 void	philo_error(int code);
+void	heap_error(int flag);
+
+//--------------------------------
+//urils
+//--------------------------------
+
+void	*ft_calloc(size_t count, size_t size);
 
 #endif

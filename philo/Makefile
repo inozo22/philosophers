@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/06/09 17:28:23 by nimai            ###   ########.fr        #
+#    Updated: 2023/06/22 13:38:32 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ INCS		:= inc
 SRC_DIR		:= src
 SRCS		:= \
 				main.c \
-				errors.c
+				errors.c \
+				heap.c
 
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 
