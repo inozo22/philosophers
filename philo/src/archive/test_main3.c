@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 14:23:36 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/26 15:06:30 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/26 16:37:49 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	*routine(void* arg)
 	int	index = *(int*)arg;
 	printf("%d ", primes[index]);
 	free (arg);
+	return (arg);
 }
 
 int	main(int ac, char **av)
@@ -29,6 +30,8 @@ int	main(int ac, char **av)
 	pthread_t	th[10];
 	int			i;
 
+	(void)ac;
+	(void)av;
 	i = -1;
 	while (++i < 10)
 	{

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 14:23:36 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/26 15:41:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/26 16:36:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	main(int ac, char **av)
 	pthread_t	th[2];
 	int			i;
 
+	(void)ac;
+	(void)av;
 	i = -1;
 	while (++i < 2)
 	{

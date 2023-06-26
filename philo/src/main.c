@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/26 16:30:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/26 17:18:54 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include <pthread.h>
 #include <time.h>
 #include <unistd.h>
-
-pthread_mutex_t	mutex;
 
 /**
  * @brief check all av before start
@@ -120,8 +118,24 @@ t_bundle	*init_bundle(char **av)
 	return (bundle);
 }
 
-void	*roll_dice(void)
+/* void *f(void *p)
 {
+	t_mutex	*t;
+
+	t = p;
+	for (int i = 0; i < 1000000; ++i)
+	{
+		pthread_mutex_lock(t->mutex);
+		++*t->cnt;
+		pthread_mutex_unlock(t->mutex);
+	}
+	return (NULL);
+} */
+
+void	*f(void *p)
+{
+	(void)p;
+	
 	int	value;
 	int	*ret;
 
@@ -135,7 +149,7 @@ void	*roll_dice(void)
 
 void	init_thread(t_bundle *bundle)
 {
-	pthread_t		*th;
+/* 	pthread_t		*th;
 	unsigned int	i;
 	int				*ret;
 	srand(time(NULL));
@@ -164,6 +178,33 @@ void	init_thread(t_bundle *bundle)
 		}
 		printf("Philo %d dice: %d\n", i, *ret);
 		printf("Philo %d has finished execution\n", i);
+		free (ret);
+	}
+	pthread_mutex_destroy(&mutex);
+	printf("Destroyed mutex\n"); */
+	int cnt = 0;
+	unsigned int	i = -1;
+	int				*ret;
+	pthread_t *th;
+	pthread_mutex_t	mutex;
+	t_mutex	t;
+	srand(time(NULL));
+
+	th = malloc(sizeof(pthread_t) * bundle->philos);
+	if (!th)
+		return ;
+	pthread_mutex_init(&mutex, NULL);
+	t.mutex = &mutex;
+	t.cnt = &cnt;
+	while (++i < bundle->philos)
+	{
+		pthread_create(&th[i], NULL, &f, &t);
+	}
+	i = -1;
+	while (++i < bundle->philos)
+	{
+		pthread_join(th[i], (void **) &ret);
+		printf("Philo %d dice: %d\n", i, *ret);
 		free (ret);
 	}
 	pthread_mutex_destroy(&mutex);

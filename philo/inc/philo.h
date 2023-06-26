@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/26 15:58:21 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/26 17:05:17 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@
 /**
  * @brief philosophers 
  */
-typedef struct s_philo
+typedef struct s_mutex
 {
-	int	id;
-}	t_philo;
+	pthread_mutex_t	*mutex;
+	int				*cnt;
+}	t_mutex;
 
 /**
  * @brief main structure 
@@ -41,7 +42,7 @@ typedef struct s_philo
  */
 typedef struct s_bundle
 {
-	t_philo	philo[ARGLIMIT];
+//	t_philo	philo[ARGLIMIT];
 	unsigned int		time_die;//If a philosopher didn’t start eating time_to_die milliseconds since the beginning of their last meal or the beginning of the sim- ulation, they die.
 	unsigned int 		time_eat;//The time it takes for a philosopher to eat. During that time, they will need to hold two forks.
 	unsigned int		time_sleep;//The time a philosopher will spend sleeping.
