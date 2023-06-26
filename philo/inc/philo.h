@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/22 13:37:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/26 15:58:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define PHILO_H
 
 # include <stdio.h>
-#include <stdbool.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <errno.h>
 # include <unistd.h>
@@ -42,11 +42,11 @@ typedef struct s_philo
 typedef struct s_bundle
 {
 	t_philo	philo[ARGLIMIT];
-	int		time_die;//If a philosopher didn’t start eating time_to_die milliseconds since the beginning of their last meal or the beginning of the sim- ulation, they die.
-	int		time_eat;//The time it takes for a philosopher to eat. During that time, they will need to hold two forks.
-	int		time_sleep;//The time a philosopher will spend sleeping.
-	int		philos;//The number of philosophers and also the number of forks.
-	int		meals;//If all philosophers have eaten at least number_of_times_each_philosopher_must_eat times, the simulation stops. If not specified, the simulation stops when a philosopher dies.
+	unsigned int		time_die;//If a philosopher didn’t start eating time_to_die milliseconds since the beginning of their last meal or the beginning of the sim- ulation, they die.
+	unsigned int 		time_eat;//The time it takes for a philosopher to eat. During that time, they will need to hold two forks.
+	unsigned int		time_sleep;//The time a philosopher will spend sleeping.
+	unsigned int		philos;//The number of philosophers and also the number of forks.
+	unsigned int		meals;//If all philosophers have eaten at least number_of_times_each_philosopher_must_eat times, the simulation stops. If not specified, the simulation stops when a philosopher dies.
 }	t_bundle;
 
 //--------------------------------

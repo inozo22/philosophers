@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/22 15:53:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/26 15:48:45 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	philo_error(int code)
 		printf("Please, each time should not be under 60ms.\n");
 	if (code == 4)
 		printf("Please put positive number.\n");
+	if (code == 5)
+		printf("Please put int number.\n");
 }
 
 /**
