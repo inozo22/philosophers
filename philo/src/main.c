@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/27 19:09:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/27 19:26:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ t_bundle	*init_bundle(char **av)
 	bundle = (t_bundle *)ft_calloc(1, sizeof(t_bundle));
 	if (!bundle)
 		return (heap_error(1), NULL);
+	bundle->heap = 1;
 	if (!obtain_nums(av, bundle))
 		return (free (bundle), NULL);
 	/**
@@ -159,6 +160,7 @@ void	init_thread(t_bundle *bundle)
 	bundle->th = ft_calloc(bundle->philos, sizeof(pthread_t));
 	if (!bundle->th)
 		return ;
+	bundle->heap = 2;
 	pthread_mutex_init(&mutex, NULL);
 	bundle->m.mutex = &mutex;
 	bundle->m.cnt = &cnt;
@@ -176,7 +178,6 @@ void	init_thread(t_bundle *bundle)
 		printf("%08.0f Philo %d dice: %d\n", diff_time, i + 1, *ret);
 		free (ret);
 	}
-	free (bundle->th);
 	pthread_mutex_destroy(&mutex);
 	printf("Destroyed mutex\n");
 }
@@ -200,6 +201,7 @@ int	main(int ac, char **av)
 	printf("bundle->time_eat: %d\n", bundle->time_eat);
 	printf("bundle->time_sleep: %d\n", bundle->time_sleep);
 	printf("bundle->meals: %d\n", bundle->meals);
-	system ("leaks philo");
+	all_free (bundle);
+//	system ("leaks philo");
 	return (0);
 }

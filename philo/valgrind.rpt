@@ -1,211 +1,249 @@
-==19622== Memcheck, a memory error detector
-==19622== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==19622== Using Valgrind-3.21.0.GIT-lbmacos and LibVEX; rerun with -h for copyright info
-==19622== Command: ./philo 3 2251 153 111
-==19622== Parent PID: 18807
-==19622== 
-==19622== 
-==19622== Process terminating with default action of signal 2 (SIGINT)
-==19622==    at 0x100003C5A: init_bundle (in ./philo)
-==19622==    by 0x100003D58: main (in ./philo)
-==19622== 
-==19622== HEAP SUMMARY:
-==19622==     in use at exit: 14,850 bytes in 162 blocks
-==19622==   total heap usage: 176 allocs, 14 frees, 19,594 bytes allocated
-==19622== 
-==19622== 32 bytes in 1 blocks are definitely lost in loss record 13 of 41
-==19622==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x1006FC5F3: objc::DenseMap<objc_class*, objc_class*, objc::DenseMapValueInfo<objc_class*>, objc::DenseMapInfo<objc_class*>, objc::detail::DenseMapPair<objc_class*, objc_class*> >::grow(unsigned int) (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x1006FC69F: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x1006E8406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x1006F82D0: unmap_image (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x100015667: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==19622==    by 0x100015808: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
-==19622==    by 0x1002C1AD0: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
-==19622==    by 0x1006E6DAF: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x100243F38: _os_object_init (in /usr/lib/system/libdispatch.dylib)
-==19622==    by 0x1002500E7: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
-==19622==    by 0x100133790: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==19622== 
-==19622== 32 bytes in 1 blocks are definitely lost in loss record 14 of 41
-==19622==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x1006FC5F3: objc::DenseMap<objc_class*, objc_class*, objc::DenseMapValueInfo<objc_class*>, objc::DenseMapInfo<objc_class*>, objc::detail::DenseMapPair<objc_class*, objc_class*> >::grow(unsigned int) (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x1006FC6C6: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x1006FC69F: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x1006E8406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x1006F82D0: unmap_image (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x100015667: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==19622==    by 0x100015808: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
-==19622==    by 0x1002C1AD0: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
-==19622==    by 0x1006E6DAF: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x100243F38: _os_object_init (in /usr/lib/system/libdispatch.dylib)
-==19622==    by 0x1002500E7: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
-==19622== 
-==19622== 64 bytes in 1 blocks are indirectly lost in loss record 19 of 41
-==19622==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x1003E0FB5: _owned_ptr_alloc (in /usr/lib/system/libsystem_c.dylib)
-==19622==    by 0x1003E1675: setenv (in /usr/lib/system/libsystem_c.dylib)
-==19622==    by 0x100683346: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==19622==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x1000242D3: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
-==19622==    by 0x100012661: dyld::initializeMainExecutable() (in /usr/lib/dyld)
-==19622== 
-==19622== 80 (16 direct, 64 indirect) bytes in 1 blocks are definitely lost in loss record 20 of 41
-==19622==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x1003E0FA3: _owned_ptr_alloc (in /usr/lib/system/libsystem_c.dylib)
-==19622==    by 0x1003E1675: setenv (in /usr/lib/system/libsystem_c.dylib)
-==19622==    by 0x100683346: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==19622==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x1000242D3: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
-==19622==    by 0x100012661: dyld::initializeMainExecutable() (in /usr/lib/dyld)
-==19622== 
-==19622== 128 bytes in 1 blocks are definitely lost in loss record 24 of 41
-==19622==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x1006EB667: objc_msgSend_stret (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x100243FEC: _os_object_alloc_realized (in /usr/lib/system/libdispatch.dylib)
-==19622==    by 0x100248BC5: _dispatch_lane_create_with_target (in /usr/lib/system/libdispatch.dylib)
-==19622==    by 0x10064B5F5: _libtrace_init (in /usr/lib/system/libsystem_trace.dylib)
-==19622==    by 0x1001337B0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==19622==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x1000242D3: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
-==19622== 
-==19622== 288 bytes in 6 blocks are indirectly lost in loss record 27 of 41
-==19622==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x1006EB667: objc_msgSend_stret (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x100243FEC: _os_object_alloc_realized (in /usr/lib/system/libdispatch.dylib)
-==19622==    by 0x10069FD06: _xpc_string_create (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x10068382F: xpc_dictionary_set_string (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683685: _xpc_collect_environment (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683292: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==19622==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622== 
-==19622== 300 bytes in 6 blocks are indirectly lost in loss record 28 of 41
-==19622==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x100683C06: _xpc_malloc (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683AE1: _xpc_dictionary_insert (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683840: xpc_dictionary_set_string (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683685: _xpc_collect_environment (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683292: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==19622==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622== 
-==19622== 324 bytes in 6 blocks are indirectly lost in loss record 29 of 41
-==19622==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x1003D8CE5: strdup (in /usr/lib/system/libsystem_c.dylib)
-==19622==    by 0x10068385D: xpc_string_create (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x10068382F: xpc_dictionary_set_string (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683685: _xpc_collect_environment (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683292: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==19622==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622== 
-==19622== 356 bytes in 2 blocks are indirectly lost in loss record 30 of 41
-==19622==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x100683C06: _xpc_malloc (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683AE1: _xpc_dictionary_insert (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683E87: _xpc_dyld_image_callback (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x10001499C: dyld::registerBulkLoadCallback(void (*)(unsigned int, mach_header const**, char const**)) (in /usr/lib/dyld)
-==19622==    by 0x100683D1A: _xpc_collect_images (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683297: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==19622==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622== 
-==19622== 452 (96 direct, 356 indirect) bytes in 1 blocks are definitely lost in loss record 31 of 41
-==19622==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x1006EB667: objc_msgSend_stret (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x100243FEC: _os_object_alloc_realized (in /usr/lib/system/libdispatch.dylib)
-==19622==    by 0x1006837D7: xpc_dictionary_create (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683E02: _xpc_dyld_image_callback (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x10001499C: dyld::registerBulkLoadCallback(void (*)(unsigned int, mach_header const**, char const**)) (in /usr/lib/dyld)
-==19622==    by 0x100683D1A: _xpc_collect_images (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683297: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==19622==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622== 
-==19622== 824 bytes in 1 blocks are still reachable in loss record 34 of 41
-==19622==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x100003C14: init_bundle (in ./philo)
-==19622==    by 0x100003D58: main (in ./philo)
-==19622== 
-==19622== 896 bytes in 28 blocks are definitely lost in loss record 35 of 41
-==19622==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x1006FC5F3: objc::DenseMap<objc_class*, objc_class*, objc::DenseMapValueInfo<objc_class*>, objc::DenseMapInfo<objc_class*>, objc::detail::DenseMapPair<objc_class*, objc_class*> >::grow(unsigned int) (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x1006E8406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x1006F82D0: unmap_image (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x100015667: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==19622==    by 0x100015808: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
-==19622==    by 0x1002C1AD0: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
-==19622==    by 0x1006E6DAF: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x100243F38: _os_object_init (in /usr/lib/system/libdispatch.dylib)
-==19622==    by 0x1002500E7: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
-==19622==    by 0x100133790: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==19622==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622== 
-==19622== 896 bytes in 28 blocks are definitely lost in loss record 36 of 41
-==19622==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x1006FC5F3: objc::DenseMap<objc_class*, objc_class*, objc::DenseMapValueInfo<objc_class*>, objc::DenseMapInfo<objc_class*>, objc::detail::DenseMapPair<objc_class*, objc_class*> >::grow(unsigned int) (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x1006FC6C6: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x1006E8406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x1006F82D0: unmap_image (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x100015667: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
-==19622==    by 0x100015808: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
-==19622==    by 0x1002C1AD0: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
-==19622==    by 0x1006E6DAF: map_images_nolock (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x100243F38: _os_object_init (in /usr/lib/system/libdispatch.dylib)
-==19622==    by 0x1002500E7: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
-==19622==    by 0x100133790: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==19622== 
-==19622== 1,008 (96 direct, 912 indirect) bytes in 1 blocks are definitely lost in loss record 37 of 41
-==19622==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==19622==    by 0x1006EB667: objc_msgSend_stret (in /usr/lib/libobjc.A.dylib)
-==19622==    by 0x100243FEC: _os_object_alloc_realized (in /usr/lib/system/libdispatch.dylib)
-==19622==    by 0x1006837D7: xpc_dictionary_create (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683659: _xpc_collect_environment (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x100683292: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
-==19622==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
-==19622==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
-==19622==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
-==19622== 
-==19622== LEAK SUMMARY:
-==19622==    definitely lost: 2,192 bytes in 62 blocks
-==19622==    indirectly lost: 1,332 bytes in 21 blocks
-==19622==      possibly lost: 0 bytes in 0 blocks
-==19622==    still reachable: 824 bytes in 1 blocks
-==19622==         suppressed: 10,502 bytes in 78 blocks
-==19622== 
-==19622== For lists of detected and suppressed errors, rerun with: -s
-==19622== ERROR SUMMARY: 8 errors from 8 contexts (suppressed: 7 from 7)
+==26508== Memcheck, a memory error detector
+==26508== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==26508== Using Valgrind-3.21.0.GIT-lbmacos and LibVEX; rerun with -h for copyright info
+==26508== Command: ./philo 5 800 200 200
+==26508== Parent PID: 2466
+==26508== 
+--26508-- run: /usr/bin/dsymutil "./philo"
+==26508== 
+==26508== HEAP SUMMARY:
+==26508==     in use at exit: 18,270 bytes in 165 blocks
+==26508==   total heap usage: 186 allocs, 21 frees, 23,154 bytes allocated
+==26508== 
+==26508== 32 bytes in 1 blocks are still reachable in loss record 13 of 44
+==26508==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1003A071F: __Balloc_D2A (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x10039D88D: __rv_alloc_D2A (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x10039DD93: __dtoa (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003C42DD: __vfprintf (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003EAAD2: __v2printf (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003C32B1: vfprintf_l (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003C141D: printf (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x100003936: init_thread (in ./philo)
+==26508==    by 0x1000039FC: main (in ./philo)
+==26508== 
+==26508== 32 bytes in 1 blocks are definitely lost in loss record 14 of 44
+==26508==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1006FC5F3: objc::DenseMap<objc_class*, objc_class*, objc::DenseMapValueInfo<objc_class*>, objc::DenseMapInfo<objc_class*>, objc::detail::DenseMapPair<objc_class*, objc_class*> >::grow(unsigned int) (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x1006FC69F: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x1006E8406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x1006F82D0: unmap_image (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x100015667: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==26508==    by 0x100015808: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==26508==    by 0x1002C1AD0: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==26508==    by 0x1006E6DAF: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x100243F38: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==26508==    by 0x1002500E7: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==26508==    by 0x100133790: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==26508== 
+==26508== 32 bytes in 1 blocks are definitely lost in loss record 15 of 44
+==26508==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1006FC5F3: objc::DenseMap<objc_class*, objc_class*, objc::DenseMapValueInfo<objc_class*>, objc::DenseMapInfo<objc_class*>, objc::detail::DenseMapPair<objc_class*, objc_class*> >::grow(unsigned int) (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x1006FC6C6: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x1006FC69F: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x1006E8406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x1006F82D0: unmap_image (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x100015667: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==26508==    by 0x100015808: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==26508==    by 0x1002C1AD0: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==26508==    by 0x1006E6DAF: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x100243F38: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==26508==    by 0x1002500E7: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==26508== 
+==26508== 36 bytes in 1 blocks are still reachable in loss record 16 of 44
+==26508==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1003A071F: __Balloc_D2A (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003A0EFC: __d2b_D2A (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x10039DB61: __dtoa (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003C42DD: __vfprintf (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003EAAD2: __v2printf (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003C32B1: vfprintf_l (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003C141D: printf (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x100003936: init_thread (in ./philo)
+==26508==    by 0x1000039FC: main (in ./philo)
+==26508== 
+==26508== 64 bytes in 1 blocks are indirectly lost in loss record 21 of 44
+==26508==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1003E0FB5: _owned_ptr_alloc (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003E1675: setenv (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x100683346: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==26508==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x1000242D3: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
+==26508==    by 0x100012661: dyld::initializeMainExecutable() (in /usr/lib/dyld)
+==26508== 
+==26508== 80 bytes in 1 blocks are still reachable in loss record 22 of 44
+==26508==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1003A069F: __Balloc_D2A (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003A0EFC: __d2b_D2A (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x10039DB61: __dtoa (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003C42DD: __vfprintf (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003EAAD2: __v2printf (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003C32B1: vfprintf_l (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003C141D: printf (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x100003936: init_thread (in ./philo)
+==26508==    by 0x1000039FC: main (in ./philo)
+==26508== 
+==26508== 80 (16 direct, 64 indirect) bytes in 1 blocks are definitely lost in loss record 23 of 44
+==26508==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1003E0FA3: _owned_ptr_alloc (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003E1675: setenv (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x100683346: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==26508==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x1000242D3: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
+==26508==    by 0x100012661: dyld::initializeMainExecutable() (in /usr/lib/dyld)
+==26508== 
+==26508== 128 bytes in 1 blocks are definitely lost in loss record 27 of 44
+==26508==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1006EB667: objc_msgSend_stret (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x100243FEC: _os_object_alloc_realized (in /usr/lib/system/libdispatch.dylib)
+==26508==    by 0x100248BC5: _dispatch_lane_create_with_target (in /usr/lib/system/libdispatch.dylib)
+==26508==    by 0x10064B5F5: _libtrace_init (in /usr/lib/system/libsystem_trace.dylib)
+==26508==    by 0x1001337B0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==26508==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x1000242D3: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
+==26508== 
+==26508== 288 bytes in 6 blocks are indirectly lost in loss record 30 of 44
+==26508==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1006EB667: objc_msgSend_stret (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x100243FEC: _os_object_alloc_realized (in /usr/lib/system/libdispatch.dylib)
+==26508==    by 0x10069FD06: _xpc_string_create (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x10068382F: xpc_dictionary_set_string (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683685: _xpc_collect_environment (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683292: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==26508==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508== 
+==26508== 300 bytes in 6 blocks are indirectly lost in loss record 31 of 44
+==26508==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x100683C06: _xpc_malloc (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683AE1: _xpc_dictionary_insert (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683840: xpc_dictionary_set_string (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683685: _xpc_collect_environment (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683292: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==26508==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508== 
+==26508== 324 bytes in 6 blocks are indirectly lost in loss record 32 of 44
+==26508==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1003D8CE5: strdup (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x10068385D: xpc_string_create (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x10068382F: xpc_dictionary_set_string (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683685: _xpc_collect_environment (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683292: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==26508==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508== 
+==26508== 356 bytes in 2 blocks are indirectly lost in loss record 33 of 44
+==26508==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x100683C06: _xpc_malloc (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683AE1: _xpc_dictionary_insert (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683E87: _xpc_dyld_image_callback (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x10001499C: dyld::registerBulkLoadCallback(void (*)(unsigned int, mach_header const**, char const**)) (in /usr/lib/dyld)
+==26508==    by 0x100683D1A: _xpc_collect_images (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683297: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==26508==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508== 
+==26508== 452 (96 direct, 356 indirect) bytes in 1 blocks are definitely lost in loss record 34 of 44
+==26508==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1006EB667: objc_msgSend_stret (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x100243FEC: _os_object_alloc_realized (in /usr/lib/system/libdispatch.dylib)
+==26508==    by 0x1006837D7: xpc_dictionary_create (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683E02: _xpc_dyld_image_callback (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x10001499C: dyld::registerBulkLoadCallback(void (*)(unsigned int, mach_header const**, char const**)) (in /usr/lib/dyld)
+==26508==    by 0x100683D1A: _xpc_collect_images (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683297: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==26508==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508== 
+==26508== 896 bytes in 28 blocks are definitely lost in loss record 37 of 44
+==26508==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1006FC5F3: objc::DenseMap<objc_class*, objc_class*, objc::DenseMapValueInfo<objc_class*>, objc::DenseMapInfo<objc_class*>, objc::detail::DenseMapPair<objc_class*, objc_class*> >::grow(unsigned int) (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x1006E8406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x1006F82D0: unmap_image (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x100015667: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==26508==    by 0x100015808: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==26508==    by 0x1002C1AD0: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==26508==    by 0x1006E6DAF: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x100243F38: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==26508==    by 0x1002500E7: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==26508==    by 0x100133790: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==26508==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508== 
+==26508== 896 bytes in 28 blocks are definitely lost in loss record 38 of 44
+==26508==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1006FC5F3: objc::DenseMap<objc_class*, objc_class*, objc::DenseMapValueInfo<objc_class*>, objc::DenseMapInfo<objc_class*>, objc::detail::DenseMapPair<objc_class*, objc_class*> >::grow(unsigned int) (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x1006FC6C6: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x1006E8406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x1006F82D0: unmap_image (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x100015667: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==26508==    by 0x100015808: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==26508==    by 0x1002C1AD0: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==26508==    by 0x1006E6DAF: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x100243F38: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==26508==    by 0x1002500E7: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==26508==    by 0x100133790: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==26508== 
+==26508== 1,008 (96 direct, 912 indirect) bytes in 1 blocks are definitely lost in loss record 39 of 44
+==26508==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1006EB667: objc_msgSend_stret (in /usr/lib/libobjc.A.dylib)
+==26508==    by 0x100243FEC: _os_object_alloc_realized (in /usr/lib/system/libdispatch.dylib)
+==26508==    by 0x1006837D7: xpc_dictionary_create (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683659: _xpc_collect_environment (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x100683292: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==26508==    by 0x1001337A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==26508==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==26508==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==26508== 
+==26508== 4,096 bytes in 1 blocks are definitely lost in loss record 44 of 44
+==26508==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==26508==    by 0x1003BE367: __smakebuf (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003D1C4D: __swsetup (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003EA94E: __v2printf (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003C32B1: vfprintf_l (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x1003C141D: printf (in /usr/lib/system/libsystem_c.dylib)
+==26508==    by 0x100003936: init_thread (in ./philo)
+==26508==    by 0x1000039FC: main (in ./philo)
+==26508== 
+==26508== LEAK SUMMARY:
+==26508==    definitely lost: 6,288 bytes in 63 blocks
+==26508==    indirectly lost: 1,332 bytes in 21 blocks
+==26508==      possibly lost: 0 bytes in 0 blocks
+==26508==    still reachable: 148 bytes in 3 blocks
+==26508==         suppressed: 10,502 bytes in 78 blocks
+==26508== 
+==26508== For lists of detected and suppressed errors, rerun with: -s
+==26508== ERROR SUMMARY: 9 errors from 9 contexts (suppressed: 7 from 7)

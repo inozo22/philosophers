@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/27 19:07:32 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/27 19:22:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <string.h>
 
 # define ARGLIMIT 201
+# define BUNDLE_HEAP 1
+# define TH_HEAP 2
 
 /**
  * @brief philosophers 
@@ -44,6 +46,7 @@ typedef struct s_mutex
 typedef struct s_bundle
 {
 //	t_philo	philo[ARGLIMIT];
+	int					heap;
 	unsigned int		time_die;//If a philosopher didn’t start eating time_to_die milliseconds since the beginning of their last meal or the beginning of the sim- ulation, they die.
 	unsigned int 		time_eat;//The time it takes for a philosopher to eat. During that time, they will need to hold two forks.
 	unsigned int		time_sleep;//The time a philosopher will spend sleeping.
@@ -67,5 +70,12 @@ void	heap_error(int flag);
 //--------------------------------
 
 void	*ft_calloc(size_t count, size_t size);
+
+
+//--------------------------------
+//free
+//--------------------------------
+
+void	all_free(t_bundle *bundle);
 
 #endif
