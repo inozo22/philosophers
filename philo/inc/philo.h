@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/26 17:05:17 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/27 19:07:32 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define PHILO_H
 
 # include <stdio.h>
+# include <sys/time.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <errno.h>
@@ -48,6 +49,10 @@ typedef struct s_bundle
 	unsigned int		time_sleep;//The time a philosopher will spend sleeping.
 	unsigned int		philos;//The number of philosophers and also the number of forks.
 	unsigned int		meals;//If all philosophers have eaten at least number_of_times_each_philosopher_must_eat times, the simulation stops. If not specified, the simulation stops when a philosopher dies.
+	struct timeval		start;
+	struct timeval		clock;   //maybe it's not neccesary (because I can declear when I need it)
+	pthread_t			*th;
+	t_mutex				m;
 }	t_bundle;
 
 //--------------------------------

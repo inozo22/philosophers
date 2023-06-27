@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/26 17:18:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/27 19:09:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ unsigned int	myatoi(char *str)
 
 /**
  * @note if there is invalid number, return 0 and terminate the program
+ * @note I can put check_av here, but to control error message let it like this
  */
 int	obtain_nums(char **av, t_bundle *bundle)
 {
@@ -135,7 +136,6 @@ t_bundle	*init_bundle(char **av)
 void	*f(void *p)
 {
 	(void)p;
-	
 	int	value;
 	int	*ret;
 
@@ -149,64 +149,34 @@ void	*f(void *p)
 
 void	init_thread(t_bundle *bundle)
 {
-/* 	pthread_t		*th;
-	unsigned int	i;
-	int				*ret;
-	srand(time(NULL));
-
-	th = malloc(sizeof(pthread_t) * bundle->philos);
-	if (!th)
-		return ;
-	pthread_mutex_init(&mutex, NULL);
-	i = -1;
-	while (++i < bundle->philos)
-	{
-		if (pthread_create(&th[i], NULL, &roll_dice, NULL) != 0)
-		{
-			perror("Failed to create thread");
-			return ;
-		}
-		printf("Philo %d has started\n", i);
-	}
-	i = -1;
-	while (++i < bundle->philos)
-	{
-		if (pthread_join(th[i], (void **) &ret) != 0)
-		{
-			perror("Failed to join thread");
-			return ;
-		}
-		printf("Philo %d dice: %d\n", i, *ret);
-		printf("Philo %d has finished execution\n", i);
-		free (ret);
-	}
-	pthread_mutex_destroy(&mutex);
-	printf("Destroyed mutex\n"); */
 	int cnt = 0;
 	unsigned int	i = -1;
 	int				*ret;
-	pthread_t *th;
 	pthread_mutex_t	mutex;
-	t_mutex	t;
+	float	diff_time;
 	srand(time(NULL));
 
-	th = malloc(sizeof(pthread_t) * bundle->philos);
-	if (!th)
+	bundle->th = ft_calloc(bundle->philos, sizeof(pthread_t));
+	if (!bundle->th)
 		return ;
 	pthread_mutex_init(&mutex, NULL);
-	t.mutex = &mutex;
-	t.cnt = &cnt;
+	bundle->m.mutex = &mutex;
+	bundle->m.cnt = &cnt;
 	while (++i < bundle->philos)
 	{
-		pthread_create(&th[i], NULL, &f, &t);
+		pthread_create(&bundle->th[i], NULL, &f, &bundle->m);
 	}
 	i = -1;
+	gettimeofday(&bundle->start, NULL);
 	while (++i < bundle->philos)
 	{
-		pthread_join(th[i], (void **) &ret);
-		printf("Philo %d dice: %d\n", i, *ret);
+		pthread_join(bundle->th[i], (void **) &ret);
+		gettimeofday(&bundle->clock, NULL);
+		diff_time = bundle->clock.tv_sec - bundle->start.tv_sec + (float)(bundle->clock.tv_usec - bundle->start.tv_usec);
+		printf("%08.0f Philo %d dice: %d\n", diff_time, i + 1, *ret);
 		free (ret);
 	}
+	free (bundle->th);
 	pthread_mutex_destroy(&mutex);
 	printf("Destroyed mutex\n");
 }
@@ -230,5 +200,6 @@ int	main(int ac, char **av)
 	printf("bundle->time_eat: %d\n", bundle->time_eat);
 	printf("bundle->time_sleep: %d\n", bundle->time_sleep);
 	printf("bundle->meals: %d\n", bundle->meals);
+	system ("leaks philo");
 	return (0);
 }
