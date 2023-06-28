@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/28 15:06:47 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/28 15:58:36 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ t_bundle	*init_bundle(char **av)
 	 * 
 	 * 
 	 */
-
+//	printf("bundle->ph[150].is_dead: %d\n", bundle->ph[150].is_dead);
+//	printf("bundle->ph[150].ate: %d\n", bundle->ph[150].ate);
 	return (bundle);
 }
 
@@ -135,33 +136,39 @@ void	*f(void *p)
 int	run_thread(t_bundle *bundle)
 {
 	int cnt = 0;
-	unsigned int	i = -1;
+	unsigned int	i = 0;
 	int				*ret;
 	pthread_mutex_t	mutex;
 	float	diff_time;
 	srand(time(NULL));
 
-	bundle->th = ft_calloc(bundle->philos, sizeof(pthread_t));
-	if (!bundle->th)
-		heap_error(2, bundle);
+	while (i < bundle->philos)
+	{
+		bundle->ph[i].th = ft_calloc(1, sizeof(pthread_t));
+		if (!bundle->ph[i].th)
+			heap_error(2, bundle);
+		i++;
+	}
 	bundle->heap++;
 	pthread_mutex_init(&mutex, NULL);
 	bundle->m.mutex = &mutex;
 	bundle->m.cnt = &cnt;
-	while (++i < bundle->philos)
+	i = 0;
+	while (i < bundle->philos)
 	{
-		if (pthread_create(&bundle->th[i], NULL, &f, &bundle->m) != 0)
+		if (pthread_create(bundle->ph[i].th, NULL, &f, &bundle->m) != 0)
 		{
 			bundle->status = 1;
 			return (bundle->status);
 		}
+		i++;
 	}
-	i = -1;
+	i = 0;
 	gettimeofday(&bundle->start, NULL);
-	while (++i < bundle->philos)
+	while (i < bundle->philos)
 	{
 		ret = 0;
-		if (pthread_join(bundle->th[i], (void **) &ret) != 0)
+		if (pthread_join(*bundle->ph[i].th, (void **) &ret) != 0)
 		{
 			bundle->status = 2;
 			return (bundle->status);
@@ -170,6 +177,7 @@ int	run_thread(t_bundle *bundle)
 		diff_time = bundle->clock.tv_sec - bundle->start.tv_sec + (float)(bundle->clock.tv_usec - bundle->start.tv_usec);
 		printf("%08.0f Philo %03d dice: %d\n", diff_time, i + 1, *ret);
 		free (ret);
+		i++;
 	}
 	pthread_mutex_destroy(&mutex);
 	printf("Destroyed mutex\n");
