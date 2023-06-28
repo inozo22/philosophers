@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/28 10:15:22 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/28 15:15:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	philo_error(int code, t_bundle *bundle)
  * @author nimai
  * @return exit directory after free.
  * @note at the moment separate all cases to know where is the problem. Maybe I will merge then
+ * @note flag 1 has valor as NULL, if you have problem with this, check it
  */
 void	heap_error(int flag, t_bundle *bundle)
 {

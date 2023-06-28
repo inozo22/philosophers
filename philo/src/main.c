@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/28 10:25:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/28 15:06:47 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	obtain_nums(char **av, t_bundle *bundle)
 /**
  * @brief initialization according to the av position
  * @return main structure
- * @note 
+ * @note maybe put obtain_nums here if I will not put more lines here
  */
 t_bundle	*init_bundle(char **av)
 {
@@ -160,6 +160,7 @@ int	run_thread(t_bundle *bundle)
 	gettimeofday(&bundle->start, NULL);
 	while (++i < bundle->philos)
 	{
+		ret = 0;
 		if (pthread_join(bundle->th[i], (void **) &ret) != 0)
 		{
 			bundle->status = 2;
@@ -190,7 +191,6 @@ int	main(int ac, char **av)
 		all_free(bundle);
 		return (1);
 	}
-
 	printf("bundle->philos: %d\n", bundle->philos);
 	printf("bundle->time_die: %d\n", bundle->time_die);
 	printf("bundle->time_eat: %d\n", bundle->time_eat);
