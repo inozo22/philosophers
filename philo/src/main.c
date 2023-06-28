@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/27 19:26:09 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/28 10:25:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,16 @@
  * @brief check all av before start
  * @note it's not necessary, but to protect program
  */
-bool	check_av(unsigned int num, int flag)
+void	check_av(unsigned int num, int flag, t_bundle *bundle)
 {
 	if (flag == 1 && num > 200)
-		return (philo_error(2), false);
+		philo_error(2, bundle);
 	if (flag >= 2 && flag <= 4 && num < 60)
-		return (philo_error(3), false);
+		philo_error(3, bundle);
 	if (num < 0)
-		return (philo_error(4), false);
+		philo_error(4, bundle);
 	if (num > 2147483647)
-		return (philo_error(5), false);
-	return (true);
+		philo_error(5, bundle);
 }
 
 
@@ -40,7 +39,7 @@ bool	check_av(unsigned int num, int flag)
  * @return int
  * @note 
  */
-unsigned int	myatoi(char *str)
+unsigned int	myatoi(char *str, t_bundle *bundle)
 {
 	int				i;
 	unsigned int	nbr;
@@ -62,6 +61,8 @@ unsigned int	myatoi(char *str)
 		nbr = (str[i] - 48) + (nbr * 10);
 		i++;
 	}
+	if (str[i] != '\0')
+		philo_error(6, bundle);
 	return (nbr * sign);
 }
 
@@ -75,12 +76,10 @@ int	obtain_nums(char **av, t_bundle *bundle)
 	unsigned int	num;
 
 	i = 0;
-	bundle->meals = 0;
 	while (av[++i])
 	{
-		num = myatoi(av[i]);
-		if (!check_av(num, i))
-			return (0);
+		num = myatoi(av[i], bundle);
+		check_av(num, i, bundle);
 		if (i == 1)
 			bundle->philos = num;
 		if (i == 2)
@@ -106,10 +105,9 @@ t_bundle	*init_bundle(char **av)
 
 	bundle = (t_bundle *)ft_calloc(1, sizeof(t_bundle));
 	if (!bundle)
-		return (heap_error(1), NULL);
-	bundle->heap = 1;
+		heap_error(1, NULL);
 	if (!obtain_nums(av, bundle))
-		return (free (bundle), NULL);
+		philo_error (99, bundle);
 	/**
 	 * initialize the philos here.
 	 *  
@@ -119,20 +117,6 @@ t_bundle	*init_bundle(char **av)
 
 	return (bundle);
 }
-
-/* void *f(void *p)
-{
-	t_mutex	*t;
-
-	t = p;
-	for (int i = 0; i < 1000000; ++i)
-	{
-		pthread_mutex_lock(t->mutex);
-		++*t->cnt;
-		pthread_mutex_unlock(t->mutex);
-	}
-	return (NULL);
-} */
 
 void	*f(void *p)
 {
@@ -148,7 +132,7 @@ void	*f(void *p)
 	return ((void *)ret);
 }
 
-void	init_thread(t_bundle *bundle)
+int	run_thread(t_bundle *bundle)
 {
 	int cnt = 0;
 	unsigned int	i = -1;
@@ -159,27 +143,36 @@ void	init_thread(t_bundle *bundle)
 
 	bundle->th = ft_calloc(bundle->philos, sizeof(pthread_t));
 	if (!bundle->th)
-		return ;
-	bundle->heap = 2;
+		heap_error(2, bundle);
+	bundle->heap++;
 	pthread_mutex_init(&mutex, NULL);
 	bundle->m.mutex = &mutex;
 	bundle->m.cnt = &cnt;
 	while (++i < bundle->philos)
 	{
-		pthread_create(&bundle->th[i], NULL, &f, &bundle->m);
+		if (pthread_create(&bundle->th[i], NULL, &f, &bundle->m) != 0)
+		{
+			bundle->status = 1;
+			return (bundle->status);
+		}
 	}
 	i = -1;
 	gettimeofday(&bundle->start, NULL);
 	while (++i < bundle->philos)
 	{
-		pthread_join(bundle->th[i], (void **) &ret);
+		if (pthread_join(bundle->th[i], (void **) &ret) != 0)
+		{
+			bundle->status = 2;
+			return (bundle->status);
+		}
 		gettimeofday(&bundle->clock, NULL);
 		diff_time = bundle->clock.tv_sec - bundle->start.tv_sec + (float)(bundle->clock.tv_usec - bundle->start.tv_usec);
-		printf("%08.0f Philo %d dice: %d\n", diff_time, i + 1, *ret);
+		printf("%08.0f Philo %03d dice: %d\n", diff_time, i + 1, *ret);
 		free (ret);
 	}
 	pthread_mutex_destroy(&mutex);
 	printf("Destroyed mutex\n");
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -187,14 +180,16 @@ int	main(int ac, char **av)
 	t_bundle	*bundle;
 
 	if (ac < 5 || ac > 6)
-	{
-		philo_error(1);
-		return (1);
-	}
+		philo_error(1, NULL);
 	bundle = init_bundle(av);
 	if (!bundle)
 		return (1);
-	init_thread(bundle);
+	if (run_thread(bundle) != 0)
+	{
+		//put error message here? using bundle->status
+		all_free(bundle);
+		return (1);
+	}
 
 	printf("bundle->philos: %d\n", bundle->philos);
 	printf("bundle->time_die: %d\n", bundle->time_die);

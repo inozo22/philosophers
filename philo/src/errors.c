@@ -6,13 +6,19 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/26 15:48:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/28 10:15:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_error(int code)
+/**
+ * @brief print error message, free and exit.
+ * @author nimai
+ * @return exit directory after free.
+ * @note at the moment separate all cases to know where is the problem. Maybe I will merge then
+ */
+void	philo_error(int code, t_bundle *bundle)
 {
 	if (code == 1)
 	{
@@ -23,27 +29,44 @@ void	philo_error(int code)
 		printf("	:[5][number_of_times_each_philosopher_must_eat]\n");
 		printf("-------------------------------------------------------\n");
 		printf("example	:philo 5 800 200 200 [10]\n");
-		exit(1);
 	}
-	if (code == 2)
+	else if (code == 2)
 		printf("Please, number of Philo should be fewer than 201.\n");
-	if (code == 3)
+	else if (code == 3)
 		printf("Please, each time should not be under 60ms.\n");
-	if (code == 4)
+	else if (code == 4)
 		printf("Please put positive number.\n");
-	if (code == 5)
+	else if (code == 5)
 		printf("Please put int number.\n");
+	else if (code == 6)
+		printf("Please put only numeric letter.\n");
+	else if (code == 99)
+		printf("UNKNOWN ERROR\n");
+	if (bundle)
+		all_free(bundle);
+	exit (1);
 }
 
 /**
- * @brief print error message.
+ * @brief print error message, free and exit.
  * @author nimai
- * @return nothing.
+ * @return exit directory after free.
+ * @note at the moment separate all cases to know where is the problem. Maybe I will merge then
  */
-void	heap_error(int flag)
+void	heap_error(int flag, t_bundle *bundle)
 {
 	if (flag == 1)
 	{
-		printf("memory allocate failure\n");
+		printf("bundle memory allocate failure\n");
+		if (bundle)
+			all_free(bundle);
+		exit (1);
+	}
+	if (flag == 2)
+	{
+		printf("th memory allocate failure\n");
+		if (bundle)
+			all_free(bundle);
+		exit (1);
 	}
 }

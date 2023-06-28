@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/06/27 19:22:41 by nimai            ###   ########.fr        #
+#    Updated: 2023/06/27 19:29:07 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ DEPS		:= $(OBJS:.o=.d)
 
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror -pedantic
-LNK			:= -g3 -O0 #-fsanitize=address 
+LNK			:= -g3 -O0 -fsanitize=address 
 CPPFLAGS	:= $(addprefix -I,$(INCS)) -MMD -MP
 LDFLAGS		:= $(addprefix -L,$(dir $(LIBS_TARGET))) 
 LDLIBS		:= $(addprefix -l,$(LIBS))
