@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 16:36:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/30 17:24:05 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,39 +117,35 @@ t_bundle	*init_bundle(char **av)
 void	*routine(void *param)
 {
 	t_philo		*philo;
-	float		diff_time;
-
 
 	philo = (t_philo *)param;
+	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
+		usleep(500);
 	pthread_mutex_lock(&philo->bundle->forks[philo->right]);
 	philo->right = 1;
-	diff_time = get_time(1);
-	printf("%08.0f Philo %03d has taken a right fork\n", diff_time, philo->id);
+	print_philo(philo, "has taken a right fork", "\033[0m");
 	pthread_mutex_lock(&philo->bundle->forks[philo->left]);
 	philo->left = 1;
-	diff_time = get_time(1);
-	printf("%08.0f Philo %03d has taken a left fork\n", diff_time, philo->id);
+	print_philo(philo, "has taken a left fork", "\033[0m");
 	if (philo->left && philo->right)
 	{
-		diff_time = get_time(1);
-		printf("%08.0f \033[1;32mPhilo %03d is eating\033[0m\n", diff_time, philo->id);
+		print_philo(philo, "is eating", "\033[1;32m");
+		philo->ate++;
 		usleep(philo->bundle->time_eat);
 	}
 	philo->left = 0;
 	philo->right = 0;
-	diff_time = get_time(1);
 	pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
 	pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
-	printf("%08.0f \033[1;36mPhilo %03d is sleeping\033[0m\n", diff_time, philo->id);
+	print_philo(philo, "is sleeping", "\033[1;36m");
 	usleep(philo->bundle->time_sleep);
-	printf("%08.0f \033[1;33mPhilo %03d is thinking\033[0m\n", diff_time, philo->id);
+	print_philo(philo, "is thinking", "\033[1;33m");
 	return (NULL);
 }
 
-int	run_thread(t_bundle *bundle)
+int	set_thread(t_bundle *bundle)
 {
 	unsigned int	i = 0;
-	int				*ret;
 
 	pthread_mutex_init(&bundle->philos_mutex, NULL);
 	pthread_mutex_init(&bundle->print, NULL);
@@ -170,29 +166,39 @@ int	run_thread(t_bundle *bundle)
 		pthread_mutex_init(&bundle->forks[i], NULL);
 		i++;
 	}
-//	bundle->heap++;
+	return (0);
+}
+
+void	hold_thread(t_bundle *bundle)
+{
+	unsigned int	i;
+
 	i = 0;
-	get_time(0);
 	while (i < bundle->philos)
 	{
+/* 		if (bundle->ph[i].id % 2 == 0 || bundle->ph[i].id == bundle->philos)
+			usleep(500); */
 		if (pthread_create(&bundle->ph[i].th, NULL, &routine, &bundle->ph[i]) != 0)
 		{
 			bundle->status = 1;
-			return (bundle->status);
 		}
-		usleep(10);
+//		usleep(10);
 		i++;
 	}
+}
+
+void	destroy_thread(t_bundle *bundle)
+{
+	unsigned int	i;
+
 	i = 0;
 	while (i < bundle->philos)
 	{
-		ret = 0;
-		if (pthread_join(bundle->ph[i].th, (void **) &ret) != 0)
+		if (pthread_join(bundle->ph[i].th, NULL) != 0)
 		{
 			bundle->status = 2;
-			return (bundle->status);
+//			return (bundle->status);
 		}
-		free (ret);
 		i++;
 	}
 	pthread_mutex_destroy(&bundle->philos_mutex);
@@ -206,7 +212,6 @@ int	run_thread(t_bundle *bundle)
 		i++;
 	}
 	printf("Destroyed mutexs\n");
-	return (0);
 }
 
 int	main(int ac, char **av)
@@ -218,17 +223,18 @@ int	main(int ac, char **av)
 	bundle = init_bundle(av);
 	if (!bundle)
 		return (1);
-	if (run_thread(bundle) != 0)
+	if (set_thread(bundle) != 0)
 	{
 		//put error message here? using bundle->status
 		all_free(bundle);
 		return (1);
 	}
-	printf("bundle->philos: %d\n", bundle->philos);
-	printf("bundle->time_die: %d\n", bundle->time_die);
-	printf("bundle->time_eat: %d\n", bundle->time_eat);
-	printf("bundle->time_sleep: %d\n", bundle->time_sleep);
-	printf("bundle->meals: %d\n", bundle->meals);
+	get_time(0);
+	while (1)
+	{
+		hold_thread(bundle);
+	}
+	destroy_thread(bundle);
 	all_free (bundle);
 //	system ("leaks philo");
 	return (0);
