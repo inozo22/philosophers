@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/28 15:42:18 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/30 12:53:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
  */
 typedef struct s_mutex
 {
-	pthread_mutex_t	*mutex;
+	pthread_mutex_t	mutex;
 	int				*cnt;
 }	t_mutex;
 
@@ -46,6 +46,7 @@ typedef struct s_philo
 {
 	int					is_dead;
 	int					ate;
+	float				last_meal;
 	pthread_t			*th;
 }	t_philo;
 

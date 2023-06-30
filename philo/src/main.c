@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/28 16:08:49 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/30 12:38:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,18 +119,36 @@ t_bundle	*init_bundle(char **av)
 	return (bundle);
 }
 
-void	*f(void *p)
+void	*routine(void *param)
 {
-	(void)p;
-	int	value;
-	int	*ret;
+//	int				value;
+//	int				*ret;
+	t_bundle		*bundle;
+//	int				mails = 0;
+	float	diff_time;
 
-	value = (rand() % 6) + 1;
+	bundle = param;
+
+//	(void)mutex;	
+//	ret = malloc(sizeof(int));
+//	if (!ret)
+//		return (NULL);
+//	p = ft_calloc(1, )
+	for (int i = 0; i < 1; i++)
+	{
+		pthread_mutex_lock(&bundle->m.mutex);
+		diff_time = bundle->clock.tv_sec - bundle->start.tv_sec + (float)(bundle->clock.tv_usec - bundle->start.tv_usec);
+		printf("%08.0f Philo %03d has taken a fork\n", diff_time, i + 1);
+		pthread_mutex_unlock(&bundle->m.mutex);
+	}
+//	*ret = mails;
+/* 	value = (rand() % 6) + 1;
 	ret = malloc(sizeof(int));
 	if (!ret)
 		return (NULL);
 	*ret = value;
-	return ((void *)ret);
+	return ((void *)ret); */
+	return (NULL);
 }
 
 int	run_thread(t_bundle *bundle)
@@ -151,12 +169,12 @@ int	run_thread(t_bundle *bundle)
 	}
 	bundle->heap++;
 	pthread_mutex_init(&mutex, NULL);
-	bundle->m.mutex = &mutex;
+	bundle->m.mutex = mutex;
 	bundle->m.cnt = &cnt;
 	i = 0;
 	while (i < bundle->philos)
 	{
-		if (pthread_create(bundle->ph[i].th, NULL, &f, &bundle->m) != 0)
+		if (pthread_create(bundle->ph[i].th, NULL, &routine, &bundle) != 0)
 		{
 			bundle->status = 1;
 			return (bundle->status);
