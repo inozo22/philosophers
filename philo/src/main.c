@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 15:29:28 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/30 16:12:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,21 +119,31 @@ void	*routine(void *param)
 	t_philo		*philo;
 	float		diff_time;
 
-	philo = (t_philo *)param;
 
-	for (int i = 0; i < 1; i++)
+	philo = (t_philo *)param;
+	pthread_mutex_lock(&philo->bundle->forks[philo->right]);
+	philo->right = 1;
+	diff_time = get_time(1);
+	printf("%08.0f Philo %03d has taken a right fork\n", diff_time, philo->id);
+	pthread_mutex_lock(&philo->bundle->forks[philo->left]);
+	philo->left = 1;
+	diff_time = get_time(1);
+	printf("%08.0f Philo %03d has taken a left fork\n", diff_time, philo->id);
+	if (philo->left && philo->right)
 	{
-		pthread_mutex_lock(&philo->bundle->philos_mutex);
-		diff_time = get_time(1);
-		printf("%08.0f Philo %03d has taken a fork\n", diff_time, philo->id);
-		pthread_mutex_unlock(&philo->bundle->philos_mutex);
+		printf("%08.0f Philo %03d is eating\n", diff_time, philo->id);
+		usleep(philo->bundle->time_eat);
 	}
+	philo->left = 0;
+	philo->right = 0;
+	printf("%08.0f Philo %03d is sleeping\n", diff_time, philo->id);
+	pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
+	pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
 	return (NULL);
 }
 
 int	run_thread(t_bundle *bundle)
 {
-//	int cnt = 0;
 	unsigned int	i = 0;
 	int				*ret;
 
@@ -158,6 +168,7 @@ int	run_thread(t_bundle *bundle)
 	}
 //	bundle->heap++;
 	i = 0;
+	get_time(0);
 	while (i < bundle->philos)
 	{
 		if (pthread_create(&bundle->ph[i].th, NULL, &routine, &bundle->ph[i]) != 0)
@@ -165,10 +176,10 @@ int	run_thread(t_bundle *bundle)
 			bundle->status = 1;
 			return (bundle->status);
 		}
+		usleep(10);
 		i++;
 	}
 	i = 0;
-	get_time(0);
 	while (i < bundle->philos)
 	{
 		ret = 0;
