@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 16:12:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/30 16:36:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,14 +131,18 @@ void	*routine(void *param)
 	printf("%08.0f Philo %03d has taken a left fork\n", diff_time, philo->id);
 	if (philo->left && philo->right)
 	{
-		printf("%08.0f Philo %03d is eating\n", diff_time, philo->id);
+		diff_time = get_time(1);
+		printf("%08.0f \033[1;32mPhilo %03d is eating\033[0m\n", diff_time, philo->id);
 		usleep(philo->bundle->time_eat);
 	}
 	philo->left = 0;
 	philo->right = 0;
-	printf("%08.0f Philo %03d is sleeping\n", diff_time, philo->id);
+	diff_time = get_time(1);
 	pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
 	pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
+	printf("%08.0f \033[1;36mPhilo %03d is sleeping\033[0m\n", diff_time, philo->id);
+	usleep(philo->bundle->time_sleep);
+	printf("%08.0f \033[1;33mPhilo %03d is thinking\033[0m\n", diff_time, philo->id);
 	return (NULL);
 }
 
