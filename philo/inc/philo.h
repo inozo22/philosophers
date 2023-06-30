@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 17:17:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/30 18:17:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_philo
 {
 	unsigned int		id;
 	int					is_dead;
-	int					ate;
+	unsigned int		ate;
 	float				last_meal;
 	int					right;
 	int					left;

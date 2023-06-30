@@ -6,11 +6,34 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 17:55:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/30 18:25:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	check_meals(t_bundle *bundle)
+{
+	unsigned int	i;
+
+	pthread_mutex_lock(&bundle->philos_mutex);
+	i = 0;
+	while (i < bundle->philos)
+	{
+		if (bundle->ph[i].ate < bundle->meals)
+		{
+			pthread_mutex_unlock(&bundle->philos_mutex);
+			return ;
+		}
+		i++;
+	}
+	if (bundle->meals != 0)
+	{
+		all_free(bundle);
+		printf("\033[1;34mThey all ate the required number of meals🥳\n\033[0m");
+		exit (0);
+	}
+}
 
 /**
  * @brief check all av before start
@@ -130,14 +153,15 @@ void	*routine(void *param)
 	print_philo(philo, "is eating", "\033[1;32m");
 	philo->ate++;
 	philo->last_meal = get_time(1);
-//	usleep(philo->bundle->time_eat);
 	pthread_mutex_lock(&philo->bundle->eat);
+	check_meals(philo->bundle);
+	usleep(philo->bundle->time_eat);
+	pthread_mutex_unlock(&philo->bundle->eat);
 	print_philo(philo, "is sleeping", "\033[1;36m");
-	print_philo(philo, "is thinking", "\033[1;33m");
 	pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
 	pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
-	pthread_mutex_unlock(&philo->bundle->eat);
 	usleep(philo->bundle->time_sleep);
+	print_philo(philo, "is thinking", "\033[1;33m");
 	return (NULL);
 }
 
@@ -228,10 +252,7 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	get_time(0);
-	while (1)
-	{
-		hold_thread(bundle);
-	}
+	hold_thread(bundle);
 	destroy_thread(bundle);
 	all_free (bundle);
 //	system ("leaks philo");
