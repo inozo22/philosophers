@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 18:25:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/30 18:55:10 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,30 +137,36 @@ t_bundle	*init_bundle(char **av)
 	return (bundle);
 }
 
+/**
+ * @note when should I put "ate"? when the philo finish eat or before? 
+ * 
+ * 
+ */
 void	*routine(void *param)
 {
 	t_philo		*philo;
 
 	philo = (t_philo *)param;
-	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos || philo->ate)
+	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
 		usleep(200);
 	pthread_mutex_lock(&philo->bundle->forks[philo->right]);
-//	printf("Philo: %d, Fork[%d]\n", philo->id, philo->right);
 	print_philo(philo, "has taken a right fork", "\033[0m");
 	pthread_mutex_lock(&philo->bundle->forks[philo->left]);
-//	printf("Philo: %d, Fork[%d]\n", philo->id, philo->left);
 	print_philo(philo, "has taken a left fork", "\033[0m");
+	pthread_mutex_lock(&philo->bundle->eat);
 	print_philo(philo, "is eating", "\033[1;32m");
 	philo->ate++;
 	philo->last_meal = get_time(1);
-	pthread_mutex_lock(&philo->bundle->eat);
 	check_meals(philo->bundle);
-	usleep(philo->bundle->time_eat);
+	time_control(philo, philo->bundle->time_eat);
+//	usleep(philo->bundle->time_eat);
 	pthread_mutex_unlock(&philo->bundle->eat);
-	print_philo(philo, "is sleeping", "\033[1;36m");
 	pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
 	pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
-	usleep(philo->bundle->time_sleep);
+	print_philo(philo, "is sleeping", "\033[1;36m");
+	time_control(philo, philo->bundle->time_sleep);
+//	usleep(philo->bundle->time_sleep);
+	check_survival(philo);
 	print_philo(philo, "is thinking", "\033[1;33m");
 	return (NULL);
 }

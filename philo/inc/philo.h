@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 18:17:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/30 18:51:32 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 typedef struct s_philo
 {
 	unsigned int		id;
-	int					is_dead;
+//	int					is_dead;
 	unsigned int		ate;
 	float				last_meal;
 	int					right;
@@ -63,6 +63,7 @@ typedef struct s_bundle
 	t_philo				ph[ARGLIMIT];
 	int					heap;
 	int					status;
+	int					is_dead;
 	unsigned int		time_die;//If a philosopher didn’t start eating time_to_die milliseconds since the beginning of their last meal or the beginning of the sim- ulation, they die.
 	unsigned int 		time_eat;//The time it takes for a philosopher to eat. During that time, they will need to hold two forks.
 	unsigned int		time_sleep;//The time a philosopher will spend sleeping.
@@ -104,6 +105,7 @@ void	all_free(t_bundle *bundle);
 //--------------------------------
 
 long	get_time(int flag);
+void	time_control(t_philo *philo, long time);
 
 //--------------------------------
 //print
