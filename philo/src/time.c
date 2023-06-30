@@ -6,17 +6,36 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 17:55:10 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/27 15:11:37 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/30 15:14:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <philo.h>
-#include <stdio.h>
-#include <sys/time.h>
-#include <stdlib.h>
-#include <string.h>
- 
-int main()
+#include <philo.h>
+
+/**
+ * @note flag 0 is start, otherwise return the differ time in long
+ */
+long	get_time(int flag)
+{
+	static struct timeval	start;
+	struct timeval			now;
+	long					ret;
+
+	if (flag == 0)
+	{
+		gettimeofday(&start, NULL);
+		ret = 0;
+	}
+	else
+	{
+		gettimeofday(&now, NULL);
+		ret = now.tv_sec - start.tv_sec + (float)(now.tv_usec - start.tv_usec);
+	}
+	return (ret);
+}
+
+
+/* int main()
 {
     struct timeval time1;
     struct timeval time2;
@@ -25,7 +44,7 @@ int main()
     gettimeofday(&time1, NULL);
 //    printf("sec: %d, usec: %d\n", (int)time1.tv_sec, (int)time1.tv_usec);
  
-    /** Describe Function for Measurement of time **/
+    * Describe Function for Measurement of time *
 	printf("dskfjslkdgjtlkjgskdjfajksdhkjsfhjskdfnsjkdfnskdnfjsndjfnsjkdnfjnsjndfjnsjfnjsndfkjnsjkdnfjsndkjfnjksndfk\n");
  
     gettimeofday(&time2, NULL);
@@ -35,4 +54,4 @@ int main()
     printf("diff: %f[s]\n", diff_time);
  
     return 0;
-}
+} */

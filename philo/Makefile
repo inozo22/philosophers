@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/06/28 16:01:40 by nimai            ###   ########.fr        #
+#    Updated: 2023/06/30 15:05:06 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRCS		:= \
 				main.c \
 				errors.c \
 				heap.c \
-				free.c
+				free.c \
+				time.c
 
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 

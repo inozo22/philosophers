@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 12:53:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/30 15:23:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,26 @@
 /**
  * @brief mutex control 
  */
-typedef struct s_mutex
+/* typedef struct s_mutex
 {
 	pthread_mutex_t	mutex;
 	int				*cnt;
-}	t_mutex;
+}	t_mutex; */
 
 /**
  * @brief philosophers 
  */
 typedef struct s_philo
 {
+	int					id;
 	int					is_dead;
 	int					ate;
 	float				last_meal;
-	pthread_t			*th;
+	int					right;
+	int					left;
+	pthread_t			th;
+	struct s_bundle		*bundle;
 }	t_philo;
-
-/**
- * @brief philosophers 
- */
-typedef struct s_chops
-{
-	int					is_dead;
-	int					ate;
-	pthread_t			*th;
-}	t_chops;
 
 /**
  * @brief main structure 
@@ -67,7 +61,6 @@ typedef struct s_chops
 typedef struct s_bundle
 {
 	t_philo				ph[ARGLIMIT];
-	t_chops				ch[ARGLIMIT];
 	int					heap;
 	int					status;
 	unsigned int		time_die;//If a philosopher didn’t start eating time_to_die milliseconds since the beginning of their last meal or the beginning of the sim- ulation, they die.
@@ -77,8 +70,13 @@ typedef struct s_bundle
 	unsigned int		meals;//If all philosophers have eaten at least number_of_times_each_philosopher_must_eat times, the simulation stops. If not specified, the simulation stops when a philosopher dies.
 	struct timeval		start;
 	struct timeval		clock;   //maybe it's not neccesary (because I can declear when I need it)
+	pthread_mutex_t		philos_mutex;
+	pthread_mutex_t		forks[ARGLIMIT];
+	pthread_mutex_t		print;
+	pthread_mutex_t		eat;
+	pthread_mutex_t		death;
 //	pthread_t			*th;
-	t_mutex				m;
+	
 }	t_bundle;
 
 //--------------------------------
@@ -100,5 +98,11 @@ void	*ft_calloc(size_t count, size_t size);
 //--------------------------------
 
 void	all_free(t_bundle *bundle);
+
+//--------------------------------
+//time
+//--------------------------------
+
+long	get_time(int flag);
 
 #endif

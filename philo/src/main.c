@@ -6,16 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 12:38:30 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/30 15:29:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <pthread.h>
-#include <time.h>
-#include <unistd.h>
 
 /**
  * @brief check all av before start
@@ -121,60 +116,51 @@ t_bundle	*init_bundle(char **av)
 
 void	*routine(void *param)
 {
-//	int				value;
-//	int				*ret;
-	t_bundle		*bundle;
-//	int				mails = 0;
-	float	diff_time;
+	t_philo		*philo;
+	float		diff_time;
 
-	bundle = param;
+	philo = (t_philo *)param;
 
-//	(void)mutex;	
-//	ret = malloc(sizeof(int));
-//	if (!ret)
-//		return (NULL);
-//	p = ft_calloc(1, )
 	for (int i = 0; i < 1; i++)
 	{
-		pthread_mutex_lock(&bundle->m.mutex);
-		diff_time = bundle->clock.tv_sec - bundle->start.tv_sec + (float)(bundle->clock.tv_usec - bundle->start.tv_usec);
-		printf("%08.0f Philo %03d has taken a fork\n", diff_time, i + 1);
-		pthread_mutex_unlock(&bundle->m.mutex);
+		pthread_mutex_lock(&philo->bundle->philos_mutex);
+		diff_time = get_time(1);
+		printf("%08.0f Philo %03d has taken a fork\n", diff_time, philo->id);
+		pthread_mutex_unlock(&philo->bundle->philos_mutex);
 	}
-//	*ret = mails;
-/* 	value = (rand() % 6) + 1;
-	ret = malloc(sizeof(int));
-	if (!ret)
-		return (NULL);
-	*ret = value;
-	return ((void *)ret); */
 	return (NULL);
 }
 
 int	run_thread(t_bundle *bundle)
 {
-	int cnt = 0;
+//	int cnt = 0;
 	unsigned int	i = 0;
 	int				*ret;
-	pthread_mutex_t	mutex;
-	float	diff_time;
-	srand(time(NULL));
 
+	pthread_mutex_init(&bundle->philos_mutex, NULL);
+	pthread_mutex_init(&bundle->print, NULL);
+	pthread_mutex_init(&bundle->eat, NULL);
+	pthread_mutex_init(&bundle->death, NULL);
 	while (i < bundle->philos)
 	{
-		bundle->ph[i].th = ft_calloc(1, sizeof(pthread_t));
+/* 		bundle->ph[i].th = ft_calloc(1, sizeof(pthread_t));
 		if (!bundle->ph[i].th)
-			heap_error(2, bundle);
+			heap_error(2, bundle); */
+		bundle->ph[i].id = i + 1;
+		bundle->ph[i].bundle = bundle;
+		bundle->ph[i].right = i;
+		if (i == 0)
+			bundle->ph[i].left = bundle->philos - 1;
+		else
+			bundle->ph[i].left = i - 1;
+		pthread_mutex_init(&bundle->forks[i], NULL);
 		i++;
 	}
-	bundle->heap++;
-	pthread_mutex_init(&mutex, NULL);
-	bundle->m.mutex = mutex;
-	bundle->m.cnt = &cnt;
+//	bundle->heap++;
 	i = 0;
 	while (i < bundle->philos)
 	{
-		if (pthread_create(bundle->ph[i].th, NULL, &routine, &bundle) != 0)
+		if (pthread_create(&bundle->ph[i].th, NULL, &routine, &bundle->ph[i]) != 0)
 		{
 			bundle->status = 1;
 			return (bundle->status);
@@ -182,23 +168,29 @@ int	run_thread(t_bundle *bundle)
 		i++;
 	}
 	i = 0;
-	gettimeofday(&bundle->start, NULL);
+	get_time(0);
 	while (i < bundle->philos)
 	{
 		ret = 0;
-		if (pthread_join(*bundle->ph[i].th, (void **) &ret) != 0)
+		if (pthread_join(bundle->ph[i].th, (void **) &ret) != 0)
 		{
 			bundle->status = 2;
 			return (bundle->status);
 		}
-		gettimeofday(&bundle->clock, NULL);
-		diff_time = bundle->clock.tv_sec - bundle->start.tv_sec + (float)(bundle->clock.tv_usec - bundle->start.tv_usec);
-		printf("%08.0f Philo %03d dice: %d\n", diff_time, i + 1, *ret);
 		free (ret);
 		i++;
 	}
-	pthread_mutex_destroy(&mutex);
-	printf("Destroyed mutex\n");
+	pthread_mutex_destroy(&bundle->philos_mutex);
+	pthread_mutex_destroy(&bundle->print);
+	pthread_mutex_destroy(&bundle->eat);
+	pthread_mutex_destroy(&bundle->death);
+	i = 0;
+	while (i < bundle->philos)
+	{
+		pthread_mutex_destroy(&bundle->forks[i]);
+		i++;
+	}
+	printf("Destroyed mutexs\n");
 	return (0);
 }
 
