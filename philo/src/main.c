@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/02 15:27:22 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/02 15:36:25 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	*routine(void *param)
 
 	philo = (t_philo *)param;
 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
-		usleep(200);
+		usleep(500);
 	pthread_mutex_lock(&philo->bundle->forks[philo->right]);
 	print_philo(philo, "has taken a right fork", "\033[0m");
 	pthread_mutex_lock(&philo->bundle->forks[philo->left]);

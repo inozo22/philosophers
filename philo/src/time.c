@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 17:55:10 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 18:50:21 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/02 15:44:07 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	check_survival(t_philo *philo)
 	{
 		print_philo(philo, "died", "\033[1;31m");
 		philo->bundle->is_dead = 1;
+/* 		all_free(philo->bundle);
+		exit (0); */
 	}
 	pthread_mutex_unlock(&philo->bundle->death);
 }
