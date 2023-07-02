@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 18:51:32 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/02 15:28:32 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	all_free(t_bundle *bundle);
 
 long	get_time(int flag);
 void	time_control(t_philo *philo, long time);
+void	check_survival(t_philo *philo);
 
 //--------------------------------
 //print

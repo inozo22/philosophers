@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:18:36 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/28 15:58:17 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/02 15:29:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@
  */
 void	all_free(t_bundle *bundle)
 {
-	unsigned int	i;
+//	unsigned int	i;
 
-	i = 0;
+//	i = 0;
 	if (bundle->heap >= TH_HEAP)
 	{
-		while (i < bundle->philos)
+/* 		while (i < bundle->philos)
 		{
 			free (bundle->ph[i].th);
 			i++;
-		}
+		} */
+		;
 	}
 	if (bundle->heap >= BUNDLE_HEAP)
 		free (bundle);

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 18:55:10 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/02 15:27:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	check_av(unsigned int num, int flag, t_bundle *bundle)
 		philo_error(2, bundle);
 	if (flag >= 2 && flag <= 4 && num < 60)
 		philo_error(3, bundle);
-	if (num < 0)
-		philo_error(4, bundle);
+/* 	if (num < 0)
+		philo_error(4, bundle); */
 	if (num > 2147483647)
 		philo_error(5, bundle);
 }
@@ -71,7 +71,7 @@ unsigned int	myatoi(char *str, t_bundle *bundle)
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
-			sign = -1;
+			philo_error(4, bundle);
 		i++;
 	}
 	while (str[i] >= 48 && str[i] <= 57)
