@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 17:55:10 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/03 13:17:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/03 14:02:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	time_control(t_philo *philo, long time)
 		check_survival(philo);
 		usleep(50);
 		usleep(50);
+//		usleep(100);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/03 13:18:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/03 14:55:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,9 +157,11 @@ void	*routine(void *param)
 		exit (0);
 	}
 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
-		usleep(500);
-	while (philo->bundle->is_dead != 1 && (philo->ate < philo->bundle->meals/* philo->bundle->have_eaten < philo->bundle->meals */ || philo->bundle->meals == 0))
+		usleep(200);
+	while (philo->bundle->is_dead != 1 && (philo->bundle->meals == 0 || philo->ate < philo->bundle->meals))
 	{
+	//	check_survival(philo);//
+	//	check_meals(philo->bundle);//
 		pthread_mutex_lock(&philo->bundle->forks[philo->right]);
 		print_philo(philo, "has taken a right fork", "\033[0m");
 		pthread_mutex_lock(&philo->bundle->forks[philo->left]);
@@ -168,8 +170,8 @@ void	*routine(void *param)
 		print_philo(philo, "is eating", "\033[1;32m");
 		philo->ate++;
 		philo->last_meal = get_time(1) + philo->bundle->time_eat;
-		check_meals(philo->bundle);
 		time_control(philo, philo->bundle->time_eat);
+		check_meals(philo->bundle);
 	//	pthread_mutex_unlock(&philo->bundle->eat);
 		pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
 		pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
@@ -263,6 +265,8 @@ int	main(int ac, char **av)
 	if (!bundle)
 		return (1);
 	bundle->start = get_time(0);
+	if (ac == 5)
+		bundle->meals = 2147483647;
 	if (set_thread(bundle) != 0)
 	{
 		//put error message here? using bundle->status
