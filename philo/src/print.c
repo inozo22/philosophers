@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 17:05:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/03 10:13:52 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/03 11:54:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 void	print_philo(t_philo *philo, char *msg, char	*color)
 {
-	float	diff_time;
+	long	diff_time;
 
 	pthread_mutex_lock(&philo->bundle->print);
 	if (philo->bundle->is_dead != 1)
 	{
-		diff_time = get_time(1);
+		diff_time = get_time(1) - philo->bundle->start;
 		if (ft_strcmp(color, "\033[1;32m") == 0)
-			printf("%08.0f %sPhilo %03d %s: %d\033[0m\n", diff_time, color, philo->id, msg, philo->ate + 1);
+			printf("%08ld %sPhilo %03d %s: %d\033[0m\n", diff_time, color, philo->id, msg, philo->ate + 1);
 		else
-			printf("%08.0f %sPhilo %03d %s\033[0m\n", diff_time, color, philo->id, msg);
+			printf("%08ld %sPhilo %03d %s\033[0m\n", diff_time, color, philo->id, msg);
 	}
 	pthread_mutex_unlock(&philo->bundle->print);
 }

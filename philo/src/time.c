@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 17:55:10 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/03 09:50:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/03 11:54:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  */
 long	get_time(int flag)
 {
-	static struct timeval	start;
+/* 	static struct timeval	start;
 	struct timeval			now;
 	long					ret;
 
@@ -32,11 +32,18 @@ long	get_time(int flag)
 		gettimeofday(&now, NULL);
 		ret = now.tv_sec - start.tv_sec + (float)(now.tv_usec - start.tv_usec);
 	}
-	return (ret);
+	return (ret); */
+	struct timeval	time;
+
+	(void)flag;
+
+	gettimeofday (&time, NULL);
+	return ((1000 * time.tv_sec) + (time.tv_usec / 1000));
 }
 
 void	check_survival(t_philo *philo)
 {
+//	printf("Line: %d\n", __LINE__);
 	pthread_mutex_lock(&philo->bundle->death);
 	if ((get_time(1) - philo->last_meal) > philo->bundle->time_die
 		&& philo->bundle->is_dead == 0)

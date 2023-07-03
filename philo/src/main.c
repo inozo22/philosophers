@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/03 10:04:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/03 11:52:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,10 +147,12 @@ void	*routine(void *param)
 	t_philo		*philo;
 
 	philo = (t_philo *)param;
+//	get_time(0);
 	if (philo->bundle->philos == 1)
 	{
 		print_philo(philo, "has taken a right fork", "\033[0m");
 		time_control(philo, philo->bundle->time_die);
+		print_philo(philo, "is starved to death👻", "\033[1;31m");
 		exit (0);
 	}
 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
@@ -193,6 +195,7 @@ int	set_thread(t_bundle *bundle)
 			heap_error(2, bundle); */
 		bundle->ph[i].id = i + 1;
 		bundle->ph[i].bundle = bundle;
+		bundle->ph[i].last_meal = bundle->start;
 		bundle->ph[i].right = i;
 		if (i == 0)
 			bundle->ph[i].left = bundle->philos - 1;
@@ -258,13 +261,13 @@ int	main(int ac, char **av)
 	bundle = init_bundle(av);
 	if (!bundle)
 		return (1);
+	bundle->start = get_time(0);
 	if (set_thread(bundle) != 0)
 	{
 		//put error message here? using bundle->status
 		all_free(bundle);
 		return (1);
 	}
-	get_time(0);
 	hold_thread(bundle);
 	destroy_thread(bundle);
 	all_free (bundle);
