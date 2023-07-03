@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/02 15:36:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/03 09:51:20 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,12 @@ void	*routine(void *param)
 	t_philo		*philo;
 
 	philo = (t_philo *)param;
+	if (philo->bundle->philos == 1)
+	{
+		print_philo(philo, "has taken a right fork", "\033[0m");
+		time_control(philo, philo->bundle->time_die);
+		exit (0);
+	}
 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
 		usleep(500);
 	pthread_mutex_lock(&philo->bundle->forks[philo->right]);
@@ -159,13 +165,11 @@ void	*routine(void *param)
 	philo->last_meal = get_time(1);
 	check_meals(philo->bundle);
 	time_control(philo, philo->bundle->time_eat);
-//	usleep(philo->bundle->time_eat);
 	pthread_mutex_unlock(&philo->bundle->eat);
 	pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
 	pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
 	print_philo(philo, "is sleeping", "\033[1;36m");
 	time_control(philo, philo->bundle->time_sleep);
-//	usleep(philo->bundle->time_sleep);
 	check_survival(philo);
 	print_philo(philo, "is thinking", "\033[1;33m");
 	return (NULL);
