@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/03 14:55:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/03 16:05:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	check_meals(t_bundle *bundle)
 	{
 		pthread_mutex_lock(&bundle->print);
 		all_free(bundle);
-		printf("\033[1;34mThey all ate the required number of meals🥳\n\033[0m");
+		printf("\033[1;34mThey all ate the required number of meals🥳\033[0m\n");
+//		system ("leaks philo");
 		exit (0);
 	}
 }
@@ -148,33 +149,32 @@ void	*routine(void *param)
 	t_philo		*philo;
 
 	philo = (t_philo *)param;
-//	get_time(0);
 	if (philo->bundle->philos == 1)
 	{
-		print_philo(philo, "has taken a right fork", "\033[0m");
+		print_philo(philo, "has taken a right chopstick", "\033[0m");
 		time_control(philo, philo->bundle->time_die);
 		print_philo(philo, "is starved to death👻", "\033[1;31m");
 		exit (0);
 	}
 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
 		usleep(200);
-	while (philo->bundle->is_dead != 1 && (philo->bundle->meals == 0 || philo->ate < philo->bundle->meals))
+	while (philo->bundle->is_dead != 1 && (/* philo->bundle->meals == 0 ||  */philo->ate < philo->bundle->meals))
 	{
-	//	check_survival(philo);//
+		check_survival(philo);//
 	//	check_meals(philo->bundle);//
 		pthread_mutex_lock(&philo->bundle->forks[philo->right]);
-		print_philo(philo, "has taken a right fork", "\033[0m");
+		print_philo(philo, "has taken a right chopstick", "\033[0m");
 		pthread_mutex_lock(&philo->bundle->forks[philo->left]);
-		print_philo(philo, "has taken a left fork", "\033[0m");
-	//	pthread_mutex_lock(&philo->bundle->eat);
+		print_philo(philo, "has taken a left chopstick", "\033[0m");
+		pthread_mutex_lock(&philo->bundle->eat);
 		print_philo(philo, "is eating", "\033[1;32m");
 		philo->ate++;
-		philo->last_meal = get_time(1) + philo->bundle->time_eat;
+		philo->last_meal = get_time(1)/*  + philo->bundle->time_eat */;
+		pthread_mutex_unlock(&philo->bundle->eat);
 		time_control(philo, philo->bundle->time_eat);
 		check_meals(philo->bundle);
-	//	pthread_mutex_unlock(&philo->bundle->eat);
-		pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
 		pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
+		pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
 		print_philo(philo, "is sleeping", "\033[1;36m");
 		time_control(philo, philo->bundle->time_sleep);
 		check_survival(philo);
@@ -210,6 +210,9 @@ int	set_thread(t_bundle *bundle)
 	return (0);
 }
 
+/**
+ * @note 230703nimai: separate routine between normal and only one philo.
+ */
 void	hold_thread(t_bundle *bundle)
 {
 	unsigned int	i;
@@ -258,7 +261,9 @@ void	destroy_thread(t_bundle *bundle)
 int	main(int ac, char **av)
 {
 	t_bundle	*bundle;
+	int			ret;
 
+	ret = 0;
 	if (ac < 5 || ac > 6)
 		philo_error(1, NULL);
 	bundle = init_bundle(av);
@@ -269,13 +274,13 @@ int	main(int ac, char **av)
 		bundle->meals = 2147483647;
 	if (set_thread(bundle) != 0)
 	{
-		//put error message here? using bundle->status
 		all_free(bundle);
 		return (1);
 	}
 	hold_thread(bundle);
+	ret = bundle->status;
 	destroy_thread(bundle);
 	all_free (bundle);
 //	system ("leaks philo");
-	return (0);
+	return (ret);
 }
