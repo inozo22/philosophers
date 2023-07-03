@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/03 09:51:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/03 10:04:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,23 +155,26 @@ void	*routine(void *param)
 	}
 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
 		usleep(500);
-	pthread_mutex_lock(&philo->bundle->forks[philo->right]);
-	print_philo(philo, "has taken a right fork", "\033[0m");
-	pthread_mutex_lock(&philo->bundle->forks[philo->left]);
-	print_philo(philo, "has taken a left fork", "\033[0m");
-	pthread_mutex_lock(&philo->bundle->eat);
-	print_philo(philo, "is eating", "\033[1;32m");
-	philo->ate++;
-	philo->last_meal = get_time(1);
-	check_meals(philo->bundle);
-	time_control(philo, philo->bundle->time_eat);
-	pthread_mutex_unlock(&philo->bundle->eat);
-	pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
-	pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
-	print_philo(philo, "is sleeping", "\033[1;36m");
-	time_control(philo, philo->bundle->time_sleep);
-	check_survival(philo);
-	print_philo(philo, "is thinking", "\033[1;33m");
+	while (philo->bundle->is_dead != 1 && philo->bundle->have_eaten < philo->bundle->meals)
+	{
+		pthread_mutex_lock(&philo->bundle->forks[philo->right]);
+		print_philo(philo, "has taken a right fork", "\033[0m");
+		pthread_mutex_lock(&philo->bundle->forks[philo->left]);
+		print_philo(philo, "has taken a left fork", "\033[0m");
+		pthread_mutex_lock(&philo->bundle->eat);
+		print_philo(philo, "is eating", "\033[1;32m");
+		philo->ate++;
+		philo->last_meal = get_time(1);
+		check_meals(philo->bundle);
+		time_control(philo, philo->bundle->time_eat);
+		pthread_mutex_unlock(&philo->bundle->eat);
+		pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
+		pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
+		print_philo(philo, "is sleeping", "\033[1;36m");
+		time_control(philo, philo->bundle->time_sleep);
+		check_survival(philo);
+		print_philo(philo, "is thinking", "\033[1;33m");
+	}
 	return (NULL);
 }
 
