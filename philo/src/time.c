@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 17:55:10 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/03 11:57:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/03 12:31:54 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	check_survival(t_philo *philo)
 	if ((get_time(1) - philo->last_meal) > philo->bundle->time_die
 		&& philo->bundle->is_dead == 0)
 	{
+	//	pthread_mutex_lock(&philo->bundle->print);
 		print_philo(philo, "is starved to death👻", "\033[1;31m");
 		philo->bundle->is_dead = 1;
 /* 		all_free(philo->bundle);
