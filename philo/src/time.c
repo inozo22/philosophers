@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 17:55:10 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/03 13:10:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/03 13:17:38 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ long	get_time(int flag)
 
 void	check_survival(t_philo *philo)
 {
-//	pthread_mutex_lock(&philo->bundle->death);
+	pthread_mutex_lock(&philo->bundle->death);
 	if ((get_time(1) - philo->last_meal) > philo->bundle->time_die
 		&& philo->bundle->is_dead == 0)
 	{
-	//	pthread_mutex_lock(&philo->bundle->print);
+	//	pthread_mutex_lock(&philo->bundle->death);
 		print_philo(philo, "is starved to death👻", "\033[1;31m");
 		philo->bundle->is_dead = 1;
 /* 		all_free(philo->bundle);
 		exit (0); */
 	}
-//	pthread_mutex_unlock(&philo->bundle->death);
+	pthread_mutex_unlock(&philo->bundle->death);
 }
 
 void	time_control(t_philo *philo, long time)

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/03 12:44:07 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/03 13:18:55 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void	*routine(void *param)
 	//	pthread_mutex_lock(&philo->bundle->eat);
 		print_philo(philo, "is eating", "\033[1;32m");
 		philo->ate++;
-		philo->last_meal = get_time(1);
+		philo->last_meal = get_time(1) + philo->bundle->time_eat;
 		check_meals(philo->bundle);
 		time_control(philo, philo->bundle->time_eat);
 	//	pthread_mutex_unlock(&philo->bundle->eat);
