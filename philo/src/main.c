@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/04 15:01:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 15:13:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ t_bundle	*init_bundle(char **av)
 
 	bundle = (t_bundle *)ft_calloc(1, sizeof(t_bundle));
 	if (!bundle)
-		heap_error(1, NULL);
+		return (heap_error(1, NULL), NULL);
 //	bundle->heap++;
 	if (!obtain_nums(av, bundle))
 		return (all_free(bundle), NULL);
@@ -284,6 +284,6 @@ int	main(int ac, char **av)
 	hold_thread(bundle);
 	destroy_thread(bundle);
 	all_free (bundle);
-//	system ("leaks philo");
+	system ("leaks philo");
 	return (0);
 }
