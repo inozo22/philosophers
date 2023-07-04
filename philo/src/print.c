@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 17:05:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/04 11:58:05 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 14:50:01 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	print_philo(t_philo *philo, char *msg, char	*color)
 		time = get_time(1) - philo->bundle->start;
 		if (ft_strcmp(color, "\033[1;32m") == 0)
 			printf("%08ld %sPhilo %03d %s: %d\033[0m\n", time, color, philo->id, msg, philo->ate + 1);
+		else if (ft_strcmp(color, "\033[1;34m") == 0)
+			printf("%08ld %s%s: %d\033[0m\n", time, color, msg, philo->ate);
 		else
 			printf("%08ld %sPhilo %03d %s\033[0m\n", time, color, philo->id, msg);
 	}

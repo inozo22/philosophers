@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/04 13:28:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 15:01:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,22 @@ void	check_meals(t_bundle *bundle)
 {
 	unsigned int	i;
 
-	pthread_mutex_lock(&bundle->philos_mutex);
+	pthread_mutex_lock(&bundle->check_meals);
 	i = 0;
 	while (i < bundle->philos)
 	{
 		if (bundle->ph[i].ate < bundle->meals)
 		{
-			pthread_mutex_unlock(&bundle->philos_mutex);
+			pthread_mutex_unlock(&bundle->check_meals);
 			return ;
 		}
 		i++;
 	}
-	if (bundle->meals != 0)
+	pthread_mutex_unlock(&bundle->check_meals);
+	if (bundle->meals != 0 && !bundle->is_dead)
 	{
-		pthread_mutex_lock(&bundle->print);
-		all_free(bundle);
-		printf("\033[1;34mThey all ate the required number of meals🥳\033[0m\n");
-//		system ("leaks philo");
-		exit (0);
+		print_philo(&bundle->ph[i - 1], MSG_COMP, BLUE);
+		bundle->is_dead = 1;
 	}
 }
 
@@ -144,7 +142,7 @@ t_bundle	*init_bundle(char **av)
 
 /**
  * @note when should I put "ate"? when the philo finish eat or before? 
- * 
+ * @note depend on the place of check_meals, you can change the timing of stop.
  * 
  */
 void	*routine(void *param)
@@ -165,20 +163,20 @@ void	*routine(void *param)
 			break ;
 		}
 		pthread_mutex_lock(&philo->bundle->forks[philo->left]);
-		print_philo(philo, MSG_LEFT, "\033[0m");
+		print_philo(philo, MSG_LEFT, CLEAR);
 		pthread_mutex_lock(&philo->bundle->eat);
-		print_philo(philo, MSG_EAT, "\033[1;32m");
+		print_philo(philo, MSG_EAT, GREEN);
 		philo->ate++;
 		philo->last_meal = get_time(1);
 		pthread_mutex_unlock(&philo->bundle->eat);
-		time_control(philo, philo->bundle->time_eat);
 		check_meals(philo->bundle);
+		time_control(philo, philo->bundle->time_eat);
 		pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
 		pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
-		print_philo(philo, MSG_SLEEP, "\033[1;36m");
+		print_philo(philo, MSG_SLEEP, CYAN);
 		time_control(philo, philo->bundle->time_sleep);
 		check_survival(philo);
-		print_philo(philo, MSG_THINK, "\033[1;33m");
+		print_philo(philo, MSG_THINK, YELLOW);
 	}
 	return (NULL);
 }
@@ -187,7 +185,7 @@ int	set_thread(t_bundle *bundle)
 {
 	unsigned int	i = 0;
 
-	pthread_mutex_init(&bundle->philos_mutex, NULL);
+	pthread_mutex_init(&bundle->check_meals, NULL);
 	pthread_mutex_init(&bundle->print, NULL);
 	pthread_mutex_init(&bundle->eat, NULL);
 	pthread_mutex_init(&bundle->death, NULL);
@@ -253,7 +251,7 @@ void	destroy_thread(t_bundle *bundle)
 		philo_error(4, bundle);
 		return ;
 	}
-	pthread_mutex_destroy(&bundle->philos_mutex);
+	pthread_mutex_destroy(&bundle->check_meals);
 	pthread_mutex_destroy(&bundle->print);
 	pthread_mutex_destroy(&bundle->eat);
 	pthread_mutex_destroy(&bundle->death);

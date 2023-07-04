@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/04 13:03:28 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 14:58:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@
 # define MSG_THINK "is thinking"
 # define MSG_RIGHT "has taken a right chopstick"
 # define MSG_LEFT "has taken a left chopstick"
+# define MSG_COMP "They all ate the required number of meals🥳"
+
+# define BLUE "\033[1;34m"
+# define YELLOW "\033[1;33m"
+# define RED "\033[1;31m"
+# define CYAN "\033[1;36m"
+# define GREEN "\033[1;32m"
+# define CLEAR "\033[0m"
+
 
 /**
  * @brief mutex control 
@@ -79,7 +88,7 @@ typedef struct s_bundle
 	unsigned int		meals;//If all philosophers have eaten at least number_of_times_each_philosopher_must_eat times, the simulation stops. If not specified, the simulation stops when a philosopher dies.
 	long				start;
 //	struct timeval		clock;   //maybe it's not neccesary (because I can declear when I need it)
-	pthread_mutex_t		philos_mutex;
+	pthread_mutex_t		check_meals;
 	pthread_mutex_t		forks[ARGLIMIT];
 	pthread_mutex_t		print;
 	pthread_mutex_t		eat;
