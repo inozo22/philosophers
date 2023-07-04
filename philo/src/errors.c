@@ -6,11 +6,32 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/28 15:15:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 10:43:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	philo_error(int code, t_bundle *bundle)
+{
+	if (code == 1)
+		printf("philos could not create a thread\n");
+	else if (code == 2)
+		printf("watchdog could not create a thread\n");
+	else if (code == 3)
+		printf("philos could not join a thread\n");
+	else if (code == 4)
+		printf("watchdog could not join a thread\n");
+	else if (code == 5)
+		;
+	else if (code == 6)
+		;
+	else if (code == 99)
+		;
+	if (bundle)
+		all_free(bundle);
+	exit (1);
+}
 
 /**
  * @brief print error message, free and exit.
@@ -18,7 +39,7 @@
  * @return exit directory after free.
  * @note at the moment separate all cases to know where is the problem. Maybe I will merge then
  */
-void	philo_error(int code, t_bundle *bundle)
+void	input_error(int code, t_bundle *bundle)
 {
 	if (code == 1)
 	{

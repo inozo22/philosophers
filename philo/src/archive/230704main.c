@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/04 11:21:52 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 11:19:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,17 +149,26 @@ void	*routine(void *param)
 	t_philo		*philo;
 
 	philo = (t_philo *)param;
+/* 	if (philo->bundle->philos == 1)
+	{
+		print_philo(philo, MSG_RIGHT, "\033[0m");
+		time_control(philo, philo->bundle->time_die);
+		check_survival(philo);
+	//	print_philo(philo, "is starved to death👻", "\033[1;31m");
+	//	exit (0);
+	} */
 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
 		usleep(200);
 	while (philo->bundle->is_dead != 1 && (/* philo->bundle->meals == 0 ||  */philo->ate < philo->bundle->meals))
 	{
 		check_survival(philo);//
+	//	check_meals(philo->bundle);//
 		pthread_mutex_lock(&philo->bundle->forks[philo->right]);
 		print_philo(philo, MSG_RIGHT, "\033[0m");
 		if (philo->bundle->philos == 1)
 		{
-			pthread_mutex_unlock(&philo->bundle->forks[philo->right]);// iru?
-			break ;
+			pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
+			break ;//
 		}
 		pthread_mutex_lock(&philo->bundle->forks[philo->left]);
 		print_philo(philo, MSG_LEFT, "\033[0m");
@@ -188,6 +197,7 @@ int	set_thread(t_bundle *bundle)
 	pthread_mutex_init(&bundle->print, NULL);
 	pthread_mutex_init(&bundle->eat, NULL);
 	pthread_mutex_init(&bundle->death, NULL);
+	printf("Line: %d\n", __LINE__);
 	while (i < bundle->philos)
 	{
 /* 		bundle->ph[i].th = ft_calloc(1, sizeof(pthread_t));
@@ -223,11 +233,13 @@ void	hold_thread(t_bundle *bundle)
 			philo_error(bundle->status, bundle);
 		}
 	}
+	printf("Line: %d\n", __LINE__);
 	if (pthread_create(&bundle->watchdog, NULL, &watchdog, bundle) != 0)
 	{
 		bundle->status = 2;
 		philo_error(bundle->status, bundle);
 	}
+	printf("Line: %d\n", __LINE__);
 	if (bundle->is_dead)
 		return ;
 }
@@ -237,19 +249,26 @@ void	destroy_thread(t_bundle *bundle)
 	long	i;
 
 	i = -1;
+	printf("Line: %d\n", __LINE__);
+	printf("bundle->philos: %ld\n", bundle->philos);
 	while (++i < bundle->philos)
 	{
+		printf("Line: %d\n", __LINE__);
 		if (pthread_join(bundle->ph[i].th, NULL) != 0)
 		{
+			printf("Line: %d\n", __LINE__);
 			bundle->status = 3;
 			philo_error(bundle->status, bundle);
 		}
+		printf("Line: %d\n", __LINE__);
 	}
+	printf("Line: %d\n", __LINE__);
 	if (pthread_join(bundle->watchdog, NULL) != 0)
 	{
 		bundle->status = 4;
 		philo_error(bundle->status, bundle);
 	}
+	printf("Line: %d\n", __LINE__);
 	pthread_mutex_destroy(&bundle->philos_mutex);
 	pthread_mutex_destroy(&bundle->print);
 	pthread_mutex_destroy(&bundle->eat);
@@ -278,7 +297,9 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	hold_thread(bundle);
+	printf("Line: %d\n", __LINE__);
 	destroy_thread(bundle);
+	printf("Line: %d\n", __LINE__);
 	all_free (bundle);
 //	system ("leaks philo");
 	return (0);
