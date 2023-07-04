@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/04 16:58:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 18:18:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,21 @@ void	check_meals(t_bundle *bundle)
 {
 	unsigned int	i;
 
-	pthread_mutex_lock(&bundle->check_meals);
+	if (pthread_mutex_lock(&bundle->check_meals) != 0)
+		bundle->fin = 99;
 	i = 0;
 	while (i < bundle->philos)
 	{
 		if (bundle->ph[i].ate < bundle->meals || bundle->meals == 0)
 		{
-			pthread_mutex_unlock(&bundle->check_meals);
+			if (pthread_mutex_unlock(&bundle->check_meals) != 0)
+				bundle->fin = 99;
 			return ;
 		}
 		i++;
 	}
-	pthread_mutex_unlock(&bundle->check_meals);
+	if (pthread_mutex_unlock(&bundle->check_meals) != 0)
+		bundle->fin = 99;
 	if (bundle->meals != 0 && !bundle->fin)
 	{
 		print_philo(&bundle->ph[i - 1], MSG_COMP, BLUE);
@@ -142,27 +145,34 @@ void	*routine(void *param)
 	philo = (t_philo *)param;
 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
 		usleep(200);
-	while (philo->bundle->fin != 1 && (philo->bundle->meals == 0 || philo->ate < philo->bundle->meals))
+	while (philo->bundle->fin <= 0 && (philo->bundle->meals == 0 || philo->ate < philo->bundle->meals))
 	{
 		check_survival(philo);
-		pthread_mutex_lock(&philo->bundle->forks[philo->right]);
+		if (pthread_mutex_lock(&philo->bundle->forks[philo->right]) != 0)
+			philo->bundle->fin = 99;
 		print_philo(philo, MSG_RIGHT, CLEAR);
 		if (philo->bundle->philos == 1)
 		{
-			pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
+			if (pthread_mutex_unlock(&philo->bundle->forks[philo->right]) != 0)
+				philo->bundle->fin = 99;
 			break ;
 		}
-		pthread_mutex_lock(&philo->bundle->forks[philo->left]);
+		if (pthread_mutex_lock(&philo->bundle->forks[philo->left]) != 0)
+			philo->bundle->fin = 99;
 		print_philo(philo, MSG_LEFT, CLEAR);
-		pthread_mutex_lock(&philo->bundle->eat);
+		if (pthread_mutex_lock(&philo->bundle->eat) != 0)
+			philo->bundle->fin = 99;
 		philo->ate++;
 		print_philo(philo, MSG_EAT, GREEN);
 		philo->last_meal = get_time(1);
-		pthread_mutex_unlock(&philo->bundle->eat);
+		if (pthread_mutex_unlock(&philo->bundle->eat) != 0)
+			philo->bundle->fin = 99;
 		check_meals(philo->bundle);
 		time_control(philo, philo->bundle->time_eat);
-		pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
-		pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
+		if (pthread_mutex_unlock(&philo->bundle->forks[philo->right]) != 0)
+			philo->bundle->fin = 99;
+		if (pthread_mutex_unlock(&philo->bundle->forks[philo->left]) != 0)
+			philo->bundle->fin = 99;
 		print_philo(philo, MSG_SLEEP, CYAN);
 		time_control(philo, philo->bundle->time_sleep);
 		check_survival(philo);
