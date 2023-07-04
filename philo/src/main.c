@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/04 11:23:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 13:28:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,17 @@ void	check_meals(t_bundle *bundle)
  * @brief check all av before start
  * @note it's not necessary, but to protect program
  */
-void	check_av(unsigned int num, int flag, t_bundle *bundle)
+int	check_av(unsigned int num, int flag, t_bundle *bundle)
 {
 	if (flag == 1 && num > 200)
-		input_error(2, bundle);
-	if (flag >= 2 && flag <= 4 && num < 60)
-		input_error(3, bundle);
+		return (input_error(2, bundle), 0);
+	else if (flag >= 2 && flag <= 4 && num < 60)
+		return (input_error(3, bundle), 0);
 /* 	if (num < 0)
 		input_error(4, bundle); */
-	if (num > 2147483647)
-		input_error(5, bundle);
+	else if (num > 2147483647)
+		return (input_error(5, bundle), 0);
+	return (1);
 }
 
 
@@ -59,7 +60,7 @@ void	check_av(unsigned int num, int flag, t_bundle *bundle)
  * @return int
  * @note 
  */
-unsigned int	myatoi(char *str, t_bundle *bundle)
+long	myatoi(char *str, t_bundle *bundle)
 {
 	int				i;
 	unsigned int	nbr;
@@ -73,7 +74,7 @@ unsigned int	myatoi(char *str, t_bundle *bundle)
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
-			input_error(4, bundle);
+			return (input_error(4, bundle), -1);
 		i++;
 	}
 	while (str[i] >= 48 && str[i] <= 57)
@@ -82,7 +83,7 @@ unsigned int	myatoi(char *str, t_bundle *bundle)
 		i++;
 	}
 	if (str[i] != '\0')
-		input_error(6, bundle);
+		return (input_error(6, bundle), -1);
 	return (nbr * sign);
 }
 
@@ -93,13 +94,14 @@ unsigned int	myatoi(char *str, t_bundle *bundle)
 int	obtain_nums(char **av, t_bundle *bundle)
 {
 	int				i;
-	unsigned int	num;
+	long			num;
 
 	i = 0;
-	while (av[++i])
+	while (av[++i] && !bundle->status)
 	{
 		num = myatoi(av[i], bundle);
-		check_av(num, i, bundle);
+		if (num == -1 || !check_av(num, i, bundle))
+			return (0);
 		if (i == 1)
 			bundle->philos = num;
 		if (i == 2)
@@ -126,8 +128,9 @@ t_bundle	*init_bundle(char **av)
 	bundle = (t_bundle *)ft_calloc(1, sizeof(t_bundle));
 	if (!bundle)
 		heap_error(1, NULL);
+//	bundle->heap++;
 	if (!obtain_nums(av, bundle))
-		input_error (99, bundle);
+		return (all_free(bundle), NULL);
 	/**
 	 * initialize the philos here.
 	 *  
@@ -219,14 +222,14 @@ void	hold_thread(t_bundle *bundle)
 	{
 		if (pthread_create(&bundle->ph[i].th, NULL, &routine, &bundle->ph[i]) != 0)
 		{
-			bundle->status = 1;
-			philo_error(bundle->status, bundle);
+			philo_error(1, bundle);
+			return ;
 		}
 	}
 	if (pthread_create(&bundle->watchdog, NULL, &watchdog, bundle) != 0)
 	{
-		bundle->status = 2;
-		philo_error(bundle->status, bundle);
+		philo_error(2, bundle);
+		return ;
 	}
 	if (bundle->is_dead)
 		return ;
@@ -241,14 +244,14 @@ void	destroy_thread(t_bundle *bundle)
 	{
 		if (pthread_join(bundle->ph[i].th, NULL) != 0)
 		{
-			bundle->status = 3;
-			philo_error(bundle->status, bundle);
+			philo_error(3, bundle);
+			return ;
 		}
 	}
 	if (pthread_join(bundle->watchdog, NULL) != 0)
 	{
-		bundle->status = 4;
-		philo_error(bundle->status, bundle);
+		philo_error(4, bundle);
+		return ;
 	}
 	pthread_mutex_destroy(&bundle->philos_mutex);
 	pthread_mutex_destroy(&bundle->print);
@@ -265,7 +268,10 @@ int	main(int ac, char **av)
 	t_bundle	*bundle;
 
 	if (ac < 5 || ac > 6)
+	{
 		input_error(1, NULL);
+		return (1);
+	}
 	bundle = init_bundle(av);
 	if (!bundle)
 		return (1);

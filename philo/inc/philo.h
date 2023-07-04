@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/04 11:09:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 13:03:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include <string.h>
 
 # define ARGLIMIT 200
-# define BUNDLE_HEAP 0//it's not necessary define here, but not to foreget
-# define TH_HEAP 1
+# define BUNDLE_HEAP 1//it's not necessary define here, but not to foreget
+# define TH_HEAP 2
 # define MSG_DIED "is starved to death👻"
 # define MSG_EAT "is eating"
 # define MSG_SLEEP "is sleeping"
