@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/03 16:05:21 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 10:19:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,11 +163,11 @@ void	*routine(void *param)
 		check_survival(philo);//
 	//	check_meals(philo->bundle);//
 		pthread_mutex_lock(&philo->bundle->forks[philo->right]);
-		print_philo(philo, "has taken a right chopstick", "\033[0m");
+		print_philo(philo, MSG_RIGHT, "\033[0m");
 		pthread_mutex_lock(&philo->bundle->forks[philo->left]);
-		print_philo(philo, "has taken a left chopstick", "\033[0m");
+		print_philo(philo, MSG_LEFT, "\033[0m");
 		pthread_mutex_lock(&philo->bundle->eat);
-		print_philo(philo, "is eating", "\033[1;32m");
+		print_philo(philo, MSG_EAT, "\033[1;32m");
 		philo->ate++;
 		philo->last_meal = get_time(1)/*  + philo->bundle->time_eat */;
 		pthread_mutex_unlock(&philo->bundle->eat);
@@ -175,10 +175,10 @@ void	*routine(void *param)
 		check_meals(philo->bundle);
 		pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
 		pthread_mutex_unlock(&philo->bundle->forks[philo->left]);
-		print_philo(philo, "is sleeping", "\033[1;36m");
+		print_philo(philo, MSG_SLEEP, "\033[1;36m");
 		time_control(philo, philo->bundle->time_sleep);
 		check_survival(philo);
-		print_philo(philo, "is thinking", "\033[1;33m");
+		print_philo(philo, MSG_THINK, "\033[1;33m");
 	}
 	return (NULL);
 }
@@ -226,8 +226,11 @@ void	hold_thread(t_bundle *bundle)
 		{
 			bundle->status = 1;
 		}
-//		usleep(10);
 		i++;
+	}
+	if (pthread_create(&bundle->watchdog, NULL, &watchdog, (void *)bundle) != 0)
+	{
+		bundle->status = 2;
 	}
 }
 
@@ -240,10 +243,14 @@ void	destroy_thread(t_bundle *bundle)
 	{
 		if (pthread_join(bundle->ph[i].th, NULL) != 0)
 		{
-			bundle->status = 2;
+			bundle->status = 3;
 //			return (bundle->status);
 		}
 		i++;
+	}
+	if (pthread_join(bundle->watchdog, NULL) != 0)
+	{
+		bundle->status = 4;
 	}
 	pthread_mutex_destroy(&bundle->philos_mutex);
 	pthread_mutex_destroy(&bundle->print);

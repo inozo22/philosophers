@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/03 13:08:21 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 10:19:10 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@
 # define ARGLIMIT 200
 # define BUNDLE_HEAP 0//it's not necessary define here, but not to foreget
 # define TH_HEAP 1
+# define MSG_DIED "is starved to death👻"
+# define MSG_EAT "is eating"
+# define MSG_SLEEP "is sleeping"
+# define MSG_THINK "is thinking"
+# define MSG_RIGHT "has taken a right chopstick"
+# define MSG_LEFT "has taken a left chopstick"
 
 /**
  * @brief mutex control 
@@ -64,6 +70,7 @@ typedef struct s_bundle
 	int					heap;
 	int					status;
 	int					is_dead;
+	pthread_t			watchdog;
 //	unsigned int		have_eaten;
 	long				time_die;//If a philosopher didn’t start eating time_to_die milliseconds since the beginning of their last meal or the beginning of the sim- ulation, they die.
 	long		 		time_eat;//The time it takes for a philosopher to eat. During that time, they will need to hold two forks.
@@ -114,5 +121,11 @@ void	check_survival(t_philo *philo);
 //--------------------------------
 
 void	print_philo(t_philo *philo, char *msg, char	*color);
+
+//--------------------------------
+//watchdog
+//--------------------------------
+
+void	*watchdog(void *param);
 
 #endif
