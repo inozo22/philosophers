@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/04 15:14:27 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 16:49:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	philo_error(int code, t_bundle *bundle)
 	else if (code == 4)
 		printf("watchdog could not join a thread\n");
 	else if (code == 5)
-		;
+		printf("pthread_mutex_init failure\n");
 	else if (code == 6)
-		;
+		printf("pthread_mutex_destroy failure\n");
 	else if (code == 99)
 		;
 	if (bundle)

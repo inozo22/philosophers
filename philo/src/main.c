@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/04 15:13:51 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/04 16:58:25 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	check_meals(t_bundle *bundle)
 	i = 0;
 	while (i < bundle->philos)
 	{
-		if (bundle->ph[i].ate < bundle->meals)
+		if (bundle->ph[i].ate < bundle->meals || bundle->meals == 0)
 		{
 			pthread_mutex_unlock(&bundle->check_meals);
 			return ;
@@ -28,10 +28,10 @@ void	check_meals(t_bundle *bundle)
 		i++;
 	}
 	pthread_mutex_unlock(&bundle->check_meals);
-	if (bundle->meals != 0 && !bundle->is_dead)
+	if (bundle->meals != 0 && !bundle->fin)
 	{
 		print_philo(&bundle->ph[i - 1], MSG_COMP, BLUE);
-		bundle->is_dead = 1;
+		bundle->fin = 1;
 	}
 }
 
@@ -45,8 +45,6 @@ int	check_av(unsigned int num, int flag, t_bundle *bundle)
 		return (input_error(2, bundle), 0);
 	else if (flag >= 2 && flag <= 4 && num < 60)
 		return (input_error(3, bundle), 0);
-/* 	if (num < 0)
-		input_error(4, bundle); */
 	else if (num > 2147483647)
 		return (input_error(5, bundle), 0);
 	return (1);
@@ -126,17 +124,9 @@ t_bundle	*init_bundle(char **av)
 	bundle = (t_bundle *)ft_calloc(1, sizeof(t_bundle));
 	if (!bundle)
 		return (heap_error(1, NULL), NULL);
-//	bundle->heap++;
+	bundle->heap++;
 	if (!obtain_nums(av, bundle))
 		return (all_free(bundle), NULL);
-	/**
-	 * initialize the philos here.
-	 *  
-	 * 
-	 * 
-	 */
-//	printf("bundle->ph[150].is_dead: %d\n", bundle->ph[150].is_dead);
-//	printf("bundle->ph[150].ate: %d\n", bundle->ph[150].ate);
 	return (bundle);
 }
 
@@ -152,21 +142,21 @@ void	*routine(void *param)
 	philo = (t_philo *)param;
 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
 		usleep(200);
-	while (philo->bundle->is_dead != 1 && (/* philo->bundle->meals == 0 ||  */philo->ate < philo->bundle->meals))
+	while (philo->bundle->fin != 1 && (philo->bundle->meals == 0 || philo->ate < philo->bundle->meals))
 	{
-		check_survival(philo);//
+		check_survival(philo);
 		pthread_mutex_lock(&philo->bundle->forks[philo->right]);
-		print_philo(philo, MSG_RIGHT, "\033[0m");
+		print_philo(philo, MSG_RIGHT, CLEAR);
 		if (philo->bundle->philos == 1)
 		{
-			pthread_mutex_unlock(&philo->bundle->forks[philo->right]);// iru?
+			pthread_mutex_unlock(&philo->bundle->forks[philo->right]);
 			break ;
 		}
 		pthread_mutex_lock(&philo->bundle->forks[philo->left]);
 		print_philo(philo, MSG_LEFT, CLEAR);
 		pthread_mutex_lock(&philo->bundle->eat);
-		print_philo(philo, MSG_EAT, GREEN);
 		philo->ate++;
+		print_philo(philo, MSG_EAT, GREEN);
 		philo->last_meal = get_time(1);
 		pthread_mutex_unlock(&philo->bundle->eat);
 		check_meals(philo->bundle);
@@ -183,17 +173,16 @@ void	*routine(void *param)
 
 int	set_thread(t_bundle *bundle)
 {
-	unsigned int	i = 0;
+	long	i;
 
-	pthread_mutex_init(&bundle->check_meals, NULL);
-	pthread_mutex_init(&bundle->print, NULL);
-	pthread_mutex_init(&bundle->eat, NULL);
-	pthread_mutex_init(&bundle->death, NULL);
+	i = 0;
+	if (pthread_mutex_init(&bundle->check_meals, NULL) != 0 || \
+	pthread_mutex_init(&bundle->print, NULL) != 0 || \
+	pthread_mutex_init(&bundle->eat, NULL) != 0 || \
+	pthread_mutex_init(&bundle->death, NULL) != 0)
+		return (philo_error(5, bundle), 1);
 	while (i < bundle->philos)
 	{
-/* 		bundle->ph[i].th = ft_calloc(1, sizeof(pthread_t));
-		if (!bundle->ph[i].th)
-			heap_error(2, bundle); */
 		bundle->ph[i].id = i + 1;
 		bundle->ph[i].bundle = bundle;
 		bundle->ph[i].last_meal = bundle->start;
@@ -202,7 +191,8 @@ int	set_thread(t_bundle *bundle)
 			bundle->ph[i].left = bundle->philos - 1;
 		else
 			bundle->ph[i].left = i - 1;
-		pthread_mutex_init(&bundle->forks[i], NULL);
+		if (pthread_mutex_init(&bundle->forks[i], NULL) != 0)
+			return (philo_error(5, bundle), 1);
 		i++;
 	}
 	return (0);
@@ -211,29 +201,23 @@ int	set_thread(t_bundle *bundle)
 /**
  * @note 230703nimai: separate routine between normal and only one philo.
  */
-void	hold_thread(t_bundle *bundle)
+int	hold_thread(t_bundle *bundle)
 {
 	long	i;
 
 	i = -1;
 	while (++i < bundle->philos)
 	{
-		if (pthread_create(&bundle->ph[i].th, NULL, &routine, &bundle->ph[i]) != 0)
-		{
-			philo_error(1, bundle);
-			return ;
-		}
+		if (pthread_create(&bundle->ph[i].th, NULL, &routine, \
+		&bundle->ph[i]) != 0)
+			return (philo_error(1, bundle), 1);
 	}
 	if (pthread_create(&bundle->watchdog, NULL, &watchdog, bundle) != 0)
-	{
-		philo_error(2, bundle);
-		return ;
-	}
-	if (bundle->is_dead)
-		return ;
+		return (philo_error(2, bundle), 1);
+	return (0);
 }
 
-void	destroy_thread(t_bundle *bundle)
+int	destroy_thread(t_bundle *bundle)
 {
 	long	i;
 
@@ -241,24 +225,21 @@ void	destroy_thread(t_bundle *bundle)
 	while (++i < bundle->philos)
 	{
 		if (pthread_join(bundle->ph[i].th, NULL) != 0)
-		{
-			philo_error(3, bundle);
-			return ;
-		}
+			return (philo_error(3, bundle), 1);
 	}
 	if (pthread_join(bundle->watchdog, NULL) != 0)
-	{
-		philo_error(4, bundle);
-		return ;
-	}
-	pthread_mutex_destroy(&bundle->check_meals);
-	pthread_mutex_destroy(&bundle->print);
-	pthread_mutex_destroy(&bundle->eat);
-	pthread_mutex_destroy(&bundle->death);
+		return (philo_error(4, bundle), 1);
+	if (pthread_mutex_destroy(&bundle->check_meals) != 0 || \
+	pthread_mutex_destroy(&bundle->print) != 0 || \
+	pthread_mutex_destroy(&bundle->eat) != 0 || \
+	pthread_mutex_destroy(&bundle->death) != 0)
+		return (philo_error(6, bundle), 1);
 	i = -1;
 	while (++i < bundle->philos)
-		pthread_mutex_destroy(&bundle->forks[i]);
+		if (pthread_mutex_destroy(&bundle->forks[i]) != 0)
+			return (philo_error(6, bundle), 1);
 	printf("Destroyed mutexs\n");
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -274,16 +255,12 @@ int	main(int ac, char **av)
 	if (!bundle)
 		return (1);
 	bundle->start = get_time(0);
-	if (ac == 5)
-		bundle->meals = 2147483647;
-	if (set_thread(bundle) != 0)
-	{
-		all_free(bundle);
+	if (set_thread(bundle))
 		return (1);
-	}
-	hold_thread(bundle);
-	destroy_thread(bundle);
-	all_free (bundle);
+	if (hold_thread(bundle))
+		return (1);
+	if (destroy_thread(bundle) == 0)
+		all_free (bundle);
 	system ("leaks philo");
 	return (0);
 }
