@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 13:01:27 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/05 15:43:37 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@
  */
 typedef struct s_philo
 {
-	unsigned int		id;
-	unsigned int		ate;
+	long				id;
+	long				ate;
 	long				last_meal;
 	int					right;
 	int					left;
@@ -56,7 +56,7 @@ typedef struct s_philo
  */
 typedef struct s_bundle
 {
-	t_philo				ph[ARGLIMIT];
+	t_philo				*ph;
 	int					status;
 	int					fin;
 	pthread_t			watchdog;
@@ -64,7 +64,7 @@ typedef struct s_bundle
 	long				time_eat;
 	long				time_sleep;
 	long				philos;
-	unsigned int		meals;
+	long				meals;
 	long				start;
 	pthread_mutex_t		check_meals;
 	pthread_mutex_t		forks[ARGLIMIT];
