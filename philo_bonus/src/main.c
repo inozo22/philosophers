@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 15:56:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/05 16:02:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_bundle	*init_bundle(char **av)
 	bundle->start = get_time();
 	if (bundle->philos == 1)
 	{
-		;//print RIGHT & DIED and exit!
+		;//print RIGHT & DIED and exit! (before allocate things...)
 	}
 	bundle->ph = (t_philo *)ft_calloc(bundle->philos, sizeof(t_philo));
 	if (!bundle->ph)

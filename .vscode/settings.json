@@ -7,5 +7,6 @@
         "vector": "c",
         "philo.h": "c",
         "chrono": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
