@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heap.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 13:26:34 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/30 09:39:48 by nimai            ###   ########.fr       */
+/*   Created: 2023/06/27 19:18:36 by nimai             #+#    #+#             */
+/*   Updated: 2023/07/05 11:26:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /**
- * @brief malloc with memset
- * @note
+ * @brief free main structure.
  */
-void	*ft_calloc(size_t count, size_t size)
+void	all_free(t_bundle *bundle)
 {
-	void	*ptr;
-
-	ptr = malloc(count * size);
-	if (!ptr)
-		return (NULL);
-	memset(ptr, 0, size);
-	return (ptr);
+	if (bundle)
+	{
+		free (bundle);
+		bundle = NULL;
+	}
 }

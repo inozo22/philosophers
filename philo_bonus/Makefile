@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/07/04 12:11:14 by nimai            ###   ########.fr        #
+#    Updated: 2023/07/05 13:03:45 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,7 @@ LIBS_TARGET	:=
 INCS		:= inc
 SRC_DIR		:= src
 SRCS		:= \
-				main.c \
-				errors.c \
-				heap.c \
-				free.c \
-				time.c \
-				print.c \
-				watchdog.c
+				main.c 
 
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 
