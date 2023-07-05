@@ -6,12 +6,17 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/04 16:49:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/05 09:37:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @brief print error message.
+ * @note as return directory after this function, also free.
+ * @return print message and free structure.
+ */
 void	philo_error(int code, t_bundle *bundle)
 {
 	if (code == 1)
@@ -32,11 +37,9 @@ void	philo_error(int code, t_bundle *bundle)
 		all_free(bundle);
 }
 
-/**
- * @brief print error message, free and exit.
- * @author nimai
- * @return exit directory after free.
- * @note at the moment separate all cases to know where is the problem. Maybe I will merge then
+/*
+ * @brief print error message.
+ * @return only print message and give bad status
  */
 void	input_error(int code, t_bundle *bundle)
 {
@@ -67,10 +70,9 @@ void	input_error(int code, t_bundle *bundle)
 }
 
 /**
- * @brief print error message, free and exit.
+ * @brief print error message
  * @author nimai
- * @return exit directory after free.
- * @note at the moment separate all cases to know where is the problem. Maybe I will merge then
+ * @return only print the message
  * @note flag 1 has valor as NULL, if you have problem with this, check it
  */
 void	heap_error(int flag, t_bundle *bundle)

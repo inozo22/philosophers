@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/07/04 10:19:42 by nimai            ###   ########.fr        #
+#    Updated: 2023/07/05 10:39:39 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,12 @@ SRC_DIR		:= src
 SRCS		:= \
 				main.c \
 				errors.c \
-				heap.c \
+				utils.c \
 				free.c \
 				time.c \
-				print.c \
-				watchdog.c
+				watchdog.c \
+				thread.c \
+				thread_action.c 
 
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 

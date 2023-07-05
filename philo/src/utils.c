@@ -1,16 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/30 17:05:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/04 16:03:56 by nimai            ###   ########.fr       */
+/*   Created: 2023/06/22 13:26:34 by nimai             #+#    #+#             */
+/*   Updated: 2023/07/05 10:23:17 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/**
+ * @brief malloc with memset
+ * @note
+ */
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*ptr;
+
+	ptr = malloc(count * size);
+	if (!ptr)
+		return (NULL);
+	memset(ptr, 0, size);
+	return (ptr);
+}
 
 /**
  * @note for debug, maybe I will delete it later 
@@ -39,26 +54,33 @@ int	ft_strcmp(const char *s1, const char *s2)
 }
 
 /**
- * @brief print with lock the thread
- * @author nimai
- * @note printf("%08ld %s%03d %s: %d%s\n", time, color, philo->id, msg, philo->ate, CLEAR);
+ * @brief atoi, because there is no libft neither atoi...
+ * @return int
  * @note 
- *
- * */
-void	print_philo(t_philo *philo, char *msg, char	*color)
+ */
+long	myatoi(char *str, t_bundle *bundle)
 {
-	long	time;
+	int				i;
+	unsigned int	nbr;
+	int				sign;
 
-	pthread_mutex_lock(&philo->bundle->print);
-	if (philo->bundle->fin != 1)
+	i = 0;
+	nbr = 0;
+	sign = 1;
+	while ((str[i] <= 13 && str[i] >= 9) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		time = get_time(1) - philo->bundle->start;
-		if (ft_strcmp(color, GREEN) == 0)
-			printf("%08ld %s%03d %s%s\n", time, color, philo->id, msg, CLEAR);
-		else if (ft_strcmp(color, BLUE) == 0)
-			printf("%08ld %s%s: %d%s\n", time, color, msg, philo->ate, CLEAR);
-		else
-			printf("%08ld %s%03d %s%s\n", time, color, philo->id, msg, CLEAR);
+		if (str[i] == '-')
+			return (input_error(4, bundle), -1);
+		i++;
 	}
-	pthread_mutex_unlock(&philo->bundle->print);
+	while (str[i] >= 48 && str[i] <= 57)
+	{
+		nbr = (str[i] - 48) + (nbr * 10);
+		i++;
+	}
+	if (str[i] != '\0')
+		return (input_error(6, bundle), -1);
+	return (nbr * sign);
 }
