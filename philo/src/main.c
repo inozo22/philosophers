@@ -6,16 +6,12 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 11:29:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/05 12:05:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/**
- * @brief check all av before start
- * @note it's not necessary, but to protect program
- */
 int	check_av(unsigned int num, int flag, t_bundle *bundle)
 {
 	if (num > 2147483647)
@@ -27,10 +23,6 @@ int	check_av(unsigned int num, int flag, t_bundle *bundle)
 	return (1);
 }
 
-/**
- * @note if there is invalid number, return 0 and terminate the program
- * @note I can put check_av here, but to control error message let it like this
- */
 int	obtain_nums(char **av, t_bundle *bundle)
 {
 	int				i;
@@ -56,11 +48,6 @@ int	obtain_nums(char **av, t_bundle *bundle)
 	return (1);
 }
 
-/**
- * @brief initialization according to the av position
- * @return main structure
- * @note maybe put obtain_nums here if I will not put more lines here
- */
 t_bundle	*init_bundle(char **av)
 {
 	t_bundle	*bundle;
@@ -95,6 +82,5 @@ int	main(int ac, char **av)
 		printf("PTHEREAD ERROR: %d\n", bundle->fin);
 	if (destroy(bundle) == 0)
 		all_free (bundle);
-	system ("leaks philo");
 	return (0);
 }

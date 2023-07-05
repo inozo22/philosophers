@@ -6,16 +6,12 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:26:34 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 10:23:17 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/05 12:04:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/**
- * @brief malloc with memset
- * @note
- */
 void	*ft_calloc(size_t count, size_t size)
 {
 	void	*ptr;
@@ -27,9 +23,6 @@ void	*ft_calloc(size_t count, size_t size)
 	return (ptr);
 }
 
-/**
- * @note for debug, maybe I will delete it later 
- */
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
@@ -53,11 +46,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-/**
- * @brief atoi, because there is no libft neither atoi...
- * @return int
- * @note 
- */
 long	myatoi(char *str, t_bundle *bundle)
 {
 	int				i;

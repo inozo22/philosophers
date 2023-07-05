@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 09:52:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 11:18:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/05 12:04:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	*routine(void *param)
 	philo->ate < philo->bundle->meals))
 	{
 		action(philo);
-		print_philo(philo, MSG_SLEEP, CYAN);
+		print_philo(philo, MSG_SLEEP, CLEAR);
 		time_control(philo, philo->bundle->time_sleep);
-		print_philo(philo, MSG_THINK, YELLOW);
+		print_philo(philo, MSG_THINK, CLEAR);
 	}
 	return (NULL);
 }
@@ -59,9 +59,6 @@ int	init_mutex(t_bundle *bundle)
 	return (0);
 }
 
-/**
- * @note 230703nimai: separate routine between normal and only one philo.
- */
 int	set_thread(t_bundle *bundle)
 {
 	long	i;
@@ -99,6 +96,5 @@ int	destroy(t_bundle *bundle)
 	while (++i < bundle->philos)
 		if (pthread_mutex_destroy(&bundle->forks[i]) != 0)
 			return (philo_error(6, bundle), 1);
-	printf("Destroyed all\n");
 	return (0);
 }

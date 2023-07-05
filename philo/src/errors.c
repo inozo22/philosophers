@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 09:37:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/05 12:04:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	input_error(int code, t_bundle *bundle)
 
 /**
  * @brief print error message
- * @author nimai
  * @return only print the message
  * @note flag 1 has valor as NULL, if you have problem with this, check it
  */

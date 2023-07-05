@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 11:37:04 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/05 12:02:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define MSG_EAT "is eating"
 # define MSG_SLEEP "is sleeping"
 # define MSG_THINK "is thinking"
-# define MSG_RIGHT "has taken a right chopstick"
-# define MSG_LEFT "has taken a left chopstick"
+# define MSG_RIGHT "has taken a fork"
+# define MSG_LEFT "has taken a fork"
 # define MSG_COMP "They all ate the required number of meals🥳"
 
 # define BLUE "\033[1;34m"
@@ -93,7 +93,6 @@ int		destroy(t_bundle *bundle);
 //thread_action
 //--------------------------------
 
-void	check_survival(t_philo *philo);
 void	check_meals(t_bundle *bundle);
 void	print_philo(t_philo *philo, char *msg, char	*color);
 void	action(t_philo *philo);

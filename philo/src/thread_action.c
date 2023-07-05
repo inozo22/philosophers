@@ -6,25 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 09:58:22 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 11:29:46 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/05 12:05:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	check_survival(t_philo *philo)
-{
-	if (pthread_mutex_lock(&philo->bundle->death) != 0)
-		philo->bundle->fin = 99;
-	if ((get_time() - philo->last_meal) > philo->bundle->time_die
-		&& philo->bundle->fin == 0)
-	{
-		print_philo(philo, MSG_DIED, RED);
-		philo->bundle->fin = 1;
-	}
-	if (pthread_mutex_unlock(&philo->bundle->death) != 0)
-		philo->bundle->fin = 98;
-}
 
 void	check_meals(t_bundle *bundle)
 {
@@ -52,11 +38,6 @@ void	check_meals(t_bundle *bundle)
 	}
 }
 
-/**
- * @brief print with lock the thread
- * @author nimai
- * @note 
- * */
 void	print_philo(t_philo *philo, char *msg, char	*color)
 {
 	long	time;
@@ -88,7 +69,7 @@ void	action(t_philo *philo)
 	if (pthread_mutex_lock(&philo->bundle->eat) != 0)
 		philo->bundle->fin = 99;
 	philo->ate++;
-	print_philo(philo, MSG_EAT, GREEN);
+	print_philo(philo, MSG_EAT, CLEAR);
 	philo->last_meal = get_time();
 	if (pthread_mutex_unlock(&philo->bundle->eat) != 0)
 		philo->bundle->fin = 98;
