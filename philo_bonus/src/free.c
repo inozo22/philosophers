@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:18:36 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 11:26:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/06 09:26:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@
  */
 void	all_free(t_bundle *bundle)
 {
-	if (bundle)
+	if (bundle->heap >= 2)
+	{
+		free (bundle->ph);
+		bundle->ph = NULL;
+	}
+	if (bundle->heap >= 1)
 	{
 		free (bundle);
 		bundle = NULL;

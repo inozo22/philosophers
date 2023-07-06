@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 12:04:52 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/06 09:49:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /**
  * @brief print error message.
  * @note as return directory after this function, also free.
+ * @note maybe better to exit after free???
  * @return print message and free structure.
  */
 void	philo_error(int code, t_bundle *bundle)
@@ -37,7 +38,7 @@ void	philo_error(int code, t_bundle *bundle)
 		all_free(bundle);
 }
 
-/*
+/**
  * @brief print error message.
  * @return only print message and give bad status
  */

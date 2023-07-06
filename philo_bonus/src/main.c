@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 16:02:14 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/06 10:49:15 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_bundle	*init_bundle(char **av)
 	bundle = (t_bundle *)ft_calloc(1, sizeof(t_bundle));
 	if (!bundle)
 		return (heap_error(1, NULL), NULL);
+	bundle->heap++;
 	if (!obtain_nums(av, bundle))
 		return (all_free(bundle), NULL);
 	bundle->start = get_time();
@@ -67,13 +68,17 @@ t_bundle	*init_bundle(char **av)
 	bundle->ph = (t_philo *)ft_calloc(bundle->philos, sizeof(t_philo));
 	if (!bundle->ph)
 		return (NULL);
+	bundle->heap++;
 	i = 0;
 	while (i < bundle->philos)
 	{
 		bundle->ph[i].id = i + 1;
-		bundle->ph[i].bundle = bundle;
+		bundle->ph[i].ate = 0;
 		bundle->ph[i].last_meal = bundle->start;
-		printf ("id: %ld last_meal: %ld ate: %ld right: %d left: %d\n", bundle->ph[i].id, bundle->ph[i].last_meal, bundle->ph[i].ate, bundle->ph[i].right, bundle->ph[i].left);
+		bundle->ph[i].right = 0;
+		bundle->ph[i].left = 0;
+		bundle->ph[i].bundle = bundle;
+		printf ("heap: %d id: %ld last_meal: %ld ate: %ld right: %d left: %d\n", bundle->heap, bundle->ph[i].id, bundle->ph[i].last_meal, bundle->ph[i].ate, bundle->ph[i].right, bundle->ph[i].left);
 		i++;
 	}
 	return (bundle);
@@ -93,9 +98,9 @@ int	main(int ac, char **av)
 		return (1);
 //	bundle->start = get_time();
 //KOKOMADE
-/* 	if (init_mutex(bundle))
+ 	if (init_sem(bundle))
 		return (1);
-	if (set_thread(bundle))
+/*	if (set_thread(bundle))
 		return (1);
 	if (bundle->fin > 1)
 		printf("PTHEREAD ERROR: %d\n", bundle->fin);

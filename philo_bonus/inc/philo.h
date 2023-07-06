@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 15:43:37 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/06 11:22:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@
 # include <pthread.h>
 # include <string.h>
 # include <semaphore.h>
+# include <fcntl.h>
 
 # define ARGLIMIT 200
+# define HEAP_BUNDLE 1
+# define HEAP_PHILO 2
 # define MSG_DIED "is starved to death👻"
 # define MSG_EAT "is eating"
 # define MSG_SLEEP "is sleeping"
@@ -47,6 +50,8 @@ typedef struct s_philo
 	long				last_meal;
 	int					right;
 	int					left;
+	sem_t				*fork;
+	sem_t				*eat;
 	pthread_t			th;
 	struct s_bundle		*bundle;
 }	t_philo;
@@ -56,9 +61,11 @@ typedef struct s_philo
  */
 typedef struct s_bundle
 {
+	sem_t				*print;
 	t_philo				*ph;
 	int					status;
 	int					fin;
+	int					heap;
 	pthread_t			watchdog;
 	long				time_die;
 	long				time_eat;
@@ -66,11 +73,6 @@ typedef struct s_bundle
 	long				philos;
 	long				meals;
 	long				start;
-	pthread_mutex_t		check_meals;
-	pthread_mutex_t		forks[ARGLIMIT];
-	pthread_mutex_t		print;
-	pthread_mutex_t		eat;
-	pthread_mutex_t		death;
 	pid_t				pid;
 }	t_bundle;
 
@@ -83,13 +85,11 @@ int		ft_strcmp(const char *s1, const char *s2);
 long	myatoi(char *str, t_bundle *bundle);
 
 //--------------------------------
-//thread
+//init_sem
 //--------------------------------
 
-void	*routine(void *param);
-int		init_mutex(t_bundle *bundle);
-int		set_thread(t_bundle *bundle);
-int		destroy(t_bundle *bundle);
+int		init_sem(t_bundle *bundle);
+
 
 //--------------------------------
 //thread_action
@@ -125,5 +125,7 @@ void	time_control(t_philo *philo, long time);
 //--------------------------------
 
 void	*watchdog(void *param);
+
+
 
 #endif
