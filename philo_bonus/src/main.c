@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/06 10:49:15 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/06 11:41:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ int	main(int ac, char **av)
 //	bundle->start = get_time();
 //KOKOMADE
  	if (init_sem(bundle))
+		return (1);
+	if (run(bundle))
 		return (1);
 /*	if (set_thread(bundle))
 		return (1);

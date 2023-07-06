@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/06 11:22:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/06 14:35:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_philo
 	sem_t				*fork;
 	sem_t				*eat;
 	pthread_t			th;
+	pid_t				pid;
 	struct s_bundle		*bundle;
 }	t_philo;
 
@@ -61,8 +62,8 @@ typedef struct s_philo
  */
 typedef struct s_bundle
 {
-	sem_t				*print;
 	t_philo				*ph;
+	sem_t				*print;
 	int					status;
 	int					fin;
 	int					heap;
@@ -73,7 +74,7 @@ typedef struct s_bundle
 	long				philos;
 	long				meals;
 	long				start;
-	pid_t				pid;
+	pid_t				pid_watchdog;
 }	t_bundle;
 
 //--------------------------------
@@ -92,12 +93,10 @@ int		init_sem(t_bundle *bundle);
 
 
 //--------------------------------
-//thread_action
+//run
 //--------------------------------
 
-void	check_meals(t_bundle *bundle);
-void	print_philo(t_philo *philo, char *msg, char	*color);
-void	action(t_philo *philo);
+int		run(t_bundle *bundle);
 
 //--------------------------------
 //errors
