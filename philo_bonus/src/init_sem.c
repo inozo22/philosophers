@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 10:49:26 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/06 11:40:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/06 17:29:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ sem_t	*set_sem(char *sem_name, int amount, int id)
 	name = ft_strdup(sem_name);
 	if (!name)
 		return (NULL);
+
 	sem_unlink(name);
 	ret = sem_open(name, O_CREAT, 0600, amount);
 	free (name);
@@ -61,5 +62,6 @@ int	init_sem(t_bundle *bundle)
 {
 	bundle->print = set_sem("/print", 1, 0);
 	bundle->ph[0].fork = set_sem("/fork", bundle->philos, 0);
+	
 	return (0);
 }

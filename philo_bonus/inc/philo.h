@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/06 14:35:52 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/06 18:34:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string.h>
 # include <semaphore.h>
 # include <fcntl.h>
+# include <signal.h>
 
 # define ARGLIMIT 200
 # define HEAP_BUNDLE 1

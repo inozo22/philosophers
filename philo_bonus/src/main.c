@@ -6,11 +6,29 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/06 11:41:09 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/06 18:40:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/**
+ * @note 230706nimai: you have to send to error, and then, free and exit there
+ */
+int	destroy_process(t_bundle *bundle)
+{
+	long	i;
+
+	i = -1;
+	while (++i < bundle->philos)
+	{
+		if (kill(bundle->ph[i].pid, SIGKILL) != 0)
+			return (1);
+	}
+	if (kill(bundle->pid_watchdog, SIGKILL) != 0)
+		return (1);
+	return (0);
+}
 
 int	check_input(unsigned int num, int flag, t_bundle *bundle)
 {
@@ -102,12 +120,15 @@ int	main(int ac, char **av)
 		return (1);
 	if (run(bundle))
 		return (1);
+//	system ("leaks philo_bonus");
 /*	if (set_thread(bundle))
 		return (1);
 	if (bundle->fin > 1)
 		printf("PTHEREAD ERROR: %d\n", bundle->fin);
 	if (destroy(bundle) == 0)
 		all_free (bundle); */
+	if (destroy_process(bundle) == 0)
+		all_free(bundle);
 	return (0);
 }
 
