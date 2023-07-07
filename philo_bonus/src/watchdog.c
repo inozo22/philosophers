@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 09:15:34 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:20:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,17 @@ void	*watchdog(void *param)
 		}
 	}
 	return (NULL);
+}
+
+int	set_watchdog(t_bundle *bundle)
+{
+	bundle->pid_watchdog = fork();
+	if (bundle->pid_watchdog < 0)
+		return (1);
+	if (bundle->pid_watchdog == 0)
+	{
+		printf("Hello, I'm watchdog!\n");
+		//func();
+	}
+	return (0);
 }

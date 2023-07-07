@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:11:01 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 10:11:51 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 14:22:25 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_philo
 	long				last_meal;
 	int					right;
 	int					left;
-	sem_t				*fork;
+//	sem_t				*fork;
 	sem_t				*eat;
 	pthread_t			th;
 	pid_t				pid;
@@ -37,6 +37,7 @@ typedef struct s_bundle
 {
 	t_philo				*ph;
 	sem_t				*print;
+	sem_t				*fork;
 	int					status;
 	int					fin;
 	int					heap;

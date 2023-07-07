@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/07/07 12:57:09 by nimai            ###   ########.fr        #
+#    Updated: 2023/07/07 15:02:24 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRCS		:= \
 				time.c \
 				init_sem.c \
 				run.c \
-				utils_philo.c
+				utils_philo.c \
+				watchdog.c
 
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 

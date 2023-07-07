@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:34:09 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 09:15:26 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:11:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ void	action(t_philo *philo)
 {
 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
 		usleep(200);
-	if (sem_wait(philo->fork) != 0)
+	if (sem_wait(philo->bundle->fork) != 0)
 		philo->bundle->fin = 99;
 	print_philo(philo, MSG_RIGHT, CLEAR);
-	if (sem_wait(philo->fork) != 0)
+	if (sem_wait(philo->bundle->fork) != 0)
 		philo->bundle->fin = 99;
 	print_philo(philo, MSG_LEFT, CLEAR);
 	if (sem_wait(philo->eat) != 0)
@@ -88,9 +88,9 @@ void	action(t_philo *philo)
 	check_meals(philo->bundle);
 	time_control(philo, philo->bundle->time_eat);
 	//KOKOMADE
-	if (sem_post(philo->fork) != 0)
+	if (sem_post(philo->bundle->fork) != 0)
 		philo->bundle->fin = 98;
-	if (sem_post(philo->fork) != 0)
+	if (sem_post(philo->bundle->fork) != 0)
 		philo->bundle->fin = 98;
 }
 
@@ -131,18 +131,20 @@ int	run(t_bundle *bundle)
 			return (1);
 		if (bundle->ph[i].pid == 0)
 		{
-			printf("Hello, I'm %d!\n", i + 1);
-			func();
+			pthread_create(&bundle->ph[i].th, NULL, &watchdog, (void *)&bundle->ph[i]);
+			routain(&bundle->ph[i]);
+			pthread_join(bundle->ph[i].th, NULL);
+			exit(0);
 		}
 	}
-	bundle->pid_watchdog = fork();
+/* 	bundle->pid_watchdog = fork();
 	if (bundle->pid_watchdog < 0)
 		return (1);
 	if (bundle->pid_watchdog == 0)
 	{
 		printf("Hello, I'm watchdog!\n");
 		func();
-	}
+	} */
 	return (0);
 }
 

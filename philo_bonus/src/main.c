@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 12:56:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:20:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_bundle	*init_bundle(char **av)
 	t_bundle	*bundle;
 	int			i;
 
-	bundle = NULL;
 	bundle = (t_bundle *)ft_calloc(1, sizeof(t_bundle));
 	if (!bundle)
 		return (heap_error(1, NULL), NULL);
@@ -85,8 +84,8 @@ t_bundle	*init_bundle(char **av)
 	if (!bundle->ph)
 		return (NULL);
 	bundle->heap++;
-	i = 0;
-	while (i < bundle->philos)
+	i = -1;
+	while (++i < bundle->philos)
 	{
 		bundle->ph[i].id = i + 1;
 		bundle->ph[i].ate = 0;
@@ -94,7 +93,6 @@ t_bundle	*init_bundle(char **av)
 		bundle->ph[i].right = 0;
 		bundle->ph[i].left = 0;
 		bundle->ph[i].bundle = bundle;
-		i++;
 	}
 	return (bundle);
 }
@@ -102,6 +100,8 @@ t_bundle	*init_bundle(char **av)
 int	main(int ac, char **av)
 {
 	t_bundle	*bundle;
+	int			i;
+	int			status;
 
 	if (ac < 5 || ac > 6)
 	{
@@ -117,6 +117,20 @@ int	main(int ac, char **av)
 		return (1);
 	if (run(bundle))
 		return (1);
+	if (bundle->meals && set_watchdog(bundle))
+		return (1);
+	i = -1;
+	while (++i < bundle->philos)
+	{
+		waitpid(-1, &status, 0);
+		if (status != SIGKILL)
+		{
+			;
+		}
+	}
+	if (bundle->meals)
+		waitpid(-1, &status, 0);
+	
 /*	if (set_thread(bundle))
 		return (1);
 	if (bundle->fin > 1)
