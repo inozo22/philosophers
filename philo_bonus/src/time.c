@@ -6,11 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 17:55:10 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 12:04:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 09:25:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 long	get_time(void)
 {
@@ -25,9 +25,20 @@ void	time_control(t_philo *philo, long time)
 	long	ret;
 
 	ret = get_time() + time;
-	while ((get_time() < ret) && philo->bundle->fin == 0)
+	if (philo == NULL)
 	{
-		usleep(50);
-		usleep(50);
+		while (get_time() < ret)
+		{
+			usleep(50);
+			usleep(50);
+		}
+	}
+	else
+	{
+		while ((get_time() < ret) && philo->bundle->fin == 0)
+		{
+			usleep(50);
+			usleep(50);
+		}
 	}
 }

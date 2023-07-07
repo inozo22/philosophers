@@ -6,11 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:26:34 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 16:00:03 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 09:15:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 void	*ft_calloc(size_t count, size_t size)
 {

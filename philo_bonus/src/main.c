@@ -6,11 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/06 18:40:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 12:56:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 /**
  * @note 230706nimai: you have to send to error, and then, free and exit there
@@ -80,9 +80,7 @@ t_bundle	*init_bundle(char **av)
 		return (all_free(bundle), NULL);
 	bundle->start = get_time();
 	if (bundle->philos == 1)
-	{
-		;//print RIGHT & DIED and exit! (before allocate things...)
-	}
+		loneliness(bundle);
 	bundle->ph = (t_philo *)ft_calloc(bundle->philos, sizeof(t_philo));
 	if (!bundle->ph)
 		return (NULL);
@@ -96,7 +94,6 @@ t_bundle	*init_bundle(char **av)
 		bundle->ph[i].right = 0;
 		bundle->ph[i].left = 0;
 		bundle->ph[i].bundle = bundle;
-		printf ("heap: %d id: %ld last_meal: %ld ate: %ld right: %d left: %d\n", bundle->heap, bundle->ph[i].id, bundle->ph[i].last_meal, bundle->ph[i].ate, bundle->ph[i].right, bundle->ph[i].left);
 		i++;
 	}
 	return (bundle);
@@ -120,15 +117,13 @@ int	main(int ac, char **av)
 		return (1);
 	if (run(bundle))
 		return (1);
-//	system ("leaks philo_bonus");
 /*	if (set_thread(bundle))
 		return (1);
 	if (bundle->fin > 1)
-		printf("PTHEREAD ERROR: %d\n", bundle->fin);
-	if (destroy(bundle) == 0)
-		all_free (bundle); */
+		printf("PTHEREAD ERROR: %d\n", bundle->fin);*/
 	if (destroy_process(bundle) == 0)
 		all_free(bundle);
+//	system ("leaks philo_bonus");
 	return (0);
 }
 

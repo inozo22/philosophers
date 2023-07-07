@@ -6,11 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 10:49:26 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/06 17:29:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 12:50:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -62,6 +62,5 @@ int	init_sem(t_bundle *bundle)
 {
 	bundle->print = set_sem("/print", 1, 0);
 	bundle->ph[0].fork = set_sem("/fork", bundle->philos, 0);
-	
 	return (0);
 }
