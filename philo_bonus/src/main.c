@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 15:30:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:55:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,16 +125,11 @@ int	main(int ac, char **av)
 		waitpid(-1, &status, 0);
 		if (status != SIGKILL)
 		{
-			;
+			;//kill everything hereeee
 		}
 	}
 	if (bundle->meals)
 		waitpid(-1, &status, 0);
-	
-/*	if (set_thread(bundle))
-		return (1);
-	if (bundle->fin > 1)
-		printf("PTHEREAD ERROR: %d\n", bundle->fin);*/
 	if (destroy_process(bundle) == 0)
 		all_free(bundle);
 //	system ("leaks philo_bonus");

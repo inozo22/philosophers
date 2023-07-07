@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 10:49:26 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 14:55:34 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:56:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ sem_t	*set_sem(char *sem_name, int amount, int id)
 	{
 		num = ft_itoa(id);
 		if (!num)
-			return (NULL);//calloc failure
+			return (NULL);//calloc failure put error
 		tmp = name;
 		name = ft_strjoin(name, num);
 		if (!name)
-			return (NULL);//calloc failure
+			return (NULL);//calloc failure put error
 		free (num);
 		free (tmp);
 	}

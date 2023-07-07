@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:34:09 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 15:52:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:55:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	action_fork(t_philo *philo)
 	return (0);
 }
 
-
 void	action(t_philo *philo)
 {
 	action_fork(philo);
@@ -90,10 +89,6 @@ void	action(t_philo *philo)
 	if (sem_post(philo->bundle->fork) != 0)
 		philo->bundle->fin = 98;
 }
-
-
-
-
 
 void	*routain(void *param)
 {
@@ -128,7 +123,8 @@ int	run(t_bundle *bundle)
 			return (1);
 		if (bundle->ph[i].pid == 0)
 		{
-			pthread_create(&bundle->ph[i].th, NULL, &watchdog, (void *)&bundle->ph[i]);
+			if (pthread_create(&bundle->ph[i].th, NULL, &watchdog, (void *)&bundle->ph[i]) != 0)
+				exit (1);//error
 			routain(&bundle->ph[i]);
 			pthread_join(bundle->ph[i].th, NULL);
 			exit(0);

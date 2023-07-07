@@ -6,12 +6,15 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:52:37 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 12:55:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:57:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
+/**
+ * @brief this is a function for one philosopher, maybe better way
+ */
 void	loneliness(t_bundle *bundle)
 {
 	long	time;

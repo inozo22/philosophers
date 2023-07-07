@@ -6,12 +6,15 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:26:34 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 14:55:06 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:58:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
+/**
+ * @note almost all of them from libft
+ */
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;

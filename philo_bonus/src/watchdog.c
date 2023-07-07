@@ -6,12 +6,15 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 15:44:09 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:59:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
+/**
+ * @brief life control
+ */
 void	*watchdog(void *param)
 {
 	t_bundle		*bundle;
@@ -63,6 +66,9 @@ void	eat_counter(t_bundle *bundle)
 	exit (0);
 }
 
+/**
+ * @brief meal control
+ */
 int	set_eat_counter(t_bundle *bundle)
 {
 	bundle->pid_watchdog = fork();

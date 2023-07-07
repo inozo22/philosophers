@@ -6,17 +6,14 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 09:15:10 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 16:00:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
 /**
- * @brief print error message.
- * @note as return directory after this function, also free.
- * @note maybe better to exit after free???
- * @return print message and free structure.
+ * @note there are a lot of error which are not controled yet
  */
 void	philo_error(int code, t_bundle *bundle)
 {

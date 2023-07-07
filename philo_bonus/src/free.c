@@ -6,13 +6,14 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:18:36 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 09:15:17 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 16:04:00 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
 /**
+ * @note maybe conbine with destroyers, then name terminater
  * @brief free main structure.
  */
 void	all_free(t_bundle *bundle)

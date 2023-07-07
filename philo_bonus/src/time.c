@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 17:55:10 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 09:25:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:56:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ long	get_time(void)
 	return ((1000 * time.tv_sec) + (time.tv_usec / 1000));
 }
 
+/**
+ * @note it's not beautiful, rethink about this
+ */
 void	time_control(t_philo *philo, long time)
 {
 	long	ret;
