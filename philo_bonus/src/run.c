@@ -6,19 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:34:09 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 15:11:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:52:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-void	func(void)
-{
-	while (1)
-	{
-		;
-	}
-}
 
 void	print_philo(t_philo *philo, char *msg, char *color)
 {
@@ -40,35 +32,34 @@ void	print_philo(t_philo *philo, char *msg, char *color)
 		philo->bundle->fin = 98;
 }
 
-void	check_meals(t_bundle *bundle)
+/* void	check_meals(t_bundle *bundle)
 {
 //	(void)bundle;
 	unsigned int	i;
 
-/* 	if (pthread_mutex_lock(&bundle->check_meals) != 0)
-		bundle->fin = 99; */
+ 	if (pthread_mutex_lock(&bundle->check_meals) != 0)
+		bundle->fin = 99; 
 	i = 0;
 	while (i < bundle->philos)
 	{
 		if (bundle->ph[i].ate < bundle->meals || bundle->meals == 0)
 		{
-/* 			if (pthread_mutex_unlock(&bundle->check_meals) != 0)
-				bundle->fin = 98; */
+ 			if (pthread_mutex_unlock(&bundle->check_meals) != 0)
+				bundle->fin = 98; 
 			return ;
 		}
 		i++;
 	}
-/* 	if (pthread_mutex_unlock(&bundle->check_meals) != 0)
-		bundle->fin = 98; */
+ 	if (pthread_mutex_unlock(&bundle->check_meals) != 0)
+		bundle->fin = 98; 
 	if (bundle->meals != 0 && !bundle->fin)
 	{
 		print_philo(&bundle->ph[i - 1], MSG_COMP, BLUE);
 		bundle->fin = 1;
 	}
-}
+} */
 
-
-void	action(t_philo *philo)
+int	action_fork(t_philo *philo)
 {
 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
 		usleep(200);
@@ -78,14 +69,20 @@ void	action(t_philo *philo)
 	if (sem_wait(philo->bundle->fork) != 0)
 		philo->bundle->fin = 99;
 	print_philo(philo, MSG_LEFT, CLEAR);
-	if (sem_wait(philo->eat) != 0)
-		philo->bundle->fin = 99;
-	philo->ate++;
+	return (0);
+}
+
+
+void	action(t_philo *philo)
+{
+	action_fork(philo);
 	print_philo(philo, MSG_EAT, GREEN);
+	if (sem_post(philo->eat) != 0)
+		philo->bundle->fin = 99;
 	philo->last_meal = get_time();
 	if (sem_post(philo->eat) != 0)
 		philo->bundle->fin = 98;
-	check_meals(philo->bundle);
+//	check_meals(philo->bundle);
 	time_control(philo, philo->bundle->time_eat);
 	//KOKOMADE
 	if (sem_post(philo->bundle->fork) != 0)
@@ -109,9 +106,9 @@ void	*routain(void *param)
 	philo->ate < philo->bundle->meals))
 	{
 		action(philo);
-		print_philo(philo, MSG_SLEEP, CLEAR);
+		print_philo(philo, MSG_SLEEP, CYAN);
 		time_control(philo, philo->bundle->time_sleep);
-		print_philo(philo, MSG_THINK, CLEAR);
+		print_philo(philo, MSG_THINK, YELLOW);
 	}
 	return (NULL);
 }

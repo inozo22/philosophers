@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 15:20:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:44:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,37 @@ void	*watchdog(void *param)
 	return (NULL);
 }
 
-int	set_watchdog(t_bundle *bundle)
+void	eat_counter(t_bundle *bundle)
+{
+	int	i;
+	int	counter;
+
+	counter = 0;
+	while (counter < bundle->philos)
+	{
+		i = 0;
+		while (i < bundle->philos)
+		{
+			sem_wait(bundle->ph[i].eat);
+			bundle->ph[i].ate++;
+			if (bundle->ph[i].ate == bundle->meals)
+				counter++;
+		}
+		usleep(100);
+		usleep(100);
+	}
+	printf("they all ate required times!\n");
+	exit (0);
+}
+
+int	set_eat_counter(t_bundle *bundle)
 {
 	bundle->pid_watchdog = fork();
 	if (bundle->pid_watchdog < 0)
 		return (1);
 	if (bundle->pid_watchdog == 0)
 	{
-		printf("Hello, I'm watchdog!\n");
+		eat_counter(bundle);
 		//func();
 	}
 	return (0);

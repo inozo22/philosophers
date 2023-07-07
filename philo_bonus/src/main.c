@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 15:20:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:30:38 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	main(int ac, char **av)
 		return (1);
 	if (run(bundle))
 		return (1);
-	if (bundle->meals && set_watchdog(bundle))
+	if (bundle->meals && set_eat_counter(bundle))
 		return (1);
 	i = -1;
 	while (++i < bundle->philos)

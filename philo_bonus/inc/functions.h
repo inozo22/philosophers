@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:47:47 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 15:14:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:45:18 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	time_control(t_philo *philo, long time);
 //--------------------------------
 
 void	*watchdog(void *param);
-int		set_watchdog(t_bundle *bundle);
+int		set_eat_counter(t_bundle *bundle);
 
 //--------------------------------
 //utils_philo
