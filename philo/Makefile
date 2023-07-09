@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/07/05 11:39:36 by nimai            ###   ########.fr        #
+#    Updated: 2023/07/09 17:32:53 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRCS		:= \
 				time.c \
 				watchdog.c \
 				thread.c \
-				thread_action.c 
+				thread_action.c \
+				thread_protect.c
 
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 
@@ -38,7 +39,7 @@ DEPS		:= $(OBJS:.o=.d)
 
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror -pedantic
-LNK			:= -g3 -O0 -fsanitize=address 
+LNK			:= -g3 -O0 -fsanitize=address
 CPPFLAGS	:= $(addprefix -I,$(INCS)) -MMD -MP
 LDFLAGS		:= $(addprefix -L,$(dir $(LIBS_TARGET))) 
 LDLIBS		:= $(addprefix -l,$(LIBS))
@@ -81,7 +82,7 @@ export	ART
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) $(LNK) -o $(NAME)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(LDLIBS) $(LNK) -o $(NAME)
 	$(info CREATED $(NAME))
 	@echo "$$ART"
 
@@ -90,7 +91,7 @@ $(LIBS_TARGET):
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(DIR_DUP)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c -g -o $@ $<
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 	$(info CREATED $@)
 
 -include $(DEPS)

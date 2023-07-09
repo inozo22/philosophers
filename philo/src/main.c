@@ -6,22 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 12:05:51 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 17:27:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	check_av(unsigned int num, int flag, t_bundle *bundle)
-{
-	if (num > 2147483647)
-		return (input_error(5, bundle), 0);
-	else if (flag == 1 && num > 200)
-		return (input_error(2, bundle), 0);
-	else if (flag >= 2 && flag <= 4 && num < 60)
-		return (input_error(3, bundle), 0);
-	return (1);
-}
 
 int	obtain_nums(char **av, t_bundle *bundle)
 {
@@ -31,9 +20,11 @@ int	obtain_nums(char **av, t_bundle *bundle)
 	i = 0;
 	while (av[++i] && !bundle->status)
 	{
-		num = myatoi(av[i], bundle);
-		if (num == -1 || !check_av(num, i, bundle))
+		num = myatol(av[i], bundle);
+		if (num == -1)
 			return (0);
+		if (num > INT_MAX)
+			return (input_error(5, bundle), 0);
 		if (i == 1)
 			bundle->philos = num;
 		if (i == 2)
@@ -50,14 +41,23 @@ int	obtain_nums(char **av, t_bundle *bundle)
 
 t_bundle	*init_bundle(char **av)
 {
-	t_bundle	*bundle;
+	t_bundle		*bundle;
 
-	bundle = NULL;
 	bundle = (t_bundle *)ft_calloc(1, sizeof(t_bundle));
 	if (!bundle)
 		return (heap_error(1, NULL), NULL);
+	bundle->heap = HEAP_BUNDLE;
 	if (!obtain_nums(av, bundle))
 		return (all_free(bundle), NULL);
+	bundle->forks = (pthread_mutex_t *)ft_calloc(bundle->philos, \
+	sizeof(pthread_mutex_t));
+	if (!bundle->forks)
+		return (heap_error(2, bundle), NULL);
+	bundle->heap = HEAP_FORKS;
+	bundle->ph = (t_philo *)ft_calloc(bundle->philos, sizeof(t_philo));
+	if (!bundle->ph)
+		return (heap_error(3, bundle), NULL);
+	bundle->heap = HEAP_PH;
 	return (bundle);
 }
 

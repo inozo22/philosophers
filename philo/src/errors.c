@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 12:04:52 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 17:26:34 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,17 @@ void	input_error(int code, t_bundle *bundle)
  */
 void	heap_error(int flag, t_bundle *bundle)
 {
-	(void)bundle;
 	if (flag == 1)
 	{
 		printf("bundle memory allocate failure\n");
 	}
+	if (flag == 2)
+	{
+		printf("forks memory allocate failure\n");
+	}
+	if (flag == 3)
+	{
+		printf("ph memory allocate failure\n");
+	}
+	all_free (bundle);
 }

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 12:02:59 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 17:18:00 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,21 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <string.h>
+# include <limits.h>
 
-# define ARGLIMIT 200
-# define MSG_DIED "is starved to death👻"
+# define MSG_DIED "is died"
 # define MSG_EAT "is eating"
 # define MSG_SLEEP "is sleeping"
 # define MSG_THINK "is thinking"
 # define MSG_RIGHT "has taken a fork"
 # define MSG_LEFT "has taken a fork"
-# define MSG_COMP "They all ate the required number of meals🥳"
+# define MSG_COMP "They all ate the required number of meals"
+
+# define ERR_MUTEX_LOCK 99
+# define ERR_MUTEX_UNLOCK 98
+# define HEAP_BUNDLE 1
+# define HEAP_FORKS 2
+# define HEAP_PH 3
 
 # define BLUE "\033[1;34m"
 # define YELLOW "\033[1;33m"
@@ -55,8 +61,9 @@ typedef struct s_philo
  */
 typedef struct s_bundle
 {
-	t_philo				ph[ARGLIMIT];
+	t_philo				*ph;
 	int					status;
+	int					heap;
 	int					fin;
 	pthread_t			watchdog;
 	long				time_die;
@@ -66,9 +73,8 @@ typedef struct s_bundle
 	unsigned int		meals;
 	long				start;
 	pthread_mutex_t		check_meals;
-	pthread_mutex_t		forks[ARGLIMIT];
+	pthread_mutex_t		*forks;
 	pthread_mutex_t		print;
-	pthread_mutex_t		eat;
 	pthread_mutex_t		death;
 }	t_bundle;
 
@@ -78,7 +84,7 @@ typedef struct s_bundle
 
 void	*ft_calloc(size_t count, size_t size);
 int		ft_strcmp(const char *s1, const char *s2);
-long	myatoi(char *str, t_bundle *bundle);
+long	myatol(char *str, t_bundle *bundle);
 
 //--------------------------------
 //thread
@@ -123,5 +129,12 @@ void	time_control(t_philo *philo, long time);
 //--------------------------------
 
 void	*watchdog(void *param);
+
+//--------------------------------
+//thread_protect.c
+//--------------------------------
+
+void	my_pthread_mutex_lock(pthread_mutex_t *param, t_bundle *bundle);
+void	my_pthread_mutex_unlock(pthread_mutex_t *param, t_bundle *bundle);
 
 #endif

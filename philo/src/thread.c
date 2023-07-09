@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 09:52:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/05 12:04:22 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 16:43:18 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ void	*routine(void *param)
 	philo->ate < philo->bundle->meals))
 	{
 		action(philo);
-		print_philo(philo, MSG_SLEEP, CLEAR);
-		time_control(philo, philo->bundle->time_sleep);
-		print_philo(philo, MSG_THINK, CLEAR);
 	}
 	return (NULL);
 }
@@ -39,7 +36,6 @@ int	init_mutex(t_bundle *bundle)
 	i = 0;
 	if (pthread_mutex_init(&bundle->check_meals, NULL) != 0 || \
 	pthread_mutex_init(&bundle->print, NULL) != 0 || \
-	pthread_mutex_init(&bundle->eat, NULL) != 0 || \
 	pthread_mutex_init(&bundle->death, NULL) != 0)
 		return (philo_error(5, bundle), 1);
 	while (i < bundle->philos)
@@ -52,6 +48,7 @@ int	init_mutex(t_bundle *bundle)
 			bundle->ph[i].left = bundle->philos - 1;
 		else
 			bundle->ph[i].left = i - 1;
+		bundle->ph[i].ate = 0;
 		if (pthread_mutex_init(&bundle->forks[i], NULL) != 0)
 			return (philo_error(5, bundle), 1);
 		i++;
@@ -89,7 +86,6 @@ int	destroy(t_bundle *bundle)
 		return (philo_error(4, bundle), 1);
 	if (pthread_mutex_destroy(&bundle->check_meals) != 0 || \
 	pthread_mutex_destroy(&bundle->print) != 0 || \
-	pthread_mutex_destroy(&bundle->eat) != 0 || \
 	pthread_mutex_destroy(&bundle->death) != 0)
 		return (philo_error(6, bundle), 1);
 	i = -1;
