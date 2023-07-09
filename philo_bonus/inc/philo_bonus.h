@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 12:48:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 18:01:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@
 # include <signal.h>
 # include "structure.h"
 # include "functions.h"
+# include <limits.h>
 
-# define ARGLIMIT 200
-# define HEAP_BUNDLE 1
-# define HEAP_PHILO 2
 # define MSG_DIED "is starved to death👻"
 # define MSG_EAT "is eating"
 # define MSG_SLEEP "is sleeping"
@@ -35,6 +33,12 @@
 # define MSG_RIGHT "has taken first chopstick"
 # define MSG_LEFT "has taken second chopstick"
 # define MSG_COMP "They all ate the required number of meals🥳"
+
+# define ERR_MUTEX_LOCK 99
+# define ERR_MUTEX_UNLOCK 98
+# define HEAP_BUNDLE 1
+# define HEAP_FORKS 2
+# define HEAP_PH 3
 
 # define BLUE "\033[1;34m"
 # define YELLOW "\033[1;33m"

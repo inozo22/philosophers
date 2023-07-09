@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:34:09 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/09 09:59:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 18:19:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	print_philo(t_philo *philo, char *msg, char *color)
 
 int	action_fork(t_philo *philo)
 {
-	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
-		usleep(200);
+/* 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
+		usleep(200); */
 	if (sem_wait(philo->bundle->fork) != 0)
 		philo->bundle->fin = 99;
 	print_philo(philo, MSG_RIGHT, CLEAR);
@@ -81,16 +81,20 @@ void	action(t_philo *philo)
 {
 	action_fork(philo);
 	print_philo(philo, MSG_EAT, GREEN);
-	if (sem_post(philo->eat) != 0)
-		philo->bundle->fin = 99;
+	philo->ate++;
+/* 	if (sem_wait(philo->eat) != 0)
+		philo->bundle->fin = 99; */
 	philo->last_meal = get_time();
-	if (sem_post(philo->eat) != 0)
-		philo->bundle->fin = 98;
+/* 	if (sem_post(philo->eat) != 0)
+		philo->bundle->fin = 98; */
 	time_control(philo, philo->bundle->time_eat);
+	print_philo(philo, MSG_SLEEP, CYAN);
 	if (sem_post(philo->bundle->fork) != 0)
 		philo->bundle->fin = 98;
 	if (sem_post(philo->bundle->fork) != 0)
 		philo->bundle->fin = 98;
+	time_control(philo, philo->bundle->time_sleep);
+	print_philo(philo, MSG_THINK, YELLOW);
 }
 
 void	*routain(void *param)
@@ -102,9 +106,6 @@ void	*routain(void *param)
 	philo->ate < philo->bundle->meals))
 	{
 		action(philo);
-		print_philo(philo, MSG_SLEEP, CYAN);
-		time_control(philo, philo->bundle->time_sleep);
-		print_philo(philo, MSG_THINK, YELLOW);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/09 10:00:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 18:13:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ void	*watchdog(void *param)
 	while (bundle->fin == 0)
 	{
 		i = 0;
-		while (++i < bundle->philos && bundle->fin == 0)
+		while (++i < bundle->philos/*  && bundle->fin == 0 */)
 		{
+			printf("Im hereeeeee!\n");
 			if (sem_wait(bundle->print) != 0)
 				bundle->fin = 99;
 			if ((get_time() - bundle->ph[i].last_meal) > \
@@ -65,7 +66,6 @@ void	eat_counter(t_bundle *bundle)
 		usleep(100);
 		usleep(100);
 	}
-	bundle->fin++;
 	printf("they all ate required times!\n");
 	all_free (bundle);
 	exit (0);
@@ -81,9 +81,7 @@ int	set_eat_counter(t_bundle *bundle)
 		return (1);
 	if (bundle->pid_watchdog == 0)
 	{
-		printf("I'm eat counter!\n");
 		eat_counter(bundle);
-		//func();
 	}
 	return (0);
 }

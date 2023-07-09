@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:26:34 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 15:58:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 17:58:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-long	myatoi(char *str, t_bundle *bundle)
+long	myatol(char *str, t_bundle *bundle)
 {
 	int				i;
 	unsigned int	nbr;

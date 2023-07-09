@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:47:47 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 16:09:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 17:59:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void	*ft_calloc(size_t count, size_t size);
 int		ft_strcmp(const char *s1, const char *s2);
-long	myatoi(char *str, t_bundle *bundle);
+long	myatol(char *str, t_bundle *bundle);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
