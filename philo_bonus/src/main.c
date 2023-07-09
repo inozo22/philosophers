@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 15:55:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 09:50:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,21 @@ t_bundle	*init_bundle(char **av)
 	return (bundle);
 }
 
+/* void	all_kill(t_bundle *bundle)
+{
+	int	i;
+
+	i = -1;
+	while (++i < bundle->philos)
+	{
+		kill(bundle->ph[i].pid, SIGKILL);
+	}
+	if (bundle->meals)
+	{
+		kill(bundle->pid_watchdog, SIGKILL);
+	}
+} */
+
 int	main(int ac, char **av)
 {
 	t_bundle	*bundle;
@@ -111,8 +126,6 @@ int	main(int ac, char **av)
 	bundle = init_bundle(av);
 	if (!bundle)
 		return (1);
-//	bundle->start = get_time();
-//KOKOMADE
  	if (init_sem(bundle))
 		return (1);
 	if (run(bundle))
@@ -125,7 +138,7 @@ int	main(int ac, char **av)
 		waitpid(-1, &status, 0);
 		if (status != SIGKILL)
 		{
-			;//kill everything hereeee
+			destroy_process(bundle);
 		}
 	}
 	if (bundle->meals)

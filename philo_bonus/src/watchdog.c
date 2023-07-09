@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 15:59:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 10:00:25 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,23 @@ void	*watchdog(void *param)
 	bundle = (t_bundle *)param;
 	while (bundle->fin == 0)
 	{
-		i = -1;
-		while (++i < bundle->philos/*  && bundle->fin == 0 */)
+		i = 0;
+		while (++i < bundle->philos && bundle->fin == 0)
 		{
 			if (sem_wait(bundle->print) != 0)
 				bundle->fin = 99;
 			if ((get_time() - bundle->ph[i].last_meal) > \
-			bundle->time_die/*  && bundle->fin == 0 */)
+			bundle->time_die && bundle->fin == 0)
 			{
 				print_philo(&bundle->ph[i], MSG_DIED, RED);
 				bundle->fin = 1;//maybe I can remove this
 				all_free (bundle);
 				exit (0);
+				return (0);
 			}
 			if (sem_post(bundle->print) != 0)
 				bundle->fin = 99;
+			i++;
 		}
 	}
 	return (NULL);
@@ -58,11 +60,14 @@ void	eat_counter(t_bundle *bundle)
 			bundle->ph[i].ate++;
 			if (bundle->ph[i].ate == bundle->meals)
 				counter++;
+			i++;
 		}
 		usleep(100);
 		usleep(100);
 	}
+	bundle->fin++;
 	printf("they all ate required times!\n");
+	all_free (bundle);
 	exit (0);
 }
 
@@ -76,6 +81,7 @@ int	set_eat_counter(t_bundle *bundle)
 		return (1);
 	if (bundle->pid_watchdog == 0)
 	{
+		printf("I'm eat counter!\n");
 		eat_counter(bundle);
 		//func();
 	}

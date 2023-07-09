@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:34:09 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 16:06:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 09:59:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ void	print_philo(t_philo *philo, char *msg, char *color)
 		time = get_time() - philo->bundle->start;
 		if (ft_strcmp(color, GREEN) == 0)
 			printf("%08ld %s%03ld %s%s\n", time, color, philo->id, msg, CLEAR);
+		else if (ft_strcmp(color, RED) == 0)
+		{
+			printf("%08ld %s%s: %ld%s\n", time, color, msg, philo->ate, CLEAR);
+			exit (0);
+		}
 		else if (ft_strcmp(color, BLUE) == 0)
 			printf("%08ld %s%s: %ld%s\n", time, color, msg, philo->ate, CLEAR);
 		else
@@ -81,9 +86,7 @@ void	action(t_philo *philo)
 	philo->last_meal = get_time();
 	if (sem_post(philo->eat) != 0)
 		philo->bundle->fin = 98;
-//	check_meals(philo->bundle);
 	time_control(philo, philo->bundle->time_eat);
-	//KOKOMADE
 	if (sem_post(philo->bundle->fork) != 0)
 		philo->bundle->fin = 98;
 	if (sem_post(philo->bundle->fork) != 0)
@@ -95,8 +98,6 @@ void	*routain(void *param)
 	t_philo	*philo;
 
 	philo = (t_philo *)param;
-	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
-		usleep(200);
 	while (philo->bundle->fin == 0 && (philo->bundle->meals == 0 || \
 	philo->ate < philo->bundle->meals))
 	{
@@ -130,14 +131,6 @@ int	run(t_bundle *bundle)
 			exit(0);
 		}
 	}
-/* 	bundle->pid_watchdog = fork();
-	if (bundle->pid_watchdog < 0)
-		return (1);
-	if (bundle->pid_watchdog == 0)
-	{
-		printf("Hello, I'm watchdog!\n");
-		func();
-	} */
 	return (0);
 }
 
