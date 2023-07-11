@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/09 18:01:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 13:23:27 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,30 @@ int	destroy_process(t_bundle *bundle)
 	if (kill(bundle->pid_watchdog, SIGKILL) != 0)
 		return (1);
 	return (0);
+}
+
+void	terminator(t_bundle *bundle)
+{
+	int			i;
+	int			status;
+
+	i = -1;
+	status = 0;
+	while (++i < bundle->philos)
+	{
+		waitpid(-1, &status, 0);
+		if (status != SIGKILL)
+		{
+			printf("Im here! status: %d\n", status);
+			destroy_process(bundle);
+		}
+		printf("Line: %d Im here! status: %d\n", __LINE__, status);
+	}
+	printf("Im here! status: %d\n", status);
+	if (bundle->meals)
+		waitpid(-1, &status, 0);
+	if (destroy_process(bundle) == 0)
+		all_free(bundle);
 }
 
 int	obtain_nums(char **av, t_bundle *bundle)
@@ -106,8 +130,7 @@ t_bundle	*init_bundle(char **av)
 int	main(int ac, char **av)
 {
 	t_bundle	*bundle;
-	int			i;
-	int			status;
+
 
 	if (ac < 5 || ac > 6)
 	{
@@ -123,7 +146,8 @@ int	main(int ac, char **av)
 		return (1);
 	if (bundle->meals && set_eat_counter(bundle))
 		return (1);
-	i = -1;
+	terminator(bundle);
+/* 	i = -1;
 	while (++i < bundle->philos)
 	{
 		waitpid(-1, &status, 0);
@@ -135,74 +159,6 @@ int	main(int ac, char **av)
 	if (bundle->meals)
 		waitpid(-1, &status, 0);
 	if (destroy_process(bundle) == 0)
-		all_free(bundle);
-//	system ("leaks philo_bonus");
+		all_free(bundle); */
 	return (0);
 }
-
-/* void	*function(void *param)
-{
-	sem_t *sem2 = param;
-	int	i = 0;
-
-	while (i < 5)
-	{
-		sem_wait(sem2);
-		printf("[function]%d called\n", i);
-		i++;
-	}
-	return (NULL);
-}
-
-int	main(int ac, char **av)
-{
-	sem_t		*sem;
-	sem_t		*sem2;
-	pid_t		pid;
-	pid_t		cpid[2];
-	int			status;
-	pthread_t	thread;
-	int	i = 0;
-
-	(void)ac;
-	(void)av;
-	sem_unlink("/philo");
-	sem = sem_open("/philo", O_CREAT, 0600, atoi(av[1]) / 2);// "/" から始まれば名前付きsem。同じ名前で共有できる。
-	sem2 = sem;
-	sem_unlink("/philo");
-	pid = fork();
-
-	while (i < 2)
-	{
-		if (pid != 0)
-		{
-			cpid[i] = fork();
-		}
-		i++;
-	}
-	while (1)
-	{
-		;
-	}
-	exit (1);
-	if (pid == 0)
-	{
-		printf("");
-		printf("child pid: %d\n", pid);
-		pthread_create(&thread, NULL, &function, sem2);
-		pthread_join(thread, NULL);
-		exit (0);
-	}
-	int microsecond = 1.5 * 1000000;
-	i = 0;
-	while (i < 3)
-	{
-		printf("parent pid: %d\n", pid);
-		usleep(microsecond);
-		sem_post(sem);
-		i++;
-	}
-	waitpid(-1, &status, 0);
-	sem_close(sem);
-	return (0);
-} */

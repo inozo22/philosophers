@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 10:49:26 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 15:56:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 12:20:49 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	init_sem(t_bundle *bundle)
 	i = -1;
 	while (++i < bundle->philos)
 	{
-		bundle->ph[i].eat = set_sem("/eat", 0, bundle->ph[i].id);
+		bundle->ph[i].eat = set_sem("/eat_", 0, i + 1);
 	}
 	return (0);
 }

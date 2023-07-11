@@ -6,12 +6,19 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:47:47 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/09 17:59:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 12:30:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FUNCTIONS_H
 # define FUNCTIONS_H
+
+//--------------------------------
+//main
+//--------------------------------
+
+int		destroy_process(t_bundle *bundle);
+void	terminator(t_bundle *bundle);
 
 //--------------------------------
 //utils

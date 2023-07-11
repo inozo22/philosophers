@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:11:01 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 14:22:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 11:30:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_bundle
 	t_philo				*ph;
 	sem_t				*print;
 	sem_t				*fork;
+//	sem_t				*eat;
 	int					status;
 	int					fin;
 	int					heap;

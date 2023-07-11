@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/09 18:13:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 12:24:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,27 @@
  */
 void	*watchdog(void *param)
 {
-	t_bundle		*bundle;
+	t_philo		*philo;
 	long			i;
 
-	bundle = (t_bundle *)param;
-	while (bundle->fin == 0)
+	philo = (t_philo *)param;
+	while (1)
 	{
-		i = 0;
-		while (++i < bundle->philos/*  && bundle->fin == 0 */)
+		i = -1;
+		while (++i < philo->bundle->philos/*  && bundle->fin == 0 */)
 		{
-			printf("Im hereeeeee!\n");
-			if (sem_wait(bundle->print) != 0)
-				bundle->fin = 99;
-			if ((get_time() - bundle->ph[i].last_meal) > \
-			bundle->time_die && bundle->fin == 0)
+			if (!philo->last_meal)
+				continue ;
+			if (philo->bundle->time_die <= get_time() - philo->last_meal)
 			{
-				print_philo(&bundle->ph[i], MSG_DIED, RED);
-				bundle->fin = 1;//maybe I can remove this
-				all_free (bundle);
-				exit (0);
-				return (0);
+				printf("Line: %d\n", __LINE__);
+/* 				if (sem_wait(philo->bundle->print) != 0)
+					philo->bundle->fin = 99; */
+				print_philo(philo, MSG_DIED, RED);
+				return (NULL);
 			}
-			if (sem_post(bundle->print) != 0)
-				bundle->fin = 99;
-			i++;
 		}
+		usleep (200);
 	}
 	return (NULL);
 }
@@ -57,18 +53,21 @@ void	eat_counter(t_bundle *bundle)
 		i = 0;
 		while (i < bundle->philos)
 		{
+			printf("BEFORE bundle->ph[%d].ate: %ld\n", i, bundle->ph[i].ate);
 			sem_wait(bundle->ph[i].eat);
 			bundle->ph[i].ate++;
-			if (bundle->ph[i].ate == bundle->meals)
+			printf("AFTER bundle->ph[%d].ate: %ld\n", i, bundle->ph[i].ate);
+			if (bundle->ph[i].ate >= bundle->meals - 1)
 				counter++;
+			if (counter == bundle->philos)
+				break ;
+			printf("COUNTER: %d\n", counter);
 			i++;
 		}
-		usleep(100);
-		usleep(100);
 	}
-	printf("they all ate required times!\n");
-	all_free (bundle);
-	exit (0);
+	print_philo(&bundle->ph[i - 1], MSG_COMP, BLUE);
+//	all_free (bundle);
+//	exit (0);
 }
 
 /**
