@@ -6,40 +6,45 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 16:58:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 17:38:36 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
+void	all_goodbye(t_bundle *bundle)
+{
+	long	i = -1;
+
+	while (++i < bundle->philos)
+	{
+		kill(bundle->ph[i].pid, SIGKILL);
+	}
+	if (bundle->meals)
+	{
+		kill(bundle->pid_watchdog, SIGKILL);
+	}
+}
 /**
  * @note 230706nimai: you have to send to error, and then, free and exit there
  */
-int	destroy_process(t_bundle *bundle)
+int	run(t_bundle *bundle)
 {
 	long	i;
-	long	j;
 	int		status;
 
-	i = 0;
-	while (i < bundle->philos)
+	if (set_philos(bundle))
+		return (1);
+	if (bundle->meals && set_eat_counter(bundle))
+		return (1);
+	i = -1;
+	while (++i < bundle->philos)
 	{
 		waitpid(-1, &status, 0);
 		if (status != SIGKILL)
 		{
-			j = -1;
-			while (++j < bundle->philos)
-			{
-				printf("MEALS: %ld	i: %ld	j: %ld	bundle->philos: %ld\n", bundle->meals, i, j, bundle->philos);
-				kill(bundle->ph[j].pid, SIGKILL);
-			}
-			if (bundle->meals)
-			{
-				kill(bundle->pid_watchdog, SIGKILL);
-			}
+			all_goodbye(bundle);
 		}
-		printf("Line: %d\n", __LINE__);
-		i++;
 	}
 	if (bundle->meals)
 		waitpid(-1, &status, 0);
@@ -143,6 +148,19 @@ t_bundle	*init_bundle(char **av)
 	}
 } */
 
+void	close_sem(t_bundle *bundle)
+{
+	long	i;
+
+	sem_close(bundle->print);
+	sem_close(bundle->fork);
+	i = -1;
+	while (++i < bundle->philos)
+	{
+		sem_close(bundle->ph[i].eat);
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_bundle	*bundle;
@@ -159,10 +177,14 @@ int	main(int ac, char **av)
  	if (init_sem(bundle))
 		return (1);
 	if (run(bundle))
-		return (1);
-	if (bundle->meals && set_eat_counter(bundle))
-		return (1);
-	destroy_process(bundle);
+	{
+		close_sem(bundle);
+		return (all_free(bundle), 1);
+	}
+	close_sem(bundle);
+	return (all_free(bundle), 0);
+
+//	destroy_process(bundle);
 /* 	i = -1;
 	while (++i < bundle->philos)
 	{

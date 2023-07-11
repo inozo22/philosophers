@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 15:36:34 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 17:38:01 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,7 @@ void	*watchdog(void *param)
 				continue ;
 			if (philo->bundle->time_die <= get_time() - philo->last_meal)
 			{
-				printf("Line: %d\n", __LINE__);
-/* 				if (sem_wait(philo->bundle->print) != 0)
-					philo->bundle->fin = 99; */
 				print_philo(philo, MSG_DIED, RED);
-				destroy_process(philo->bundle);
-//				exit (0);
 				return (NULL);
 			}
 		}

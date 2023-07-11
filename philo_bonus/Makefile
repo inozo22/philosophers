@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/07/09 17:32:39 by nimai            ###   ########.fr        #
+#    Updated: 2023/07/11 17:26:25 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRCS		:= \
 				free.c \
 				time.c \
 				init_sem.c \
-				run.c \
+				set_philos.c \
 				utils_philo.c \
 				watchdog.c
 

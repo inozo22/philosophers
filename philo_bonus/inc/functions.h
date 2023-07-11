@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:47:47 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 12:30:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 17:18:17 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ char	*ft_strdup(const char *s);
 int		init_sem(t_bundle *bundle);
 
 //--------------------------------
-//run
+//set_philos
 //--------------------------------
 
-int		run(t_bundle *bundle);
+int	    set_philos(t_bundle *bundle);
 void	print_philo(t_philo *philo, char *msg, char *color);
 
 //--------------------------------

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run.c                                              :+:      :+:    :+:   */
+/*   set_philos.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:34:09 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 16:43:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 17:37:37 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	print_philo(t_philo *philo, char *msg, char *color)
 		else if (ft_strcmp(color, RED) == 0)
 		{
 			printf("%08ld %s%03ld %s%s\n", time, color, philo->id, msg, CLEAR);
-			return ;
+			exit (0);
 		}
 		else if (ft_strcmp(color, BLUE) == 0)
 		{
@@ -82,7 +82,7 @@ void	*routain(void *param)
 /**
  * @note 230706nimai: if I execute quickly, sometimes doesn't fork watchdog
  */
-int	run(t_bundle *bundle)
+int	set_philos(t_bundle *bundle)
 {
 	int	i;
 
