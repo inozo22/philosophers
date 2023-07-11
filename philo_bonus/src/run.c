@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:34:09 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 16:41:02 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 16:43:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	print_philo(t_philo *philo, char *msg, char *color)
 		else if (ft_strcmp(color, RED) == 0)
 		{
 			printf("%08ld %s%03ld %s%s\n", time, color, philo->id, msg, CLEAR);
-			/* terminator(philo->bundle);
-			exit (0); */
 			return ;
 		}
 		else if (ft_strcmp(color, BLUE) == 0)
@@ -56,7 +54,6 @@ int	action_fork(t_philo *philo)
 void	action(t_philo *philo)
 {
 	action_fork(philo);
-	printf("ID: %ld Im here!\n", philo->id);
 	print_philo(philo, MSG_EAT, GREEN);
 	sem_post(philo->eat);
 	philo->last_meal = get_time();
@@ -75,9 +72,7 @@ void	*routain(void *param)
 	t_philo	*philo;
 
 	philo = (t_philo *)param;
-//	sem_wait(philo->bundle->eat);
-	while (1/* philo->bundle->fin == 0 *//*  && (philo->bundle->meals == 0 || \
-	philo->ate < philo->bundle->meals )*/)
+	while (1)
 	{
 		action(philo);
 	}
@@ -94,17 +89,6 @@ int	run(t_bundle *bundle)
 	i = -1;
 	while (++i < bundle->philos)
 	{
-/* 		bundle->ph[i].pid = fork();
-		if (bundle->ph[i].pid < 0)
-			return (1);
-		if (bundle->ph[i].pid == 0)
-		{
-			if (pthread_create(&bundle->ph[i].th, NULL, &watchdog, (void *)&bundle->ph[i]) != 0)
-				exit (1);//error
-			routain(&bundle->ph[i]);
-			pthread_join(bundle->ph[i].th, NULL);
-			exit(0);
-		} */
  		bundle->ph[i].pid = fork();
 		if (bundle->ph[i].pid < 0)
 			return (1);

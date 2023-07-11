@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 16:38:46 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 16:58:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 int	destroy_process(t_bundle *bundle)
 {
 	long	i;
-	int		j;
+	long	j;
 	int		status;
 
 	i = 0;
@@ -30,23 +30,16 @@ int	destroy_process(t_bundle *bundle)
 			j = -1;
 			while (++j < bundle->philos)
 			{
-				printf("MEALS: %ld	i: %ld	j: %d	bundle->philos: %ld\n", bundle->meals, i, j, bundle->philos);
-				kill(bundle->ph[i].pid, SIGKILL);
-				{
-					printf("Buuhhhh\n");
-					return (1);
-				}
+				printf("MEALS: %ld	i: %ld	j: %ld	bundle->philos: %ld\n", bundle->meals, i, j, bundle->philos);
+				kill(bundle->ph[j].pid, SIGKILL);
 			}
 			if (bundle->meals)
 			{
-				if (kill(bundle->pid_watchdog, SIGKILL) != 0)
-				{
-					printf("Buuhhhh\n");
-					return (1);
-				}
+				kill(bundle->pid_watchdog, SIGKILL);
 			}
-			i++;
 		}
+		printf("Line: %d\n", __LINE__);
+		i++;
 	}
 	if (bundle->meals)
 		waitpid(-1, &status, 0);
