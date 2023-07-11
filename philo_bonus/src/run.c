@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:34:09 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 13:26:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 16:41:02 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	action(t_philo *philo)
 		philo->bundle->fin = 98;
 	if (sem_post(philo->bundle->fork) != 0)
 		philo->bundle->fin = 98;
-//	sem_wait(philo->bundle->eat);
 	time_control(philo, philo->bundle->time_sleep);
 	print_philo(philo, MSG_THINK, YELLOW);
 }
@@ -77,7 +76,7 @@ void	*routain(void *param)
 
 	philo = (t_philo *)param;
 //	sem_wait(philo->bundle->eat);
-	while (1/* philo->bundle->fin == 0 && (philo->bundle->meals == 0 || \
+	while (1/* philo->bundle->fin == 0 *//*  && (philo->bundle->meals == 0 || \
 	philo->ate < philo->bundle->meals )*/)
 	{
 		action(philo);
@@ -95,7 +94,18 @@ int	run(t_bundle *bundle)
 	i = -1;
 	while (++i < bundle->philos)
 	{
-		bundle->ph[i].pid = fork();
+/* 		bundle->ph[i].pid = fork();
+		if (bundle->ph[i].pid < 0)
+			return (1);
+		if (bundle->ph[i].pid == 0)
+		{
+			if (pthread_create(&bundle->ph[i].th, NULL, &watchdog, (void *)&bundle->ph[i]) != 0)
+				exit (1);//error
+			routain(&bundle->ph[i]);
+			pthread_join(bundle->ph[i].th, NULL);
+			exit(0);
+		} */
+ 		bundle->ph[i].pid = fork();
 		if (bundle->ph[i].pid < 0)
 			return (1);
 		if (bundle->ph[i].pid == 0)
@@ -109,4 +119,3 @@ int	run(t_bundle *bundle)
 	}
 	return (0);
 }
-

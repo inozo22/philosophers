@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 13:23:27 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 16:38:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,42 @@
 int	destroy_process(t_bundle *bundle)
 {
 	long	i;
+	int		j;
+	int		status;
 
-	i = -1;
-	while (++i < bundle->philos)
+	i = 0;
+	while (i < bundle->philos)
 	{
-		if (kill(bundle->ph[i].pid, SIGKILL) != 0)
-			return (1);
+		waitpid(-1, &status, 0);
+		if (status != SIGKILL)
+		{
+			j = -1;
+			while (++j < bundle->philos)
+			{
+				printf("MEALS: %ld	i: %ld	j: %d	bundle->philos: %ld\n", bundle->meals, i, j, bundle->philos);
+				kill(bundle->ph[i].pid, SIGKILL);
+				{
+					printf("Buuhhhh\n");
+					return (1);
+				}
+			}
+			if (bundle->meals)
+			{
+				if (kill(bundle->pid_watchdog, SIGKILL) != 0)
+				{
+					printf("Buuhhhh\n");
+					return (1);
+				}
+			}
+			i++;
+		}
 	}
-	if (kill(bundle->pid_watchdog, SIGKILL) != 0)
-		return (1);
+	if (bundle->meals)
+		waitpid(-1, &status, 0);
 	return (0);
 }
 
-void	terminator(t_bundle *bundle)
+/* void	terminator(t_bundle *bundle)
 {
 	int			i;
 	int			status;
@@ -52,7 +75,7 @@ void	terminator(t_bundle *bundle)
 		waitpid(-1, &status, 0);
 	if (destroy_process(bundle) == 0)
 		all_free(bundle);
-}
+} */
 
 int	obtain_nums(char **av, t_bundle *bundle)
 {
@@ -146,7 +169,7 @@ int	main(int ac, char **av)
 		return (1);
 	if (bundle->meals && set_eat_counter(bundle))
 		return (1);
-	terminator(bundle);
+	destroy_process(bundle);
 /* 	i = -1;
 	while (++i < bundle->philos)
 	{

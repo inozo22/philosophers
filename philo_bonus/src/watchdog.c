@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 12:24:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 15:36:34 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	*watchdog(void *param)
 /* 				if (sem_wait(philo->bundle->print) != 0)
 					philo->bundle->fin = 99; */
 				print_philo(philo, MSG_DIED, RED);
+				destroy_process(philo->bundle);
+//				exit (0);
 				return (NULL);
 			}
 		}
