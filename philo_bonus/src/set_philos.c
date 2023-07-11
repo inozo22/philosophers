@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:34:09 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 17:37:37 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 18:11:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_philo(t_philo *philo, char *msg, char *color)
 		}
 		else if (ft_strcmp(color, BLUE) == 0)
 		{
-			printf("%08ld %s%s: %ld%s\n", time, color, msg, philo->ate, CLEAR);
+			printf("%08ld %s%s: %ld%s\n", time, color, msg, philo->ate + 1, CLEAR);
 			exit (0);
 		}
 		else
@@ -94,6 +94,7 @@ int	set_philos(t_bundle *bundle)
 			return (1);
 		if (bundle->ph[i].pid == 0)
 		{
+			bundle->ph[i].last_meal = bundle->start;
 			if (pthread_create(&bundle->ph[i].th, NULL, &watchdog, (void *)&bundle->ph[i]) != 0)
 				exit (1);//error
 			routain(&bundle->ph[i]);

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 17:38:36 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 18:07:32 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	all_goodbye(t_bundle *bundle)
 {
-	long	i = -1;
+	long	i;
 
+	i = -1;
 	while (++i < bundle->philos)
 	{
 		kill(bundle->ph[i].pid, SIGKILL);
@@ -50,30 +51,6 @@ int	run(t_bundle *bundle)
 		waitpid(-1, &status, 0);
 	return (0);
 }
-
-/* void	terminator(t_bundle *bundle)
-{
-	int			i;
-	int			status;
-
-	i = -1;
-	status = 0;
-	while (++i < bundle->philos)
-	{
-		waitpid(-1, &status, 0);
-		if (status != SIGKILL)
-		{
-			printf("Im here! status: %d\n", status);
-			destroy_process(bundle);
-		}
-		printf("Line: %d Im here! status: %d\n", __LINE__, status);
-	}
-	printf("Im here! status: %d\n", status);
-	if (bundle->meals)
-		waitpid(-1, &status, 0);
-	if (destroy_process(bundle) == 0)
-		all_free(bundle);
-} */
 
 int	obtain_nums(char **av, t_bundle *bundle)
 {
@@ -113,40 +90,27 @@ t_bundle	*init_bundle(char **av)
 	bundle->heap = HEAP_BUNDLE;
 	if (!obtain_nums(av, bundle))
 		return (all_free(bundle), NULL);
-	bundle->start = get_time();
+//	bundle->start = get_time();
 	if (bundle->philos == 1)
 		loneliness(bundle);
 	bundle->ph = (t_philo *)ft_calloc(bundle->philos, sizeof(t_philo));
 	if (!bundle->ph)
 		return (NULL);
 	bundle->heap = HEAP_PH;
+	bundle->times_ate = (long *)ft_calloc(bundle->philos, sizeof(long));
 	i = -1;
 	while (++i < bundle->philos)
 	{
 		bundle->ph[i].id = i + 1;
 		bundle->ph[i].ate = 0;
-		bundle->ph[i].last_meal = bundle->start;
+		bundle->ph[i].last_meal = 0;
 		bundle->ph[i].right = 0;
 		bundle->ph[i].left = 0;
 		bundle->ph[i].bundle = bundle;
+		bundle->times_ate[i] = 0;
 	}
 	return (bundle);
 }
-
-/* void	all_kill(t_bundle *bundle)
-{
-	int	i;
-
-	i = -1;
-	while (++i < bundle->philos)
-	{
-		kill(bundle->ph[i].pid, SIGKILL);
-	}
-	if (bundle->meals)
-	{
-		kill(bundle->pid_watchdog, SIGKILL);
-	}
-} */
 
 void	close_sem(t_bundle *bundle)
 {
@@ -174,29 +138,10 @@ int	main(int ac, char **av)
 	bundle = init_bundle(av);
 	if (!bundle)
 		return (1);
- 	if (init_sem(bundle))
+	if (init_sem(bundle))
 		return (1);
-	if (run(bundle))
-	{
-		close_sem(bundle);
-		return (all_free(bundle), 1);
-	}
+	bundle->start = get_time();
+	run(bundle);
 	close_sem(bundle);
 	return (all_free(bundle), 0);
-
-//	destroy_process(bundle);
-/* 	i = -1;
-	while (++i < bundle->philos)
-	{
-		waitpid(-1, &status, 0);
-		if (status != SIGKILL)
-		{
-			destroy_process(bundle);
-		}
-	}
-	if (bundle->meals)
-		waitpid(-1, &status, 0);
-	if (destroy_process(bundle) == 0)
-		all_free(bundle); */
-	return (0);
 }

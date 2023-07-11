@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 17:38:01 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 18:12:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	eat_counter(t_bundle *bundle)
 		i = 0;
 		while (i < bundle->philos)
 		{
-			printf("BEFORE bundle->ph[%d].ate: %ld\n", i, bundle->ph[i].ate);
+			printf("BEFORE bundle->times_ate[%d]: %ld\n", i, bundle->times_ate[i]);
 			sem_wait(bundle->ph[i].eat);
-			bundle->ph[i].ate++;
-			printf("AFTER bundle->ph[%d].ate: %ld\n", i, bundle->ph[i].ate);
-			if (bundle->ph[i].ate >= bundle->meals - 1)
+			bundle->times_ate[i]++;
+			printf("AFTER bundle->times_ate[%d]: %ld\n", i, bundle->times_ate[i]);
+			if (bundle->times_ate[i] >= bundle->meals)
 				counter++;
 			if (counter == bundle->philos)
 				break ;
@@ -63,8 +63,6 @@ void	eat_counter(t_bundle *bundle)
 		}
 	}
 	print_philo(&bundle->ph[i - 1], MSG_COMP, BLUE);
-//	all_free (bundle);
-//	exit (0);
 }
 
 /**
