@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 09:58:22 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 13:22:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/12 16:15:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,23 @@
 
 void	check_meals(t_bundle *bundle)
 {
-	unsigned int	i;
+	long	i;
+	long	j;
 
 	my_pthread_mutex_lock(&bundle->check_meals, bundle);
 	i = 0;
+	j = 0;
 	while (i < bundle->philos)
 	{
 		if (bundle->ph[i].ate < bundle->meals || bundle->meals == 0)
 		{
+			if (bundle->ph[i].ate > bundle->times_ate)
+			{
+				printf("ate: %ld\n", bundle->ph[i].ate);
+				printf("times_ate: %ld\n", bundle->times_ate);
+				bundle->times_ate = bundle->ph[i].ate;
+				printf("times_ate: %ld\n", bundle->times_ate);
+			}
 			my_pthread_mutex_unlock(&bundle->check_meals, bundle);
 			return ;
 		}
@@ -49,9 +58,9 @@ void	print_philo(t_philo *philo, char *msg, char	*color)
 	{
 		time = get_time() - philo->bundle->start;
 		if (ft_strcmp(color, BLUE) == 0)
-			printf("%08ld %s%s: %d%s\n", time, color, msg, philo->ate, CLEAR);
+			printf("%08ld %s%s: %ld%s\n", time, color, msg, philo->ate, CLEAR);
 		else
-			printf("%08ld %s%03d %s%s\n", time, color, philo->id, msg, CLEAR);
+			printf("%08ld %s%03ld %s%s\n", time, color, philo->id, msg, CLEAR);
 	}
 	my_pthread_mutex_unlock(&philo->bundle->print, philo->bundle);
 }
