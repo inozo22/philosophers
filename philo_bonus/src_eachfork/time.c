@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 17:55:10 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/12 11:09:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 17:50:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ long	get_time(void)
 /**
  * @note it's not beautiful, rethink about this
  */
-/* void	time_control(t_philo *philo, long time)
+void	time_control(t_philo *philo, long time)
 {
 	long	ret;
 
@@ -43,21 +43,5 @@ long	get_time(void)
 			usleep(50);
 //			usleep(50);
 		}
-	}
-} */
-void	time_control(t_philo *philo, long time)
-{
-	long	ret;
-
-	(void)philo;
-	ret = get_time() + time;
-	while (get_time() < ret)
-	{
-		if (philo->bundle->time_die <= get_time() - philo->last_meal)
-		{
-			print_philo(philo, MSG_DIED, RED);
-			return ;
-		}
-		usleep(50);
 	}
 }

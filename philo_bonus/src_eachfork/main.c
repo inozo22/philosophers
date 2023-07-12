@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/12 10:43:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/12 09:09:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ t_bundle	*init_bundle(char **av)
 	bundle->heap = HEAP_BUNDLE;
 	if (!obtain_nums(av, bundle))
 		return (all_free(bundle), NULL);
+//	bundle->start = get_time();
 	if (bundle->philos == 1)
 		loneliness(bundle);
 	bundle->ph = (t_philo *)ft_calloc(bundle->philos, sizeof(t_philo));
@@ -116,17 +117,18 @@ void	close_sem(t_bundle *bundle)
 	long	i;
 
 	sem_close(bundle->print);
-	sem_close(bundle->fork);
 	i = -1;
 	while (++i < bundle->philos)
 	{
 		sem_close(bundle->ph[i].eat);
+		sem_close(bundle->ph[i].fork);
 	}
 }
 
 int	main(int ac, char **av)
 {
 	t_bundle	*bundle;
+
 
 	if (ac < 5 || ac > 6)
 	{
@@ -138,6 +140,7 @@ int	main(int ac, char **av)
 		return (1);
 	if (init_sem(bundle))
 		return (1);
+	bundle->start = get_time();
 	run(bundle);
 	close_sem(bundle);
 	return (all_free(bundle), 0);

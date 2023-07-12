@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:52:37 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/12 10:56:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/07 15:57:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,3 +27,4 @@ void	loneliness(t_bundle *bundle)
 	all_free(bundle);
 	exit (0);
 }
+

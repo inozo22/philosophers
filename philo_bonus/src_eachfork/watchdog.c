@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/12 11:20:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 18:12:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	*watchdog(void *param)
 	long			i;
 
 	philo = (t_philo *)param;
-//	philo->bundle->start = get_time();
-//	printf("start: %ld\n", philo->bundle->start);
 	while (1)
 	{
 		i = -1;
@@ -52,12 +50,15 @@ void	eat_counter(t_bundle *bundle)
 		i = 0;
 		while (i < bundle->philos)
 		{
+			printf("BEFORE bundle->times_ate[%d]: %ld\n", i, bundle->times_ate[i]);
 			sem_wait(bundle->ph[i].eat);
 			bundle->times_ate[i]++;
+			printf("AFTER bundle->times_ate[%d]: %ld\n", i, bundle->times_ate[i]);
 			if (bundle->times_ate[i] >= bundle->meals)
 				counter++;
 			if (counter == bundle->philos)
 				break ;
+			printf("COUNTER: %d\n", counter);
 			i++;
 		}
 	}
