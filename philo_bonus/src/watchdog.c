@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/12 11:20:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/12 12:03:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@
 void	*watchdog(void *param)
 {
 	t_philo		*philo;
-	long			i;
+	long		i;
 
 	philo = (t_philo *)param;
-//	philo->bundle->start = get_time();
-//	printf("start: %ld\n", philo->bundle->start);
 	while (1)
 	{
 		i = -1;
