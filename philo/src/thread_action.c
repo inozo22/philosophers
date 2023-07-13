@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 09:58:22 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/12 16:15:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/13 10:00:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	check_meals(t_bundle *bundle)
 {
 	long	i;
-	long	j;
+//	long	j;
 
 	my_pthread_mutex_lock(&bundle->check_meals, bundle);
 	i = 0;
-	j = 0;
+//	j = 0;
 	while (i < bundle->philos)
 	{
 		if (bundle->ph[i].ate < bundle->meals || bundle->meals == 0)
