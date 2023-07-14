@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 16:37:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 11:03:25 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@
 # include "functions.h"
 # include <limits.h>
 
-# define MSG_DIED "is starved to death👻"
+# define MSG_DIED "is died"
 # define MSG_EAT "is eating"
 # define MSG_SLEEP "is sleeping"
 # define MSG_THINK "is thinking"
-# define MSG_RIGHT "has taken first chopstick"
-# define MSG_LEFT "has taken second chopstick"
-# define MSG_COMP "They all ate the required number of meals🥳"
+# define MSG_RIGHT "has taken a fork"
+# define MSG_LEFT "has taken a fork"
+# define MSG_COMP "They all ate the required number of meals"
 
 # define ERR_MUTEX_LOCK 99
 # define ERR_MUTEX_UNLOCK 98

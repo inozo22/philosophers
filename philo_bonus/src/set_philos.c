@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:34:09 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/12 11:19:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 13:07:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,22 @@ void	print_philo(t_philo *philo, char *msg, char *color)
 		philo->bundle->fin = 99;
 	if (philo->bundle->fin == 0)
 	{
-		time = get_time()/*  - philo->bundle->start */;
+		time = get_time();
 		if (ft_strcmp(color, GREEN) == 0)
-			printf("%08ld %s%03ld %s: %ld%s\n", time, color, philo->id, msg, philo->ate + 1, CLEAR);
+			printf("%08ld %s%03ld %s: %ld%s\n", time, color, philo->id, \
+			msg, philo->ate + 1, CLEAR);
 		else if (ft_strcmp(color, RED) == 0)
 		{
-			printf("%08ld %s%03ld %s%s\n", time, color, philo->id, msg, CLEAR);
-			exit (0);
+			if (philo->bundle->time_die <= get_time() - philo->last_meal)
+			{
+				printf("%08ld %s%03ld %s%s\n", time, color, philo->id, msg, CLEAR);
+				exit (0);
+			}
 		}
 		else if (ft_strcmp(color, BLUE) == 0)
 		{
-			printf("%08ld %s%s: %ld%s\n", time, color, msg, philo->bundle->times_ate[philo->id - 1], CLEAR);
+			printf("%08ld %s%s: %ld%s\n", time, color, msg, \
+			philo->bundle->times_ate[philo->id - 1], CLEAR);
 			exit (0);
 		}
 		else
@@ -70,6 +75,9 @@ void	action(t_philo *philo)
 	print_philo(philo, MSG_THINK, YELLOW);
 }
 
+/**
+ * @note wait all process are started to start process at the same time
+ */
 void	*routain(void *param)
 {
 	t_philo	*philo;
@@ -85,8 +93,6 @@ void	*routain(void *param)
 		}
 	}
 	sem_wait(philo->bundle->start_sem);
-//	philo->bundle->start = get_time();
-//	philo->last_meal = get_time();
 	while (1)
 	{
 		action(philo);
@@ -109,7 +115,8 @@ int	set_philos(t_bundle *bundle)
 			return (1);
 		if (bundle->ph[i].pid == 0)
 		{
-			if (pthread_create(&bundle->ph[i].th, NULL, &watchdog, (void *)&bundle->ph[i]) != 0)
+			if (pthread_create(&bundle->ph[i].th, NULL, &watchdog, \
+			(void *)&bundle->ph[i]) != 0)
 				exit (1);//error
 			routain(&bundle->ph[i]);
 			pthread_join(bundle->ph[i].th, NULL);

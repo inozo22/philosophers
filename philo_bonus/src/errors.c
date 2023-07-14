@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/07 16:00:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 14:50:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	philo_error(int code, t_bundle *bundle)
  */
 void	input_error(int code, t_bundle *bundle)
 {
+	(void)bundle;
 	if (code == 1)
 	{
 		printf("Usage	:[1]number_of_philosophers\n");
@@ -50,12 +51,8 @@ void	input_error(int code, t_bundle *bundle)
 		printf("	:[5][number_of_times_each_philosopher_must_eat]\n");
 		printf("-------------------------------------------------------\n");
 		printf("example	:philo 5 800 200 200 [10]\n");
-		return ;
+		exit (1);
 	}
-	else if (code == 2)
-		printf("Please, number of Philo should be fewer than 201.\n");
-	else if (code == 3)
-		printf("Please, each time should not be under 60ms.\n");
 	else if (code == 4)
 		printf("Please put positive number.\n");
 	else if (code == 5)
@@ -64,7 +61,7 @@ void	input_error(int code, t_bundle *bundle)
 		printf("Please put only numeric letter.\n");
 	else if (code == 99)
 		printf("UNKNOWN ERROR\n");
-	bundle->status++;
+//	bundle->status++;
 }
 
 /**
@@ -79,4 +76,5 @@ void	heap_error(int flag, t_bundle *bundle)
 	{
 		printf("bundle memory allocate failure\n");
 	}
+	exit (1);
 }

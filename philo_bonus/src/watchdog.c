@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/12 12:03:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 13:05:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	*watchdog(void *param)
 		i = -1;
 		while (++i < philo->bundle->philos/*  && bundle->fin == 0 */)
 		{
+
 			if (!philo->last_meal)
 				continue ;
 			if (philo->bundle->time_die <= get_time() - philo->last_meal)

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/12 10:43:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 11:41:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	all_goodbye(t_bundle *bundle)
 		kill(bundle->pid_watchdog, SIGKILL);
 	}
 }
+
 /**
  * @note 230706nimai: you have to send to error, and then, free and exit there
  */
@@ -89,7 +90,10 @@ t_bundle	*init_bundle(char **av)
 		return (heap_error(1, NULL), NULL);
 	bundle->heap = HEAP_BUNDLE;
 	if (!obtain_nums(av, bundle))
-		return (all_free(bundle), NULL);
+	{
+		all_free(bundle);
+		exit(1);
+	}
 	if (bundle->philos == 1)
 		loneliness(bundle);
 	bundle->ph = (t_philo *)ft_calloc(bundle->philos, sizeof(t_philo));
@@ -129,10 +133,7 @@ int	main(int ac, char **av)
 	t_bundle	*bundle;
 
 	if (ac < 5 || ac > 6)
-	{
 		input_error(1, NULL);
-		return (1);
-	}
 	bundle = init_bundle(av);
 	if (!bundle)
 		return (1);
