@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/13 10:00:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 10:36:02 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	philo_error(int code, t_bundle *bundle)
 		printf("pthread_mutex_init failure\n");
 	else if (code == 6)
 		printf("pthread_mutex_destroy failure\n");
-/* 	else if (code == 99)
-		; */
 	if (bundle)
 		all_free(bundle);
 }
