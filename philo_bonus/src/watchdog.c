@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/14 13:05:22 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 15:33:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,16 @@
 void	*watchdog(void *param)
 {
 	t_philo		*philo;
-	long		i;
 
 	philo = (t_philo *)param;
 	while (1)
 	{
-		i = -1;
-		while (++i < philo->bundle->philos/*  && bundle->fin == 0 */)
+		if (!philo->last_meal)
+			continue ;
+		if (philo->bundle->time_die <= get_time() - philo->last_meal)
 		{
-
-			if (!philo->last_meal)
-				continue ;
-			if (philo->bundle->time_die <= get_time() - philo->last_meal)
-			{
-				print_philo(philo, MSG_DIED, RED);
-				return (NULL);
-			}
+			print_philo(philo, MSG_DIED, RED);
+			return (NULL);
 		}
 		usleep (200);
 	}

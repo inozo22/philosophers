@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:47:47 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/14 11:02:28 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 15:19:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 int		destroy_process(t_bundle *bundle);
 void	terminator(t_bundle *bundle);
+void	close_sem(t_bundle *bundle);
 
 //--------------------------------
 //utils

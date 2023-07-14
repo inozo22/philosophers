@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 10:49:26 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/14 13:05:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 15:19:07 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ sem_t	*set_sem(char *sem_name, int amount, int id)
 	{
 		num = ft_itoa(id);
 		if (!num)
-			return (NULL);//calloc failure put error
+			return (free (name), NULL);
 		tmp = name;
 		name = ft_strjoin(name, num);
 		if (!name)
-			return (NULL);//calloc failure put error
+			return (free (num), free (tmp), NULL);
 		free (num);
 		free (tmp);
 	}
@@ -48,6 +48,8 @@ int	init_sem(t_bundle *bundle)
 	bundle->start_sem = set_sem("/start", 0, 0);
 	bundle->print = set_sem("/print", 1, 0);
 	bundle->fork = set_sem("/fork", bundle->philos, 0);
+	if (!bundle->start_sem || !bundle->print || !bundle->fork)
+		return (close_sem(bundle), all_free(bundle), 1);
 	i = -1;
 	while (++i < bundle->philos)
 	{

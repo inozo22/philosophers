@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:26:34 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/09 17:58:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 15:54:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,5 +212,7 @@ long	myatol(char *str, t_bundle *bundle)
 	}
 	if (str[i] != '\0')
 		return (input_error(6, bundle), -1);
+	if (i > 10)
+		return (input_error(5, bundle), -1);
 	return (nbr * sign);
 }

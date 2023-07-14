@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/14 11:41:51 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 15:56:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,11 @@ t_bundle	*init_bundle(char **av)
 	if (bundle->philos == 1)
 		loneliness(bundle);
 	bundle->ph = (t_philo *)ft_calloc(bundle->philos, sizeof(t_philo));
-	if (!bundle->ph)
-		return (NULL);
-	bundle->heap = HEAP_PH;
 	bundle->times_ate = (long *)ft_calloc(bundle->philos, sizeof(long));
+	if (!bundle->ph || !bundle->times_ate)
+		return (heap_error(4, bundle), NULL);
+	bundle->heap = HEAP_PH;
+	bundle->heap = HEAP_TIMES_ATE;
 	i = -1;
 	while (++i < bundle->philos)
 	{

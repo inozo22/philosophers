@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/14 11:03:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 15:05:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@
 # define HEAP_BUNDLE 1
 # define HEAP_FORKS 2
 # define HEAP_PH 3
-# define HEAP_PID 4
+# define HEAP_TIMES_ATE 4
+# define HEAP_PID 5
 
 # define BLUE "\033[1;34m"
 # define YELLOW "\033[1;33m"

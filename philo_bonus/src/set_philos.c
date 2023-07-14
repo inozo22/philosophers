@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:34:09 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/14 13:07:11 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 15:44:37 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,44 +16,37 @@ void	print_philo(t_philo *philo, char *msg, char *color)
 {
 	long	time;
 
-	if (sem_wait(philo->bundle->print) != 0)
-		philo->bundle->fin = 99;
-	if (philo->bundle->fin == 0)
+	sem_wait(philo->bundle->print);
+	time = get_time();
+	if (ft_strcmp(color, GREEN) == 0)
+		printf("%08ld %s%03ld %s: %ld%s\n", time, color, philo->id, \
+		msg, philo->ate + 1, CLEAR);
+	else if (ft_strcmp(color, RED) == 0)
 	{
-		time = get_time();
-		if (ft_strcmp(color, GREEN) == 0)
-			printf("%08ld %s%03ld %s: %ld%s\n", time, color, philo->id, \
-			msg, philo->ate + 1, CLEAR);
-		else if (ft_strcmp(color, RED) == 0)
+		if (philo->bundle->time_die <= get_time() - philo->last_meal)
 		{
-			if (philo->bundle->time_die <= get_time() - philo->last_meal)
-			{
-				printf("%08ld %s%03ld %s%s\n", time, color, philo->id, msg, CLEAR);
-				exit (0);
-			}
-		}
-		else if (ft_strcmp(color, BLUE) == 0)
-		{
-			printf("%08ld %s%s: %ld%s\n", time, color, msg, \
-			philo->bundle->times_ate[philo->id - 1], CLEAR);
+			printf("%08ld %s%03ld %s%s\n", time, color, philo->id, msg, CLEAR);
 			exit (0);
 		}
-		else
-			printf("%08ld %s%03ld %s%s\n", time, color, philo->id, msg, CLEAR);
 	}
-	if (sem_post(philo->bundle->print) != 0)
-		philo->bundle->fin = 98;
+	else if (ft_strcmp(color, BLUE) == 0)
+	{
+		printf("%08ld %s%s: %ld%s\n", time, color, msg, \
+		philo->bundle->times_ate[philo->id - 1], CLEAR);
+		exit (0);
+	}
+	else
+		printf("%08ld %s%03ld %s%s\n", time, color, philo->id, msg, CLEAR);
+	sem_post(philo->bundle->print);
 }
 
 int	action_fork(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 		usleep (2000);
-	if (sem_wait(philo->bundle->fork) != 0)
-		philo->bundle->fin = 99;//terminate in another way
+	sem_wait(philo->bundle->fork);
 	print_philo(philo, MSG_RIGHT, CLEAR);
-	if (sem_wait(philo->bundle->fork) != 0)
-		philo->bundle->fin = 99;
+	sem_wait(philo->bundle->fork);
 	print_philo(philo, MSG_LEFT, CLEAR);
 	return (0);
 }
@@ -66,10 +59,8 @@ void	action(t_philo *philo)
 	philo->last_meal = get_time();
 	philo->ate++;
 	time_control(philo, philo->bundle->time_eat);
-	if (sem_post(philo->bundle->fork) != 0)
-		philo->bundle->fin = 98;
-	if (sem_post(philo->bundle->fork) != 0)
-		philo->bundle->fin = 98;
+	sem_post(philo->bundle->fork);
+	sem_post(philo->bundle->fork);
 	print_philo(philo, MSG_SLEEP, CYAN);
 	time_control(philo, philo->bundle->time_sleep);
 	print_philo(philo, MSG_THINK, YELLOW);
@@ -117,10 +108,11 @@ int	set_philos(t_bundle *bundle)
 		{
 			if (pthread_create(&bundle->ph[i].th, NULL, &watchdog, \
 			(void *)&bundle->ph[i]) != 0)
-				exit (1);//error
+				exit (1);
 			routain(&bundle->ph[i]);
-			pthread_join(bundle->ph[i].th, NULL);
-			exit(0);
+			if (pthread_join(bundle->ph[i].th, NULL) != 0)
+				exit(1);
+			exit (0);
 		}
 	}
 	return (0);
