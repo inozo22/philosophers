@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:11:01 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/14 13:05:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/17 10:14:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ typedef struct s_bundle
 	sem_t				*print;
 	sem_t				*fork;
 	sem_t				*start_sem;
-	int					status;
-	int					fin;
-	int					pro_start;
+	long				fin;
 	int					heap;
 	long				*times_ate;
 	pthread_t			watchdog;

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 09:49:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/17 10:43:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/17 10:02:49 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,14 @@ void	eat_counter(t_bundle *bundle)
 			if (bundle->times_ate[i] == bundle->meals)
 				counter++;
 			if (counter == bundle->philos)
+			{
 				print_philo(&bundle->ph[i - 1], MSG_COMP, BLUE);
+//				break ;
+			}
 			i++;
 		}
 	}
+//	print_philo(&bundle->ph[i - 1], MSG_COMP, BLUE);
 }
 
 /**

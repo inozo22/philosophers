@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/07/14 15:07:20 by nimai            ###   ########.fr        #
+#    Updated: 2023/07/17 13:33:47 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,20 +16,19 @@ NAME		:= philo_bonus
 #   INGREDIENTS                                  #
 #------------------------------------------------#
 
-LIBS		:=  
-LIBS_TARGET	:= 
 INCS		:= inc
 SRC_DIR		:= src
 SRCS		:= \
 				main.c \
 				errors.c \
 				utils.c \
-				free.c \
+				heap.c \
 				time.c \
-				init_sem.c \
+				control_sem.c \
 				set_philos.c \
 				utils_philo.c \
-				watchdog.c
+				watchdog.c \
+				run.c
 
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 

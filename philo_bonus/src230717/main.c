@@ -6,11 +6,49 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 12:59:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/17 13:32:27 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/17 10:31:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+void	all_goodbye(t_bundle *bundle)
+{
+	long	i;
+
+	i = -1;
+	while (++i < bundle->philos)
+	{
+		kill(bundle->ph[i].pid, SIGKILL);
+	}
+	if (bundle->meals)
+	{
+		kill(bundle->pid_watchdog, SIGKILL);
+	}
+}
+
+int	run(t_bundle *bundle)
+{
+	long	i;
+	int		status;
+
+	if (set_philos(bundle))
+		return (1);
+	if (bundle->meals && set_eat_counter(bundle))
+		return (1);
+	i = -1;
+	while (++i < bundle->philos)
+	{
+		waitpid(-1, &status, 0);
+		if (status != SIGKILL)
+		{
+			all_goodbye(bundle);
+		}
+	}
+	if (bundle->meals)
+		waitpid(-1, &status, 0);
+	return (0);
+}
 
 int	obtain_nums(char **av, t_bundle *bundle)
 {
@@ -41,14 +79,6 @@ int	obtain_nums(char **av, t_bundle *bundle)
 	return (1);
 }
 
-void	fill_philo(t_philo *philo)
-{
-	philo->ate = 0;
-	philo->last_meal = 0;
-	philo->right = 0;
-	philo->left = 0;
-}
-
 t_bundle	*init_bundle(char **av)
 {
 	t_bundle	*bundle;
@@ -70,12 +100,29 @@ t_bundle	*init_bundle(char **av)
 	i = -1;
 	while (++i < bundle->philos)
 	{
-		fill_philo(&bundle->ph[i]);
 		bundle->ph[i].id = i + 1;
+		bundle->ph[i].ate = 0;
+		bundle->ph[i].last_meal = 0;
+		bundle->ph[i].right = 0;
+		bundle->ph[i].left = 0;
 		bundle->ph[i].bundle = bundle;
 		bundle->times_ate[i] = 0;
 	}
 	return (bundle);
+}
+
+void	close_sem(t_bundle *bundle)
+{
+	long	i;
+
+	sem_close(bundle->start_sem);
+	sem_close(bundle->print);
+	sem_close(bundle->fork);
+	i = -1;
+	while (++i < bundle->philos)
+	{
+		sem_close(bundle->ph[i].eat);
+	}
 }
 
 int	main(int ac, char **av)
@@ -92,5 +139,6 @@ int	main(int ac, char **av)
 	run(bundle);
 	close_sem(bundle);
 	all_free(bundle);
+	system ("leaks philo_bonus");
 	return (0);
 }

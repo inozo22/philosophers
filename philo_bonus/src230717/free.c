@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:18:36 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/09 18:01:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/17 09:48:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
  */
 void	all_free(t_bundle *bundle)
 {
+	if (bundle->heap >= HEAP_TIMES_ATE)
+	{
+		free (bundle->times_ate);
+		bundle->times_ate = NULL;
+	}
 	if (bundle->heap >= HEAP_PH)
 	{
 		free (bundle->ph);

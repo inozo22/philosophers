@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:47:47 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/14 15:19:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/17 13:42:02 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,28 @@ void	close_sem(t_bundle *bundle);
 //utils
 //--------------------------------
 
-void	*ft_calloc(size_t count, size_t size);
-int		ft_strcmp(const char *s1, const char *s2);
-long	myatol(char *str, t_bundle *bundle);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_itoa(int n);
-char	*ft_strdup(const char *s);
+long	get_len(long n);
+char	*dup_str(char *str, long nb, unsigned int len);
 
 //--------------------------------
-//init_sem
+//utils_philo
+//--------------------------------
+
+void	loneliness(t_bundle *bundle);
+long	myatol(char *str, t_bundle *bundle);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strdup(const char *s);
+int		ft_strcmp(const char *s1, const char *s2);
+
+//--------------------------------
+//control_sem
 //--------------------------------
 
 int		init_sem(t_bundle *bundle);
+void	close_sem(t_bundle *bundle);
 
 //--------------------------------
 //set_philos
@@ -57,10 +64,12 @@ void	input_error(int code, t_bundle *bundle);
 void	heap_error(int flag, t_bundle *bundle);
 
 //--------------------------------
-//free
+//heap
 //--------------------------------
 
 void	all_free(t_bundle *bundle);
+void	*ft_calloc(size_t count, size_t size);
+char	*ft_itoa(int n);
 
 //--------------------------------
 //time
@@ -77,9 +86,10 @@ void	*watchdog(void *param);
 int		set_eat_counter(t_bundle *bundle);
 
 //--------------------------------
-//utils_philo
+//run
 //--------------------------------
 
-void	loneliness(t_bundle *bundle);
+int		run(t_bundle *bundle);
+void	all_goodbye(t_bundle *bundle);
 
 #endif

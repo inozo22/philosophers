@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:26:34 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/17 13:39:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/14 15:54:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (slen);
 }
 
-long	get_len(long n)
+unsigned int	get_len(long n)
 {
-	long	len;
+	unsigned int	len;
 
 	len = 0;
 	if (n == 0)
@@ -105,4 +105,114 @@ char	*dup_str(char *str, long nb, unsigned int len)
 	if (str[0] == 48)
 		str[0] = '-';
 	return (str);
+}
+
+char	*ft_itoa(int n)
+{
+	size_t	len;
+	char	*str;
+
+	len = get_len(n);
+	str = ft_calloc(len + 1, sizeof(char));
+	if (str)
+		str = dup_str(str, n, len);
+	return (str);
+}
+
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	len;
+	char	*pmem;
+
+	len = ft_strlen(s1) + ft_strlen(s2);
+	pmem = malloc(len + 1);
+	if (pmem == NULL)
+		return (NULL);
+	ft_strlcpy(pmem, s1, ft_strlen(s1) + 1);
+	ft_strlcat(pmem, s2, len + 1);
+	return (pmem);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*t;
+	size_t	len;
+	size_t	i;
+
+	len = ft_strlen(s);
+	t = malloc(len + 1);
+	i = 0;
+	if (t == NULL)
+		return (NULL);
+	while (s[i])
+	{
+		t[i] = s[i];
+		i++;
+	}
+	t[i] = '\0';
+	return (t);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*ptr;
+
+	ptr = malloc(count * size);
+	if (!ptr)
+		return (NULL);
+	memset(ptr, 0, size);
+	return (ptr);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s1)
+	{
+		if (!s2)
+			return (0);
+		else
+			return (-s2[0]);
+	}
+	else if (!s2)
+		return (*s1);
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+long	myatol(char *str, t_bundle *bundle)
+{
+	int				i;
+	unsigned int	nbr;
+	int				sign;
+
+	i = 0;
+	nbr = 0;
+	sign = 1;
+	while ((str[i] <= 13 && str[i] >= 9) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			return (input_error(4, bundle), -1);
+		i++;
+	}
+	while (str[i] >= 48 && str[i] <= 57)
+	{
+		nbr = (str[i] - 48) + (nbr * 10);
+		i++;
+	}
+	if (str[i] != '\0')
+		return (input_error(6, bundle), -1);
+	if (i > 10)
+		return (input_error(5, bundle), -1);
+	return (nbr * sign);
 }
