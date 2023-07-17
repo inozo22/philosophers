@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:00:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/09 17:27:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/17 09:08:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	obtain_nums(char **av, t_bundle *bundle)
 			return (0);
 		if (num > INT_MAX)
 			return (input_error(5, bundle), 0);
+		if (num == 0)
+			return (input_error(2, bundle), 0);
 		if (i == 1)
 			bundle->philos = num;
 		if (i == 2)
