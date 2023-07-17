@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:56:04 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/17 09:11:03 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/17 09:20:02 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	input_error(int code, t_bundle *bundle)
 		return ;
 	}
 	else if (code == 2)
-		printf("Please, put number more than 0.\n");
+		printf("Please put 1 or more philosopher.\n");
 	else if (code == 4)
 		printf("Please put positive number.\n");
 	else if (code == 5)
