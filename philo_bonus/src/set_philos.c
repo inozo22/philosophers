@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:34:09 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/17 10:05:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/17 14:02:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ void	action(t_philo *philo)
 {
 	action_fork(philo);
 	sem_post(philo->eat);
-	print_philo(philo, MSG_EAT, GREEN);
+	print_philo(philo, MSG_EAT, CLEAR);
 	philo->last_meal = get_time();
 	philo->ate++;
 	time_control(philo, philo->bundle->time_eat);
 	sem_post(philo->bundle->fork);
 	sem_post(philo->bundle->fork);
-	print_philo(philo, MSG_SLEEP, CYAN);
+	print_philo(philo, MSG_SLEEP, CLEAR);
 	time_control(philo, philo->bundle->time_sleep);
-	print_philo(philo, MSG_THINK, YELLOW);
+	print_philo(philo, MSG_THINK, CLEAR);
 }
 
 /**
