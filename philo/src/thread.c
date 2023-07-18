@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 09:52:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/14 10:47:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/18 12:59:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*routine(void *param)
 	if (philo->bundle->philos == 1)
 		return (print_philo(philo, MSG_RIGHT, CLEAR), NULL);
 	if (philo->id % 2 == 0 || philo->id == philo->bundle->philos)
-		usleep(50);
+		usleep(500);
 	while (philo->bundle->fin == 0 && (philo->bundle->meals == 0 || \
 	philo->ate < philo->bundle->meals))
 	{
