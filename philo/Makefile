@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/07/12 13:14:53 by nimai            ###   ########.fr        #
+#    Updated: 2023/07/24 10:27:04 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror -pedantic
 LNK			:= -g3 -O0 #-fsanitize=address
 CPPFLAGS	:= $(addprefix -I,$(INCS)) -MMD -MP
-LDFLAGS		:= $(addprefix -L,$(dir $(LIBS_TARGET))) 
+LDFLAGS		:= $(addprefix -L,$(dir $(LIBS_TARGET)))
 LDLIBS		:= $(addprefix -l,$(LIBS))
 
 #------------------------------------------------#
@@ -82,7 +82,7 @@ export	ART
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(LDLIBS) $(LNK) -o $(NAME)
+	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) $(LNK) -o $(NAME)
 	$(info CREATED $(NAME))
 	@echo "$$ART"
 
